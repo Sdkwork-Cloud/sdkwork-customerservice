@@ -1,0 +1,2375 @@
+{
+  "openapi": "3.1.2",
+  "info": {
+    "title": "SDKWork Customer Service Backend API",
+    "version": "1.0.0",
+    "description": "Operator-facing customer service ticket administration API.",
+    "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+    "x-sdkwork-sdk-family": "sdkwork-customerservice-backend-sdk",
+    "x-sdkwork-owner": "sdkwork-customerservice",
+    "x-sdkwork-domain": "communication",
+    "x-sdkwork-capability": "customerservice"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:18091"
+    }
+  ],
+  "tags": [
+    {
+      "name": "customerServiceTicketsAdmin"
+    },
+    {
+      "name": "customerServicePluginsAdmin"
+    },
+    {
+      "name": "customerServiceChannelsAdmin"
+    }
+  ],
+  "security": [
+    {
+      "AuthToken": [],
+      "AccessToken": []
+    }
+  ],
+  "paths": {
+    "/backend/v3/api/customer_services/tickets": {
+      "get": {
+        "tags": [
+          "customerServiceTicketsAdmin"
+        ],
+        "operationId": "customerservice.tickets.admin.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.tickets.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/TicketSummary"
+                              }
+                            },
+                            "pageInfo": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "mode",
+                                "hasMore"
+                              ],
+                              "properties": {
+                                "mode": {
+                                  "type": "string",
+                                  "enum": [
+                                    "cursor"
+                                  ]
+                                },
+                                "nextCursor": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "hasMore": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/tickets/{ticketId}": {
+      "get": {
+        "tags": [
+          "customerServiceTicketsAdmin"
+        ],
+        "operationId": "customerservice.tickets.admin.retrieve",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.tickets.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/TicketDetail"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "customerServiceTicketsAdmin"
+        ],
+        "operationId": "customerservice.tickets.admin.update",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.tickets.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTicketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/TicketDetail"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/tickets/{ticketId}/messages": {
+      "get": {
+        "tags": [
+          "customerServiceTicketsAdmin"
+        ],
+        "operationId": "customerservice.tickets.admin.messages.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.tickets.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/TicketMessage"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "customerServiceTicketsAdmin"
+        ],
+        "operationId": "customerservice.tickets.admin.messages.create",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.tickets.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendTicketMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/TicketMessage"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/plugins": {
+      "get": {
+        "tags": [
+          "customerServicePluginsAdmin"
+        ],
+        "operationId": "customerservice.plugins.admin.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.plugins.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/PluginCatalogEntry"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/plugins/{pluginCode}/enablement": {
+      "put": {
+        "tags": [
+          "customerServicePluginsAdmin"
+        ],
+        "operationId": "customerservice.plugins.admin.enablement.upsert",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.plugins.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertPluginEnablementRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/PluginEnablementSummary"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts": {
+      "get": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/ChannelAccountSummary"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.create",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChannelAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/ChannelAccountSummary"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}": {
+      "patch": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.update",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateChannelAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/ChannelAccountSummary"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}/credentials": {
+      "post": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.credentials.register",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterChannelCredentialRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SdkWorkCommandResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/auto_reply_rules": {
+      "get": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.autoReplyRules.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/AutoReplyRuleSummary"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.autoReplyRules.create",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAutoReplyRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AutoReplyRuleSummary"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/auto_reply_rules/{ruleId}": {
+      "patch": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.autoReplyRules.update",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ruleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAutoReplyRuleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AutoReplyRuleSummary"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.autoReplyRules.delete",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "ruleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SdkWorkCommandResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/delivery_block_rules/catalog": {
+      "get": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.deliveryBlockRules.catalog",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/DeliveryBlockRuleCatalogEntry"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}/delivery_block_rules": {
+      "get": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.deliveryBlockRules.list",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.deliveryBlockRules.upsert",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertDeliveryBlockRulesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "items",
+                            "pageInfo"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
+                              }
+                            },
+                            "pageInfo": {
+                              "$ref": "#/components/schemas/PageInfo"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/start": {
+      "post": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.runtime.start",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/stop": {
+      "post": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.runtime.stop",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.write",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/status": {
+      "get": {
+        "tags": [
+          "customerServiceChannelsAdmin"
+        ],
+        "operationId": "customerservice.channels.admin.accounts.runtime.status",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
+        "x-sdkwork-permission": "customerservice.channels.admin.read",
+        "x-sdkwork-auth-mode": "dual-token",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AuthToken": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "AccessToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Access-Token"
+      }
+    },
+    "schemas": {
+      "TicketSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ticketNo": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "requesterUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assigneeUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TicketDetail": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TicketSummary"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "closedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      },
+      "TicketMessage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ticketId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "authorUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "authorRole": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UpdateTicketRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "assigneeUserId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "SendTicketMessageRequest": {
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "authorRole": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type",
+          "title",
+          "status",
+          "code",
+          "traceId"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "code": {
+            "$ref": "#/components/schemas/SdkWorkPlatformErrorCode"
+          },
+          "traceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Server-owned request correlation id."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldError"
+            }
+          }
+        }
+      },
+      "PluginCatalogEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "tenantEnabled": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PluginCatalogListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginCatalogEntry"
+            }
+          }
+        }
+      },
+      "UpsertPluginEnablementRequest": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "PluginEnablementSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ChannelAccountSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "externalAccountId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "ownerUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "connectionState": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ChannelAccountListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelAccountSummary"
+            }
+          }
+        }
+      },
+      "CreateChannelAccountRequest": {
+        "type": "object",
+        "required": [
+          "pluginCode",
+          "displayName",
+          "ownerUserId"
+        ],
+        "properties": {
+          "pluginCode": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "ownerUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "externalAccountId": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateChannelAccountRequest": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterChannelCredentialRequest": {
+        "type": "object",
+        "required": [
+          "credentialKind",
+          "payload"
+        ],
+        "properties": {
+          "credentialKind": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "AutoReplyRuleSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "ruleKind": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "matchPattern": {
+            "type": "string"
+          },
+          "replyContent": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AutoReplyRuleListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AutoReplyRuleSummary"
+            }
+          }
+        }
+      },
+      "CreateAutoReplyRuleRequest": {
+        "type": "object",
+        "required": [
+          "pluginCode",
+          "ruleKind",
+          "replyContent"
+        ],
+        "properties": {
+          "pluginCode": {
+            "type": "string"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ruleKind": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "matchPattern": {
+            "type": "string"
+          },
+          "replyContent": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateAutoReplyRuleRequest": {
+        "type": "object",
+        "properties": {
+          "priority": {
+            "type": "integer"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "matchPattern": {
+            "type": "string"
+          },
+          "replyContent": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryBlockRuleCatalogEntry": {
+        "type": "object",
+        "properties": {
+          "ruleCode": {
+            "type": "string"
+          },
+          "ruleName": {
+            "type": "string"
+          },
+          "ruleDescription": {
+            "type": "string"
+          },
+          "defaultPriority": {
+            "type": "integer"
+          },
+          "defaultActionConfig": {
+            "type": "object"
+          }
+        }
+      },
+      "DeliveryBlockRuleSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ruleCode": {
+            "type": "string"
+          },
+          "ruleName": {
+            "type": "string"
+          },
+          "ruleDescription": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "excludedExternalItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "actionConfig": {
+            "type": "object"
+          },
+          "defaultActionConfig": {
+            "type": "object"
+          }
+        }
+      },
+      "DeliveryBlockRuleCatalogListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryBlockRuleCatalogEntry"
+            }
+          }
+        }
+      },
+      "DeliveryBlockRuleListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
+            }
+          }
+        }
+      },
+      "UpsertDeliveryBlockRuleItem": {
+        "type": "object",
+        "required": [
+          "ruleCode",
+          "enabled",
+          "priority"
+        ],
+        "properties": {
+          "ruleCode": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "excludedExternalItemIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "actionConfig": {
+            "type": "object"
+          }
+        }
+      },
+      "UpsertDeliveryBlockRulesRequest": {
+        "type": "object",
+        "required": [
+          "pluginCode",
+          "rules"
+        ],
+        "properties": {
+          "pluginCode": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpsertDeliveryBlockRuleItem"
+            }
+          }
+        }
+      },
+      "AccountRuntimeStatus": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "connectionState": {
+            "type": "string"
+          },
+          "workerActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SdkWorkApiResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "data",
+          "traceId"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0
+            ],
+            "default": 0,
+            "minimum": 0,
+            "maximum": 0
+          },
+          "data": {
+            "description": "Operation-specific payload typed per response schema."
+          },
+          "traceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Server-owned request correlation id."
+          }
+        }
+      },
+      "SdkWorkResourceData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Typed domain resource for the operation."
+          }
+        }
+      },
+      "SdkWorkPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "SdkWorkCommandData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "accepted"
+        ],
+        "properties": {
+          "accepted": {
+            "type": "boolean",
+            "const": true
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "PageInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode"
+        ],
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "offset",
+              "cursor"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "totalItems": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "totalPages": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SdkWorkPlatformErrorCode": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 40001,
+        "maximum": 79999,
+        "description": "Platform or domain error code per API_SPEC.md §15.3."
+      },
+      "FieldError": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "message"
+        ],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 40011,
+            "maximum": 40099
+          }
+        }
+      },
+      "SdkWorkResourceResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "SdkWorkListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkPageData"
+              }
+            }
+          }
+        ]
+      },
+      "SdkWorkCommandResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkCommandData"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

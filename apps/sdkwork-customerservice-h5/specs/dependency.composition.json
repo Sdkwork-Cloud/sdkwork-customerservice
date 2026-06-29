@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.dependency.composition",
+  "applicationCode": "customerservice",
+  "clientArchitecture": "h5",
+  "surfaces": [
+    {
+      "surface": "app",
+      "corePackage": "@sdkwork/customerservice-h5-core",
+      "sdkClients": [],
+      "reusableModules": [],
+      "hostAdapters": [],
+      "dependencyApiExports": [],
+      "dependencyApiSurfaces": []
+    }
+  ],
+  "buildToolEntries": {
+    "pnpm": {
+      "workspacePackages": [
+        "@sdkwork/customerservice-h5-core",
+        "@sdkwork/customerservice-h5-shell"
+      ]
+    }
+  }
+}

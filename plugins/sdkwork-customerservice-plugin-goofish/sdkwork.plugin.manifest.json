@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.customerservice.plugin",
+  "plugin": {
+    "code": "goofish",
+    "displayName": "Goofish / 闲鱼",
+    "version": "0.1.0",
+    "runtimeLanguages": ["rust", "python"],
+    "status": "planned",
+    "capabilities": [
+      "session.cookie",
+      "session.captcha",
+      "transport.websocket",
+      "message.chat",
+      "message.card",
+      "message.order",
+      "order.sync",
+      "delivery.auto",
+      "delivery.rule-contribution",
+      "reply.keyword",
+      "reply.ai",
+      "reply.default",
+      "notification.outbound"
+    ]
+  },
+  "entrypoints": {
+    "registryFactory": "sdkwork_customerservice_plugin_goofish::register",
+    "legacyWorkerModule": "external/xianyu-auto-reply/websocket"
+  },
+  "database": {
+    "overlayRegistry": "docs/schema-registry/overlays/goofish.tables.yaml"
+  },
+  "deliveryRules": {
+    "contributions": [
+      "buyer_credit",
+      "buyer_has_order",
+      "buyer_unconfirmed",
+      "personal_blacklist"
+    ]
+  },
+  "internalApi": {
+    "controlPrefix": "/internal/v3/api/customer_services/plugins/goofish"
+  },
+  "security": {
+    "credentialKinds": ["cookie", "token"],
+    "sensitiveFields": ["cookie_value", "access_token", "refresh_token"]
+  }
+}

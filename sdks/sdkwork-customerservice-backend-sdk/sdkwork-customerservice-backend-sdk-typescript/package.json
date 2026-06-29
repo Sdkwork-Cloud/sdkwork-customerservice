@@ -1,0 +1,12 @@
+{
+  "name": "sdkwork-customerservice-backend-sdk-generated-typescript",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./generated/server-openapi/src/index.ts"
+  },
+  "dependencies": {
+    "@sdkwork/sdk-common": "workspace:*"
+  }
+}

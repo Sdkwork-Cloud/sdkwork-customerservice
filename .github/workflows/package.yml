@@ -1,0 +1,35 @@
+name: Package Application
+
+on:
+  push:
+    tags:
+      - v*
+      - '*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag or source ref to package.
+        required: false
+        default: v0.1.0
+
+permissions:
+  contents: write
+  actions: read
+  id-token: write
+
+jobs:
+  package:
+    uses: Sdkwork-Cloud/sdkwork-github-workflow/.github/workflows/sdkwork-package.yml@b0829529b9277a3da32b90c2d36ff34ff09fa832
+    with:
+      config_path: sdkwork.workflow.json
+      tag: ${{ github.event.inputs.tag || github.ref_name }}
+      platform: all
+      architecture: all
+      profile: all
+      format: all
+      publish_release: true
+      upload_artifact: true
+      deploy: false
+      retention_days: 30
+      framework_ref: b0829529b9277a3da32b90c2d36ff34ff09fa832
+    secrets: inherit

@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f6f7fb;
+}
+
+.h5-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.h5-shell header h1 {
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem;
+}
+
+.h5-shell .error {
+  color: #b42318;
+}
+
+.h5-shell .hint {
+  color: #667085;
+  font-size: 0.875rem;
+}
+
+.h5-shell ul {
+  list-style: none;
+  padding: 0;
+}
+
+.h5-shell li {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+.h5-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.h5-actions button[aria-pressed="true"] {
+  background: #175cd3;
+  color: #fff;
+}
+
+.h5-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.h5-list-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+}
+
+.h5-list-item.active {
+  border-color: #175cd3;
+}
+
+.h5-list-item span {
+  display: block;
+  color: #667085;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.h5-detail {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+.h5-detail textarea {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.h5-messages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+
+.h5-message-meta {
+  color: #667085;
+  font-size: 0.8rem;
+}

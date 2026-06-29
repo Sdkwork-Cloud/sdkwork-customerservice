@@ -1,0 +1,93 @@
+use axum::http::{header, HeaderName, HeaderValue, StatusCode};
+use axum::response::{IntoResponse, Response};
+use axum::Json;
+use sdkwork_communication_customerservice_service::CustomerServiceError;
+use sdkwork_utils_rust::{
+    PageInfo, PageMode, SdkWorkApiResponse, SdkWorkPageData, SdkWorkProblemDetail,
+    SdkWorkResourceData, SdkWorkResultCode, SDKWORK_TRACE_ID_HEADER,
+};
+use sdkwork_web_core::new_request_id;
+use serde::Serialize;
+
+fn resolved_trace_id() -> String {
+    new_request_id()
+}
+
+fn attach_trace_header(response: &mut Response, trace_id: &str) {
+    if let Ok(value) = HeaderValue::from_str(trace_id) {
+        response
+            .headers_mut()
+            .insert(HeaderName::from_static(SDKWORK_TRACE_ID_HEADER), value);
+    }
+}
+
+fn success_json<T: Serialize>(status: StatusCode, data: T) -> Response {
+    let trace_id = resolved_trace_id();
+    let envelope = SdkWorkApiResponse::success(data, trace_id.clone());
+    let mut response = (status, Json(envelope)).into_response();
+    attach_trace_header(&mut response, &trace_id);
+    response
+}
+
+fn problem(status_code: SdkWorkResultCode, detail: impl Into<String>) -> Response {
+    let trace_id = resolved_trace_id();
+    let problem = SdkWorkProblemDetail::platform(status_code, detail, trace_id.clone());
+    let status = StatusCode::from_u16(problem.status).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
+    let mut response = (status, Json(problem)).into_response();
+    response.headers_mut().insert(
+        header::CONTENT_TYPE,
+        HeaderValue::from_static("application/problem+json"),
+    );
+    attach_trace_header(&mut response, &trace_id);
+    response
+}
+
+pub fn ok_page<T: Serialize>(items: Vec<T>, page: u32, page_size: u32, total: u64) -> Response {
+    success_json(
+        StatusCode::OK,
+        SdkWorkPageData {
+            items,
+            page_info: PageInfo {
+                mode: PageMode::Offset,
+                page: Some(page.saturating_add(1) as i32),
+                page_size: Some(page_size as i32),
+                total_items: Some(total.to_string()),
+                total_pages: None,
+                next_cursor: None,
+                has_more: None,
+            },
+        },
+    )
+}
+
+pub fn ok_items<T: Serialize>(items: Vec<T>) -> Response {
+    let total = items.len() as u64;
+    ok_page(items, 0, total.max(1) as u32, total)
+}
+
+pub fn ok_resource<T: Serialize>(item: T) -> Response {
+    success_json(StatusCode::OK, SdkWorkResourceData { item })
+}
+
+pub fn created_resource<T: Serialize>(item: T) -> Response {
+    success_json(StatusCode::CREATED, SdkWorkResourceData { item })
+}
+
+pub fn service_error(error: CustomerServiceError) -> Response {
+    match error {
+        CustomerServiceError::Validation(message) => {
+            problem(SdkWorkResultCode::ValidationError, message)
+        }
+        CustomerServiceError::NotFound(message) => problem(SdkWorkResultCode::NotFound, message),
+        CustomerServiceError::Forbidden(message) => {
+            problem(SdkWorkResultCode::PermissionRequired, message)
+        }
+        CustomerServiceError::Persistence(message) => {
+            problem(SdkWorkResultCode::InternalError, message)
+        }
+    }
+}
+
+pub fn bad_request(message: &str) -> Response {
+    problem(SdkWorkResultCode::ValidationError, message.to_owned())
+}

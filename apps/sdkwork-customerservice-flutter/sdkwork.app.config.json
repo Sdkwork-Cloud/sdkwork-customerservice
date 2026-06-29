@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 3,
+  "kind": "sdkwork.app",
+  "app": {
+    "key": "sdkwork-customerservice-flutter",
+    "name": "SDKWork Customer Service Flutter",
+    "displayName": "SDKWork Customer Service Flutter",
+    "description": "Native mobile customer service client.",
+    "vendor": "SDKWork",
+    "appType": "APP_FLUTTER",
+    "versionSource": "pubspec.yaml"
+  },
+  "runtime": {
+    "family": "mobile",
+    "framework": "flutter",
+    "runtimes": ["IOS", "ANDROID"],
+    "supportedDeploymentProfiles": ["standalone", "cloud"],
+    "defaultDeploymentProfile": "standalone"
+  },
+  "devApp": {
+    "sourceRoot": "apps/sdkwork-customerservice-flutter"
+  }
+}

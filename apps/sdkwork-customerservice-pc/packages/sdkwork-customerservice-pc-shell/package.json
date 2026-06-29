@@ -1,0 +1,21 @@
+{
+  "name": "@sdkwork/customerservice-pc-shell",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "dependencies": {
+    "@sdkwork/customerservice-contracts": "workspace:*",
+    "@sdkwork/customerservice-pc-core": "workspace:*",
+    "@sdkwork/customerservice-service": "workspace:*",
+    "@sdkwork/utils": "workspace:*",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "typescript": "^6.0.2"
+  }
+}

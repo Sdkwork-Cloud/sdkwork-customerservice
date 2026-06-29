@@ -1,0 +1,47 @@
+schemaVersion: 1
+kind: sdkwork.schema-registry.overlay
+pluginCode: taobao
+owner: customerservice-platform
+tablePrefix: communication_cs_plugin_taobao_
+parentAssembly: docs/schema-registry/customerservice.tables.yaml
+tables:
+  communication_cs_plugin_taobao_order:
+    profile: business_entity
+    systemOfRecord: true
+    writeOwner: sdkwork-customerservice-plugin-taobao
+    complianceLevel: L2
+    tenantScoped: true
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      external_order_id: { type: string, required: true }
+      external_item_id: { type: string, required: false }
+      buyer_nick: { type: string, required: false }
+      order_status: { type: string, required: true }
+      pay_status: { type: string, required: false }
+      logistics_status: { type: string, required: false }
+      raw_payload: { type: json, required: false }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+    indexes:
+      - name: ux_communication_cs_plugin_taobao_order_external
+        unique: true
+        columns: [tenant_id, account_id, external_order_id]
+  communication_cs_plugin_taobao_shop_item:
+    profile: read_model
+    systemOfRecord: false
+    writeOwner: sdkwork-customerservice-plugin-taobao
+    complianceLevel: L2
+    tenantScoped: true
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      external_item_id: { type: string, required: true }
+      title: { type: string, required: true }
+      price: { type: decimal, precision: 18, scale: 2, required: false }
+      status: { type: string, required: false }
+      synced_at: { type: instant, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }

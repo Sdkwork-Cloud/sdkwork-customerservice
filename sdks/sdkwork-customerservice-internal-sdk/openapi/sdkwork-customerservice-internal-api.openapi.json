@@ -1,0 +1,750 @@
+{
+  "openapi": "3.1.2",
+  "info": {
+    "title": "SDKWork Customer Service Internal API",
+    "version": "1.0.0",
+    "description": "Ingress-token protected plugin runtime control API on application.public-ingress.",
+    "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+    "x-sdkwork-sdk-family": "sdkwork-customerservice-internal-sdk",
+    "x-sdkwork-owner": "sdkwork-customerservice",
+    "x-sdkwork-domain": "communication",
+    "x-sdkwork-capability": "customerservice"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:18091"
+    }
+  ],
+  "tags": [
+    {
+      "name": "customerServicePluginRuntime"
+    }
+  ],
+  "security": [
+    {
+      "ApiKey": []
+    }
+  ],
+  "paths": {
+    "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/start": {
+      "post": {
+        "tags": [
+          "customerServicePluginRuntime"
+        ],
+        "operationId": "customerservice.plugins.internal.accounts.start",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-internal-api",
+        "x-sdkwork-auth-mode": "ingress-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/stop": {
+      "post": {
+        "tags": [
+          "customerServicePluginRuntime"
+        ],
+        "operationId": "customerservice.plugins.internal.accounts.stop",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-internal-api",
+        "x-sdkwork-auth-mode": "ingress-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/status": {
+      "get": {
+        "tags": [
+          "customerServicePluginRuntime"
+        ],
+        "operationId": "customerservice.plugins.internal.accounts.status",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-internal-api",
+        "x-sdkwork-auth-mode": "ingress-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/AccountRuntimeStatus"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/send_message": {
+      "post": {
+        "tags": [
+          "customerServicePluginRuntime"
+        ],
+        "operationId": "customerservice.plugins.internal.accounts.sendMessage",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-internal-api",
+        "x-sdkwork-auth-mode": "ingress-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendPluginMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/SendPluginMessageResult"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    },
+    "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/delivery_pre_check": {
+      "post": {
+        "tags": [
+          "customerServicePluginRuntime"
+        ],
+        "operationId": "customerservice.plugins.internal.accounts.deliveryPreCheck",
+        "x-sdkwork-owner": "sdkwork-customerservice",
+        "x-sdkwork-api-authority": "sdkwork-customerservice-internal-api",
+        "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-internal-api",
+        "x-sdkwork-auth-mode": "ingress-token",
+        "parameters": [
+          {
+            "name": "pluginCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryPreCheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SdkWorkApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "data"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "item"
+                          ],
+                          "properties": {
+                            "item": {
+                              "$ref": "#/components/schemas/DeliveryPreCheckResult"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "AccountRuntimeStatus": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pluginCode": {
+            "type": "string"
+          },
+          "connectionState": {
+            "type": "string"
+          },
+          "workerActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SendPluginMessageRequest": {
+        "type": "object",
+        "required": [
+          "externalConversationId",
+          "body"
+        ],
+        "properties": {
+          "externalConversationId": {
+            "type": "string"
+          },
+          "externalRecipientId": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryPreCheckRequest": {
+        "type": "object",
+        "required": [
+          "externalOrderId"
+        ],
+        "properties": {
+          "externalOrderId": {
+            "type": "string"
+          },
+          "externalItemId": {
+            "type": "string"
+          },
+          "buyerExternalId": {
+            "type": "string"
+          }
+        }
+      },
+      "SdkWorkApiResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "data",
+          "traceId"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0
+            ],
+            "default": 0,
+            "minimum": 0,
+            "maximum": 0
+          },
+          "data": {
+            "description": "Operation-specific payload typed per response schema."
+          },
+          "traceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Server-owned request correlation id."
+          }
+        }
+      },
+      "SdkWorkResourceData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Typed domain resource for the operation."
+          }
+        }
+      },
+      "SdkWorkPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "SdkWorkCommandData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "accepted"
+        ],
+        "properties": {
+          "accepted": {
+            "type": "boolean",
+            "const": true
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "PageInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode"
+        ],
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "offset",
+              "cursor"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          },
+          "totalItems": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "totalPages": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SdkWorkPlatformErrorCode": {
+        "type": "integer",
+        "format": "int32",
+        "minimum": 40001,
+        "maximum": 79999,
+        "description": "Platform or domain error code per API_SPEC.md §15.3."
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "type",
+          "title",
+          "status",
+          "code",
+          "traceId"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "code": {
+            "$ref": "#/components/schemas/SdkWorkPlatformErrorCode"
+          },
+          "traceId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Server-owned request correlation id."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldError"
+            }
+          }
+        }
+      },
+      "FieldError": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "message"
+        ],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 40011,
+            "maximum": 40099
+          }
+        }
+      },
+      "SdkWorkResourceResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "SdkWorkListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkPageData"
+              }
+            }
+          }
+        ]
+      },
+      "SdkWorkCommandResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SdkWorkCommandData"
+              }
+            }
+          }
+        ]
+      },
+      "SendPluginMessageResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "externalMessageId"
+        ],
+        "properties": {
+          "externalMessageId": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryPreCheckResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "block",
+              "card_only"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

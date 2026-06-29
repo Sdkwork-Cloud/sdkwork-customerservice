@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.customerservice.plugin-registry",
+  "owner": "customerservice-platform",
+  "domain": "communication",
+  "capability": "customerservice",
+  "plugins": [
+    {
+      "code": "goofish",
+      "displayName": "Goofish / 闲鱼",
+      "status": "scaffold",
+      "packagePath": "plugins/sdkwork-customerservice-plugin-goofish",
+      "referenceImplementation": "external/xianyu-auto-reply",
+      "capabilities": [
+        "session.cookie",
+        "session.captcha",
+        "transport.websocket",
+        "message.chat",
+        "message.card",
+        "message.order",
+        "order.sync",
+        "delivery.auto",
+        "delivery.rule-contribution",
+        "reply.keyword",
+        "reply.ai",
+        "reply.default",
+        "notification.outbound"
+      ],
+      "credentialKinds": ["cookie", "token"],
+      "databaseOverlay": "plugins/sdkwork-customerservice-plugin-goofish/docs/schema-registry/overlays/goofish.tables.yaml"
+    },
+    {
+      "code": "taobao",
+      "displayName": "Taobao / 淘宝",
+      "status": "planned",
+      "packagePath": "plugins/sdkwork-customerservice-plugin-taobao",
+      "referenceImplementation": null,
+      "capabilities": [
+        "session.oauth",
+        "transport.websocket",
+        "message.chat",
+        "order.sync",
+        "reply.keyword"
+      ],
+      "credentialKinds": ["oauth", "token"],
+      "databaseOverlay": "plugins/sdkwork-customerservice-plugin-taobao/docs/schema-registry/overlays/taobao.tables.yaml"
+    }
+  ],
+  "capabilityDictionary": {
+    "session.cookie": "Cookie-based seller session maintenance",
+    "session.captcha": "Captcha/slider challenge recovery",
+    "session.oauth": "OAuth authorization code flow",
+    "transport.websocket": "Long-lived marketplace WebSocket",
+    "message.chat": "Text chat messages",
+    "message.card": "Rich card / item card messages",
+    "message.order": "Order lifecycle messages",
+    "order.sync": "Pull/push order state from marketplace",
+    "delivery.auto": "Automatic fulfillment pipeline",
+    "delivery.rule-contribution": "Plugin-specific delivery rule evaluators",
+    "reply.keyword": "Keyword-based auto reply",
+    "reply.ai": "AI-generated replies",
+    "reply.default": "Default fallback reply",
+    "notification.outbound": "External notification channels (DingTalk, webhook, etc.)"
+  },
+  "hostTables": [
+    "communication_cs_plugin_catalog",
+    "communication_cs_plugin_enablement",
+    "communication_cs_channel_account",
+    "communication_cs_channel_account_credential",
+    "communication_cs_channel_account_runtime",
+    "communication_cs_channel_conversation",
+    "communication_cs_channel_message",
+    "communication_cs_auto_reply_rule",
+    "communication_cs_delivery_block_rule",
+    "communication_cs_plugin_event_log"
+  ],
+  "verification": {
+    "commands": ["pnpm db:validate", "pnpm plugin:validate"]
+  }
+}

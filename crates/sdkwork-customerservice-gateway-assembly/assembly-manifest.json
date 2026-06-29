@@ -1,0 +1,40 @@
+{
+  "kind": "sdkwork.gateway.assembly",
+  "schemaVersion": 1,
+  "applicationCode": "customerservice",
+  "packageName": "sdkwork-customerservice-gateway-assembly",
+  "crateDir": "crates/sdkwork-customerservice-gateway-assembly",
+  "generatedAt": "2026-06-27T10:27:14.351Z",
+  "routeCrates": [
+    {
+      "packageName": "sdkwork-routes-customerservice-app-api",
+      "memberDir": "crates/sdkwork-routes-customerservice-app-api",
+      "libName": "sdkwork_routes_customerservice_app_api",
+      "surface": "app-api",
+      "pathPrefix": null,
+      "mountOrder": 0,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    },
+    {
+      "packageName": "sdkwork-routes-customerservice-backend-api",
+      "memberDir": "crates/sdkwork-routes-customerservice-backend-api",
+      "libName": "sdkwork_routes_customerservice_backend_api",
+      "surface": "backend-api",
+      "pathPrefix": null,
+      "mountOrder": 1,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    },
+    {
+      "packageName": "sdkwork-routes-customerservice-internal-api",
+      "memberDir": "crates/sdkwork-routes-customerservice-internal-api",
+      "libName": "sdkwork_routes_customerservice_internal_api",
+      "surface": "unknown",
+      "pathPrefix": null,
+      "mountOrder": 2,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    }
+  ]
+}

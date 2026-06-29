@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.route-manifest",
+  "apiAuthority": "sdkwork-customerservice-app-api",
+  "owner": "sdkwork-customerservice",
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/app/v3/api/customer_services/tickets",
+      "operationId": "customerservice.tickets.list",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/customer_services/tickets",
+      "operationId": "customerservice.tickets.create",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/app/v3/api/customer_services/tickets/{ticketId}",
+      "operationId": "customerservice.tickets.retrieve",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/app/v3/api/customer_services/tickets/{ticketId}/messages",
+      "operationId": "customerservice.tickets.messages.list",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/customer_services/tickets/{ticketId}/messages",
+      "operationId": "customerservice.tickets.messages.create",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/customer_services/tickets/{ticketId}/attachments",
+      "operationId": "customerservice.tickets.attachments.register",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/app/v3/api/customer_services/tickets/{ticketId}/attachments",
+      "operationId": "customerservice.tickets.attachments.list",
+      "apiSurface": "app-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/tickets",
+      "operationId": "customerservice.tickets.admin.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/tickets/{ticketId}",
+      "operationId": "customerservice.tickets.admin.retrieve",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "PATCH",
+      "path": "/backend/v3/api/customer_services/tickets/{ticketId}",
+      "operationId": "customerservice.tickets.admin.update",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/tickets/{ticketId}/messages",
+      "operationId": "customerservice.tickets.admin.messages.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/tickets/{ticketId}/messages",
+      "operationId": "customerservice.tickets.admin.messages.create",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/plugins",
+      "operationId": "customerservice.plugins.admin.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/channels/accounts",
+      "operationId": "customerservice.channels.admin.accounts.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/channels/accounts",
+      "operationId": "customerservice.channels.admin.accounts.create",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "PATCH",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}",
+      "operationId": "customerservice.channels.admin.accounts.update",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/credentials",
+      "operationId": "customerservice.channels.admin.accounts.credentials.register",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/channels/auto_reply_rules",
+      "operationId": "customerservice.channels.admin.autoReplyRules.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/channels/auto_reply_rules",
+      "operationId": "customerservice.channels.admin.autoReplyRules.create",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "PATCH",
+      "path": "/backend/v3/api/customer_services/channels/auto_reply_rules/{ruleId}",
+      "operationId": "customerservice.channels.admin.autoReplyRules.update",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "DELETE",
+      "path": "/backend/v3/api/customer_services/channels/auto_reply_rules/{ruleId}",
+      "operationId": "customerservice.channels.admin.autoReplyRules.delete",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/channels/delivery_block_rules/catalog",
+      "operationId": "customerservice.channels.admin.deliveryBlockRules.catalog",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/delivery_block_rules",
+      "operationId": "customerservice.channels.admin.deliveryBlockRules.list",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "PUT",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/delivery_block_rules",
+      "operationId": "customerservice.channels.admin.deliveryBlockRules.upsert",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/start",
+      "operationId": "customerservice.channels.admin.accounts.runtime.start",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/stop",
+      "operationId": "customerservice.channels.admin.accounts.runtime.stop",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/status",
+      "operationId": "customerservice.channels.admin.accounts.runtime.status",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "PUT",
+      "path": "/backend/v3/api/customer_services/plugins/{pluginCode}/enablement",
+      "operationId": "customerservice.plugins.admin.enablement.upsert",
+      "apiSurface": "backend-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/delivery_pre_check",
+      "operationId": "customerservice.plugins.internal.accounts.deliveryPreCheck",
+      "apiSurface": "internal-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/start",
+      "operationId": "customerservice.plugins.internal.accounts.start",
+      "apiSurface": "internal-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/stop",
+      "operationId": "customerservice.plugins.internal.accounts.stop",
+      "apiSurface": "internal-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "GET",
+      "path": "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/status",
+      "operationId": "customerservice.plugins.internal.accounts.status",
+      "apiSurface": "internal-api",
+      "requestContext": "WebRequestContext"
+    },
+    {
+      "method": "POST",
+      "path": "/internal/v3/api/customer_services/plugins/{pluginCode}/accounts/{accountId}/send_message",
+      "operationId": "customerservice.plugins.internal.accounts.sendMessage",
+      "apiSurface": "internal-api",
+      "requestContext": "WebRequestContext"
+    }
+  ]
+}

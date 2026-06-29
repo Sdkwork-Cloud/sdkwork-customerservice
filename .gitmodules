@@ -1,0 +1,3 @@
+[submodule "external/xianyu-auto-reply"]
+	path = external/xianyu-auto-reply
+	url = https://github.com/zhinianboke/xianyu-auto-reply.git

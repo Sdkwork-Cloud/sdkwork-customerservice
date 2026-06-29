@@ -1,0 +1,80 @@
+schemaVersion: 1
+kind: sdkwork.database.contract
+moduleId: customerservice
+owner: customerservice-platform
+tablePrefix: communication_
+engines:
+  - postgres
+tables:
+  - name: communication_cs_ticket
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+  - name: communication_cs_ticket_message
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+  - name: communication_cs_ticket_attachment
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+  - name: communication_cs_plugin_catalog
+    primaryKey: id
+    tenantScoped: false
+    complianceLevel: L1
+    description: Global plugin definition catalog (platform metadata)
+  - name: communication_cs_plugin_enablement
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Tenant-level plugin enablement and config
+  - name: communication_cs_channel_account
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Marketplace seller account binding
+  - name: communication_cs_channel_account_credential
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L3
+    description: Encrypted session material (cookie/token/oauth)
+  - name: communication_cs_channel_account_runtime
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Connection state and worker assignment
+  - name: communication_cs_channel_conversation
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: External chat thread linked to optional ticket
+  - name: communication_cs_channel_message
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Idempotent inbound/outbound channel message log
+  - name: communication_cs_auto_reply_rule
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Keyword/default/AI auto-reply policy
+  - name: communication_cs_delivery_block_rule
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Delivery block rule configuration (registry-backed)
+  - name: communication_cs_plugin_event_log
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L3
+    description: Audit trail for plugin/session/delivery events
+  - name: communication_cs_plugin_goofish_order
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Goofish order overlay (plugin-owned)
+  - name: communication_cs_plugin_goofish_fulfillment_card
+    primaryKey: id
+    tenantScoped: true
+    complianceLevel: L2
+    description: Goofish virtual fulfillment card overlay

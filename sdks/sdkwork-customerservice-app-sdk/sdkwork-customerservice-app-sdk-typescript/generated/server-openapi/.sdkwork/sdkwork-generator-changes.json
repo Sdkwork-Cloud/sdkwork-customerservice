@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "generator": "@sdkwork/sdk-generator",
+  "sdk": {
+    "name": "sdkwork-customerservice-app-sdk",
+    "version": "0.1.0",
+    "language": "typescript",
+    "sdkType": "app",
+    "protocol": "http",
+    "packageName": "sdkwork-customerservice-app-sdk-generated-typescript"
+  },
+  "changeFingerprint": "41ff68fdc212c44ec4d768844b437632dcfae4abb34bed9783ce02a8cf137d5a",
+  "changes": {
+    "createdGeneratedFiles": [],
+    "updatedGeneratedFiles": [
+      "src/api/customer-service-tickets.ts",
+      "src/types/customerservice-tickets-attachments-register-response201.ts",
+      "src/types/customerservice-tickets-create-response201.ts",
+      "src/types/customerservice-tickets-messages-create-response201.ts",
+      "src/types/customerservice-tickets-retrieve-response.ts",
+      "src/types/index.ts"
+    ],
+    "unchangedGeneratedFiles": [
+      "bin/publish-core.mjs",
+      "bin/publish.ps1",
+      "bin/publish.sh",
+      "bin/sdk-gen.bat",
+      "bin/sdk-gen.sh",
+      "CHANGELOG.md",
+      "LICENSE",
+      "package.json",
+      "README.md",
+      "sdkwork-sdk.json",
+      "src/api/base.ts",
+      "src/api/index.ts",
+      "src/api/paths.ts",
+      "src/auth/index.ts",
+      "src/http/client.ts",
+      "src/http/index.ts",
+      "src/index.ts",
+      "src/sdk.ts",
+      "src/types/common.ts",
+      "src/types/create-ticket-request.ts",
+      "src/types/customerservice-tickets-attachments-list-response.ts",
+      "src/types/customerservice-tickets-list-response.ts",
+      "src/types/customerservice-tickets-messages-list-response.ts",
+      "src/types/field-error.ts",
+      "src/types/page-info.ts",
+      "src/types/problem-detail.ts",
+      "src/types/register-ticket-attachment-request.ts",
+      "src/types/sdk-work-api-response.ts",
+      "src/types/sdk-work-command-data.ts",
+      "src/types/sdk-work-command-response.ts",
+      "src/types/sdk-work-list-response.ts",
+      "src/types/sdk-work-page-data.ts",
+      "src/types/sdk-work-platform-error-code.ts",
+      "src/types/sdk-work-resource-data.ts",
+      "src/types/sdk-work-resource-response.ts",
+      "src/types/send-ticket-message-request.ts",
+      "src/types/ticket-attachment.ts",
+      "src/types/ticket-detail.ts",
+      "src/types/ticket-message.ts",
+      "src/types/ticket-summary.ts",
+      "tsconfig.json"
+    ],
+    "deletedGeneratedFiles": [
+      "src/types/ticket-attachment-list-response.ts",
+      "src/types/ticket-attachment-response.ts",
+      "src/types/ticket-detail-response.ts",
+      "src/types/ticket-list-response.ts",
+      "src/types/ticket-message-list-response.ts",
+      "src/types/ticket-message-response.ts"
+    ],
+    "scaffoldedFiles": [],
+    "preservedScaffoldFiles": [
+      "custom/build-runtime.mjs",
+      "custom/README.md"
+    ],
+    "backedUpFiles": []
+  },
+  "impact": {
+    "schemaVersion": 1,
+    "areas": [
+      "api-surface",
+      "models"
+    ],
+    "details": [
+      {
+        "area": "api-surface",
+        "paths": [
+          "src/api/customer-service-tickets.ts"
+        ]
+      },
+      {
+        "area": "models",
+        "paths": [
+          "src/types/customerservice-tickets-attachments-register-response201.ts",
+          "src/types/customerservice-tickets-create-response201.ts",
+          "src/types/customerservice-tickets-messages-create-response201.ts",
+          "src/types/customerservice-tickets-retrieve-response.ts",
+          "src/types/index.ts",
+          "src/types/ticket-attachment-list-response.ts",
+          "src/types/ticket-attachment-response.ts",
+          "src/types/ticket-detail-response.ts",
+          "src/types/ticket-list-response.ts",
+          "src/types/ticket-message-list-response.ts",
+          "src/types/ticket-message-response.ts"
+        ]
+      }
+    ],
+    "requiresVerification": true,
+    "summary": "Detected impact areas: api-surface, models. Verification is required."
+  },
+  "verificationPlan": {
+    "shouldRun": true,
+    "runPhase": "now",
+    "summary": "Detected impact areas: api-surface, models. Verification is required. Run the required verification commands now against the generated SDK output.",
+    "steps": [
+      {
+        "id": "check",
+        "title": "Unified package check",
+        "required": true,
+        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, models.",
+        "workingDirectory": "E:\\sdkwork-space\\sdkwork-customerservice\\sdks\\sdkwork-customerservice-app-sdk\\sdkwork-customerservice-app-sdk-typescript\\generated\\server-openapi",
+        "command": "node",
+        "args": [
+          "./bin/publish-core.mjs",
+          "--language",
+          "typescript",
+          "--project-dir",
+          ".",
+          "--action",
+          "check"
+        ],
+        "displayCommand": "node ./bin/publish-core.mjs --language typescript --project-dir . --action check"
+      },
+      {
+        "id": "build",
+        "title": "Unified package build",
+        "required": true,
+        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, models.",
+        "workingDirectory": "E:\\sdkwork-space\\sdkwork-customerservice\\sdks\\sdkwork-customerservice-app-sdk\\sdkwork-customerservice-app-sdk-typescript\\generated\\server-openapi",
+        "command": "node",
+        "args": [
+          "./bin/publish-core.mjs",
+          "--language",
+          "typescript",
+          "--project-dir",
+          ".",
+          "--action",
+          "build"
+        ],
+        "displayCommand": "node ./bin/publish-core.mjs --language typescript --project-dir . --action build"
+      }
+    ]
+  },
+  "executionDecision": {
+    "schemaVersion": 1,
+    "riskLevel": "high",
+    "nextAction": "verify",
+    "requiresManualReview": false,
+    "applyRequiresExpectedFingerprint": false,
+    "summary": "Changes have been applied. Run the required verification plan now.",
+    "reasons": [
+      "deleted-generated-files",
+      "manual-review-required",
+      "verification-required"
+    ]
+  },
+  "preservedLegacyFiles": false
+}

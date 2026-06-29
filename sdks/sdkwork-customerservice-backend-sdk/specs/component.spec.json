@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-customerservice-backend-sdk",
+    "displayName": "SDKWork Customer Service Backend SDK",
+    "version": "0.1.0",
+    "type": "sdk-family",
+    "root": "sdkwork-customerservice/sdks/sdkwork-customerservice-backend-sdk",
+    "domain": "communication",
+    "declaredDomain": "CustomerService",
+    "capability": "backend-sdk",
+    "status": "standardizing",
+    "languages": [
+      "typescript",
+      "rust",
+      "java",
+      "python",
+      "go"
+    ],
+    "generated": true,
+    "private": true,
+    "manifests": [
+      ".sdkwork-assembly.json"
+    ]
+  },
+  "contracts": {
+    "publicExports": [],
+    "runtimeEntrypoints": [
+      "bin/generate-sdk.mjs"
+    ],
+    "sdkClients": [],
+    "sdkDependencies": [],
+    "events": [],
+    "configKeys": [],
+    "ownedOperations": [
+      "customerservice.channels.admin.accounts.list",
+      "customerservice.channels.admin.accounts.create",
+      "customerservice.channels.admin.accounts.update",
+      "customerservice.channels.admin.accounts.credentials.register",
+      "customerservice.channels.admin.deliveryBlockRules.list",
+      "customerservice.channels.admin.deliveryBlockRules.upsert",
+      "customerservice.channels.admin.accounts.runtime.start",
+      "customerservice.channels.admin.accounts.runtime.status",
+      "customerservice.channels.admin.accounts.runtime.stop",
+      "customerservice.channels.admin.autoReplyRules.list",
+      "customerservice.channels.admin.autoReplyRules.create",
+      "customerservice.channels.admin.autoReplyRules.delete",
+      "customerservice.channels.admin.autoReplyRules.update",
+      "customerservice.channels.admin.deliveryBlockRules.catalog",
+      "customerservice.plugins.admin.list",
+      "customerservice.plugins.admin.enablement.upsert",
+      "customerservice.tickets.admin.list",
+      "customerservice.tickets.admin.retrieve",
+      "customerservice.tickets.admin.update",
+      "customerservice.tickets.admin.messages.list",
+      "customerservice.tickets.admin.messages.create"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "node tools/customerservice_sdk_generate.mjs --check --family sdkwork-customerservice-backend-sdk"
+    ]
+  }
+}

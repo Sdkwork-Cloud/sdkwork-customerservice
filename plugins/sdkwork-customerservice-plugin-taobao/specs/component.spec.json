@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-customerservice-plugin-taobao",
+    "displayName": "Customer Service Taobao Plugin",
+    "version": "0.1.0",
+    "type": "rust-crate",
+    "root": "plugins/sdkwork-customerservice-plugin-taobao",
+    "domain": "communication",
+    "capability": "customerservice",
+    "surface": "backend",
+    "languages": ["rust"],
+    "generated": false,
+    "manifests": ["sdkwork.plugin.manifest.json"]
+  },
+  "canonicalSpecs": [
+    {
+      "file": "PLUGIN_SYSTEM_SPEC.md",
+      "path": "../../../specs/PLUGIN_SYSTEM_SPEC.md",
+      "purpose": "Channel plugin host contract and lifecycle."
+    }
+  ],
+  "contracts": {
+    "publicExports": [],
+    "runtimeEntrypoints": ["sdkwork.plugin.manifest.json#entrypoints.registryFactory"],
+    "pluginCode": "taobao"
+  },
+  "verification": {
+    "commands": ["pnpm db:validate"]
+  }
+}

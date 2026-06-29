@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 3,
+  "kind": "sdkwork.app",
+  "app": {
+    "key": "sdkwork-customerservice",
+    "name": "SDKWork Customer Service",
+    "displayName": "SDKWork Customer Service",
+    "description": "Customer support tickets, inboxes, and operator console.",
+    "vendor": "SDKWork",
+    "appType": "APP_REACT",
+    "versionSource": "package.json",
+    "identifiers": {
+      "containerImage": "registry.sdkwork.com/apps/sdkwork-customerservice-pc"
+    }
+  },
+  "backend": {
+    "profileKey": "backend-root-admin",
+    "ownerMode": "tenant",
+    "grantMode": "current",
+    "platform": "WEB",
+    "tenantId": "100001",
+    "organizationId": "0"
+  },
+  "runtime": {
+    "family": "web",
+    "framework": "react",
+    "runtimes": ["WEB", "BROWSER"],
+    "deliveryModes": ["WEB_URL"],
+    "supportedDeploymentProfiles": ["standalone", "cloud"],
+    "defaultDeploymentProfile": "standalone"
+  },
+  "publish": {
+    "config": {
+      "workspaceRoot": "sdkwork-customerservice",
+      "managedBy": "sdkwork-customerservice-workspace"
+    }
+  },
+  "devApp": {
+    "sourceRoot": "apps/sdkwork-customerservice-pc"
+  },
+  "metadata": {
+    "standardOwner": "sdkwork-specs",
+    "domain": "communication",
+    "capability": "customerservice"
+  }
+}

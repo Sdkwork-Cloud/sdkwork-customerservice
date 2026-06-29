@@ -1,0 +1,8 @@
+packages:
+  - "apps/*"
+  - "apps/*/packages/*"
+  - "packages/common/customerservice/*"
+  - "sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript"
+  - "sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript"
+  - "../sdkwork-utils/packages/sdkwork-utils-typescript"
+  - "../sdkwork-sdk-commons/sdkwork-sdk-common-typescript"

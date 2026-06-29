@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-customerservice-app-sdk",
+    "displayName": "SDKWork Customer Service App SDK",
+    "version": "0.1.0",
+    "type": "sdk-family",
+    "root": "sdkwork-customerservice/sdks/sdkwork-customerservice-app-sdk",
+    "domain": "communication",
+    "declaredDomain": "CustomerService",
+    "capability": "app-sdk",
+    "status": "standardizing",
+    "languages": [
+      "typescript",
+      "rust",
+      "java",
+      "python",
+      "go"
+    ],
+    "generated": true,
+    "private": true,
+    "manifests": [
+      ".sdkwork-assembly.json"
+    ]
+  },
+  "contracts": {
+    "publicExports": [],
+    "runtimeEntrypoints": [
+      "bin/generate-sdk.mjs"
+    ],
+    "sdkClients": [],
+    "sdkDependencies": [
+      {
+        "workspace": "sdkwork-drive-app-sdk",
+        "role": "drive-media-resource-app-capability",
+        "required": true,
+        "dependencyMode": "consumer-sdk",
+        "apiPrefix": "/app/v3/api",
+        "apiAuthority": "sdkwork-drive.app",
+        "generatedTransportImportPolicy": "forbidden",
+        "packageByLanguage": {
+          "typescript": "@sdkwork/drive-app-sdk",
+          "rust": "sdkwork-drive-app-sdk",
+          "java": "com.sdkwork:sdkwork-drive-app-sdk",
+          "python": "sdkwork-drive-app-sdk",
+          "go": "github.com/sdkwork/sdkwork-drive-app-sdk"
+        }
+      }
+    ],
+    "events": [],
+    "configKeys": [],
+    "ownedOperations": [
+      "customerservice.tickets.list",
+      "customerservice.tickets.create",
+      "customerservice.tickets.retrieve",
+      "customerservice.tickets.attachments.list",
+      "customerservice.tickets.attachments.register",
+      "customerservice.tickets.messages.list",
+      "customerservice.tickets.messages.create"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "node tools/customerservice_sdk_generate.mjs --check --family sdkwork-customerservice-app-sdk"
+    ]
+  }
+}

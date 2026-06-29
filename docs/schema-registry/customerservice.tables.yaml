@@ -1,0 +1,208 @@
+schemaVersion: 1
+kind: sdkwork.schema-registry.assembly
+applicationCode: customerservice
+domain: communication
+capability: customerservice
+tablePrefix: communication_
+owner: customerservice-platform
+registryDependencies: []
+sourceRefs:
+  - database/contract/schema.yaml
+  - specs/PLUGIN_SYSTEM_SPEC.md
+  - specs/plugin-system.registry.json
+tables:
+  communication_cs_plugin_catalog:
+    profile: configuration
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L1
+    tenantScoped: false
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      plugin_code: { type: string, required: true, unique: true }
+      display_name: { type: string, required: true }
+      version: { type: string, required: true }
+      capabilities: { type: json, required: true }
+      status: { type: enum_string, required: true, values: [active, planned, deprecated] }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_plugin_enablement:
+    profile: configuration
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      organization_id: { type: uuid, required: false }
+      plugin_code: { type: string, required: true }
+      enabled: { type: boolean, required: true }
+      config: { type: json, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+    indexes:
+      - name: ux_communication_cs_plugin_enablement_tenant_code
+        unique: true
+        columns: [tenant_id, plugin_code]
+  communication_cs_channel_account:
+    profile: business_entity
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: XYAccount / xy_accounts
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      organization_id: { type: uuid, required: false }
+      plugin_code: { type: string, required: true }
+      external_account_id: { type: string, required: false }
+      display_name: { type: string, required: true }
+      status: { type: enum_string, required: true, values: [disabled, enabled, connecting, connected, failed] }
+      enabled: { type: boolean, required: true }
+      feature_flags: { type: json, required: true }
+      proxy_config: { type: json, required: false }
+      owner_user_id: { type: uuid, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_channel_account_credential:
+    profile: secret_vault
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L3
+    tenantScoped: true
+    security:
+      classification: credential
+      encryption: application_level
+    mapsFromReference:
+      xianyu-auto-reply: cookie fields on XYAccount, xy_token_cache
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      credential_kind: { type: enum_string, required: true, values: [cookie, token, oauth] }
+      encrypted_payload: { type: bytes, required: true }
+      key_version: { type: string, required: true }
+      expires_at: { type: instant, required: false }
+      last_rotated_at: { type: instant, required: false }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_channel_account_runtime:
+    profile: operational_state
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: CookieManager.cookie_status + ConnectionManager state
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      connection_state: { type: enum_string, required: true }
+      worker_instance_id: { type: string, required: false }
+      last_connected_at: { type: instant, required: false }
+      last_error_code: { type: string, required: false }
+      last_error_message: { type: string, required: false }
+      stats: { type: json, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_channel_conversation:
+    profile: business_entity
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      ticket_id: { type: uuid, required: false, references: communication_cs_ticket.id }
+      external_conversation_id: { type: string, required: true }
+      external_buyer_id: { type: string, required: false }
+      external_item_id: { type: string, required: false }
+      subject: { type: string, required: false }
+      last_message_at: { type: instant, required: false }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_channel_message:
+    profile: event_log
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    idempotency:
+      key: [tenant_id, conversation_id, external_message_id]
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      conversation_id: { type: uuid, required: true, references: communication_cs_channel_conversation.id }
+      external_message_id: { type: string, required: true }
+      direction: { type: enum_string, required: true, values: [inbound, outbound] }
+      message_kind: { type: enum_string, required: true, values: [chat, card, order, system] }
+      body: { type: string, required: true }
+      raw_payload: { type: json, required: false }
+      dedupe_key: { type: string, required: false }
+      ticket_message_id: { type: uuid, required: false, references: communication_cs_ticket_message.id }
+      created_at: { type: instant, required: true }
+  communication_cs_auto_reply_rule:
+    profile: policy
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: XYKeywordRule, DefaultReply
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      organization_id: { type: uuid, required: false }
+      account_id: { type: uuid, required: false, references: communication_cs_channel_account.id }
+      plugin_code: { type: string, required: true }
+      rule_kind: { type: enum_string, required: true, values: [keyword, default, ai] }
+      priority: { type: int32, required: true }
+      enabled: { type: boolean, required: true }
+      match_pattern: { type: string, required: false }
+      reply_content: { type: string, required: false }
+      scope_external_item_id: { type: string, required: false }
+      config: { type: json, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_delivery_block_rule:
+    profile: policy
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: XYDeliveryBlockRule + delivery_rules/*
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      organization_id: { type: uuid, required: false }
+      account_id: { type: uuid, required: false, references: communication_cs_channel_account.id }
+      plugin_code: { type: string, required: true }
+      rule_code: { type: string, required: true }
+      priority: { type: int32, required: true }
+      enabled: { type: boolean, required: true }
+      excluded_external_item_ids: { type: json, required: true }
+      action_config: { type: json, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+  communication_cs_plugin_event_log:
+    profile: audit_log
+    systemOfRecord: true
+    writeOwner: customerservice-platform
+    complianceLevel: L3
+    tenantScoped: true
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: false, references: communication_cs_channel_account.id }
+      plugin_code: { type: string, required: true }
+      event_type: { type: string, required: true }
+      severity: { type: enum_string, required: true, values: [debug, info, warn, error] }
+      payload: { type: json, required: true }
+      created_at: { type: instant, required: true }

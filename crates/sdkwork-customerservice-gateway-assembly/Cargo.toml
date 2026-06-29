@@ -1,0 +1,19 @@
+[package]
+name = "sdkwork-customerservice-gateway-assembly"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+description = "Generated gateway assembly for sdkwork-customerservice application HTTP plane."
+
+[lib]
+name = "sdkwork_customerservice_gateway_assembly"
+path = "src/lib.rs"
+
+[dependencies]
+axum = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+sdkwork_customerservice_service_host = { workspace = true }
+sdkwork-web-bootstrap = { workspace = true }
+sdkwork_routes_customerservice_app_api = { package = "sdkwork-routes-customerservice-app-api", path = "../sdkwork-routes-customerservice-app-api" }
+sdkwork_routes_customerservice_backend_api = { package = "sdkwork-routes-customerservice-backend-api", path = "../sdkwork-routes-customerservice-backend-api" }
+sdkwork_routes_customerservice_internal_api = { package = "sdkwork-routes-customerservice-internal-api", path = "../sdkwork-routes-customerservice-internal-api" }

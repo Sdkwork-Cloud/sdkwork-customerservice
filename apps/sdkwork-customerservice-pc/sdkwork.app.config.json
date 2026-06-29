@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 3,
+  "kind": "sdkwork.app",
+  "app": {
+    "key": "sdkwork-customerservice-pc",
+    "name": "SDKWork Customer Service PC",
+    "displayName": "SDKWork Customer Service PC",
+    "description": "Operator console for customer support tickets.",
+    "vendor": "SDKWork",
+    "appType": "APP_REACT",
+    "versionSource": "package.json"
+  },
+  "runtime": {
+    "family": "web",
+    "framework": "react",
+    "runtimes": ["WEB", "BROWSER"],
+    "supportedDeploymentProfiles": ["standalone", "cloud"],
+    "defaultDeploymentProfile": "standalone"
+  },
+  "devApp": {
+    "sourceRoot": "apps/sdkwork-customerservice-pc"
+  }
+}

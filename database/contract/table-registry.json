@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.database.table-registry",
+  "tables": [
+    {
+      "table_name": "communication_cs_ticket",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_ticket_message",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_ticket_attachment",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_plugin_catalog",
+      "owner": "customerservice-platform",
+      "compliance_level": "L1",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_plugin_enablement",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_channel_account",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_channel_account_credential",
+      "owner": "customerservice-platform",
+      "compliance_level": "L3",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_channel_account_runtime",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_channel_conversation",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_channel_message",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_auto_reply_rule",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_delivery_block_rule",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_plugin_event_log",
+      "owner": "customerservice-platform",
+      "compliance_level": "L3",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_plugin_goofish_order",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    },
+    {
+      "table_name": "communication_cs_plugin_goofish_fulfillment_card",
+      "owner": "customerservice-platform",
+      "compliance_level": "L2",
+      "lifecycle_status": "active"
+    }
+  ]
+}

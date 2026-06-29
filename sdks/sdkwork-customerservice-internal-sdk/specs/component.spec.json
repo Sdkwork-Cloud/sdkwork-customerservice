@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-customerservice-internal-sdk",
+    "displayName": "SDKWork Customer Service Backend SDK",
+    "version": "0.1.0",
+    "type": "sdk-family",
+    "root": "sdkwork-customerservice/sdks/sdkwork-customerservice-internal-sdk",
+    "domain": "communication",
+    "declaredDomain": "CustomerService",
+    "capability": "custom-sdk",
+    "status": "standardizing",
+    "languages": [
+      "typescript",
+      "rust",
+      "java",
+      "python",
+      "go"
+    ],
+    "generated": true,
+    "private": true,
+    "manifests": [
+      ".sdkwork-assembly.json"
+    ]
+  },
+  "contracts": {
+    "publicExports": [],
+    "runtimeEntrypoints": [
+      "bin/generate-sdk.mjs"
+    ],
+    "sdkClients": [],
+    "sdkDependencies": [],
+    "events": [],
+    "configKeys": [],
+    "ownedOperations": [
+      "customerservice.plugins.internal.accounts.deliveryPreCheck",
+      "customerservice.plugins.internal.accounts.sendMessage",
+      "customerservice.plugins.internal.accounts.start",
+      "customerservice.plugins.internal.accounts.status",
+      "customerservice.plugins.internal.accounts.stop"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "node tools/customerservice_sdk_generate.mjs --check --family sdkwork-customerservice-internal-sdk"
+    ]
+  }
+}

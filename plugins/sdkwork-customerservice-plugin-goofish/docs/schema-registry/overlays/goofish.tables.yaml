@@ -1,0 +1,51 @@
+schemaVersion: 1
+kind: sdkwork.schema-registry.overlay
+pluginCode: goofish
+owner: customerservice-platform
+tablePrefix: communication_cs_plugin_goofish_
+parentAssembly: docs/schema-registry/customerservice.tables.yaml
+tables:
+  communication_cs_plugin_goofish_order:
+    profile: business_entity
+    systemOfRecord: true
+    writeOwner: sdkwork-customerservice-plugin-goofish
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: XYOrder / xy_orders
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      conversation_id: { type: uuid, required: false, references: communication_cs_channel_conversation.id }
+      external_order_id: { type: string, required: true }
+      external_item_id: { type: string, required: false }
+      buyer_external_id: { type: string, required: false }
+      order_status: { type: string, required: true }
+      delivery_status: { type: string, required: false }
+      delivery_content: { type: json, required: false }
+      fail_reason: { type: string, required: false }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }
+    indexes:
+      - name: ux_communication_cs_plugin_goofish_order_external
+        unique: true
+        columns: [tenant_id, account_id, external_order_id]
+  communication_cs_plugin_goofish_fulfillment_card:
+    profile: configuration
+    systemOfRecord: true
+    writeOwner: sdkwork-customerservice-plugin-goofish
+    complianceLevel: L2
+    tenantScoped: true
+    mapsFromReference:
+      xianyu-auto-reply: Card / CardItemRelation
+    columns:
+      id: { type: uuid, required: true, primaryKey: true }
+      tenant_id: { type: uuid, required: true }
+      account_id: { type: uuid, required: true, references: communication_cs_channel_account.id }
+      card_name: { type: string, required: true }
+      card_kind: { type: enum_string, required: true, values: [text, data, image, api] }
+      content: { type: json, required: true }
+      enabled: { type: boolean, required: true }
+      created_at: { type: instant, required: true }
+      updated_at: { type: instant, required: true }

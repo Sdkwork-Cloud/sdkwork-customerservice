@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 3,
+  "kind": "sdkwork.app",
+  "app": {
+    "key": "sdkwork-customerservice-h5",
+    "name": "SDKWork Customer Service H5",
+    "displayName": "SDKWork Customer Service H5",
+    "description": "Mobile web end-user customer service inbox.",
+    "vendor": "SDKWork",
+    "appType": "APP_REACT",
+    "versionSource": "package.json"
+  },
+  "runtime": {
+    "family": "web",
+    "framework": "react",
+    "runtimes": ["WEB", "BROWSER", "MOBILE_WEB"],
+    "supportedDeploymentProfiles": ["standalone", "cloud"],
+    "defaultDeploymentProfile": "standalone"
+  },
+  "devApp": {
+    "sourceRoot": "apps/sdkwork-customerservice-h5"
+  }
+}

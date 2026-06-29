@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 2,
+  "kind": "sdkwork.app.topology",
+  "appId": "sdkwork-customerservice",
+  "archetype": "application-http-gateway",
+  "profileRoot": "configs/topology",
+  "profilePattern": "{deploymentProfile}.{serviceLayout}.{environment}.env",
+  "vocabulary": {
+    "deploymentProfile": { "allowed": ["standalone", "cloud"] },
+    "serviceLayout": { "allowed": ["unified-process", "split-services"] },
+    "environment": { "allowed": ["development", "production"] }
+  },
+  "defaults": {
+    "developmentProfileId": "standalone.unified-process.development",
+    "productionProfileId": "cloud.split-services.production",
+    "gatewayBind": "127.0.0.1:18091"
+  },
+  "profileFiles": {
+    "standalone.unified-process.development": "configs/topology/standalone.unified-process.development.env",
+    "standalone.unified-process.production": "configs/topology/standalone.unified-process.production.env",
+    "cloud.split-services.production": "configs/topology/cloud.split-services.production.env"
+  },
+  "envKeys": {
+    "deploymentProfile": "SDKWORK_CUSTOMER_SERVICE_DEPLOYMENT_PROFILE",
+    "serviceLayout": "SDKWORK_CUSTOMER_SERVICE_SERVICE_LAYOUT",
+    "environment": "SDKWORK_CUSTOMER_SERVICE_ENVIRONMENT",
+    "profileId": "SDKWORK_CUSTOMER_SERVICE_PROFILE_ID",
+    "clientDeploymentProfile": "VITE_SDKWORK_CUSTOMER_SERVICE_DEPLOYMENT_PROFILE",
+    "standaloneGatewayBind": "SDKWORK_CUSTOMER_SERVICE_APPLICATION_PUBLIC_INGRESS_BIND",
+    "apiGatewayBaseUrl": "SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL",
+    "clientApiGatewayBaseUrl": "VITE_SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL"
+  },
+  "surfaces": {
+    "application.public-ingress": {
+      "connectivityPlane": "application",
+      "protocols": ["http"],
+      "bindEnv": "SDKWORK_CUSTOMER_SERVICE_APPLICATION_PUBLIC_INGRESS_BIND",
+      "httpUrlEnv": "SDKWORK_CUSTOMER_SERVICE_APPLICATION_PUBLIC_HTTP_URL",
+      "clientHttpEnv": "VITE_SDKWORK_CUSTOMER_SERVICE_APPLICATION_PUBLIC_HTTP_URL"
+    },
+    "platform.api-gateway": {
+      "connectivityPlane": "platform",
+      "protocols": ["http"],
+      "owner": "sdkwork-api-cloud-gateway",
+      "bindEnv": "SDKWORK_API_CLOUD_GATEWAY_BIND",
+      "httpUrlEnv": "SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL",
+      "clientHttpEnv": "VITE_SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL"
+    }
+  },
+  "database": {
+    "appPrefix": "SDKWORK_CUSTOMER_SERVICE"
+  },
+  "components": {
+    "applicationServer": {
+      "crate": "sdkwork-customerservice-standalone-gateway",
+      "binary": "customerservice-server"
+    }
+  },
+  "orchestration": {
+    "profiles": {
+      "standalone.unified-process.development": {
+        "processes": [
+          {
+            "name": "customerservice-api",
+            "command": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server"
+          }
+        ]
+      }
+    }
+  }
+}
