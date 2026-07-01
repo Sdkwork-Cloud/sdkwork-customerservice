@@ -1,8 +1,8 @@
-import type { TicketDetail } from './ticket-detail';
+import type { CustomerserviceTicketsRetrieveResourceData } from './customerservice-tickets-retrieve-resource-data';
 
 export interface CustomerserviceTicketsRetrieveResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceTicketsRetrieveResourceData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

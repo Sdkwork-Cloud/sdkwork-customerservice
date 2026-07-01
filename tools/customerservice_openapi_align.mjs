@@ -2,8 +2,13 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  DOMAIN_SCHEMA_REQUIREMENTS,
+  TICKET_DETAIL_NULLABLE_OPTIONAL,
+} from "./customerservice_openapi_domain.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const checkOnly = process.argv.includes("--check");
 
 const OPENAPI_FILES = [
   "apis/app-api/communication/sdkwork-customerservice-app-api.openapi.json",
@@ -39,6 +44,11 @@ const LEGACY_SCHEMAS_TO_REMOVE = new Set([
   "AccountRuntimeStatusResponse",
   "SendPluginMessageResponse",
   "DeliveryPreCheckResponse",
+  "PluginCatalogListResponse",
+  "ChannelAccountListResponse",
+  "AutoReplyRuleListResponse",
+  "DeliveryBlockRuleCatalogListResponse",
+  "DeliveryBlockRuleListResponse",
 ]);
 
 const COMMAND_RESPONSE_OPERATIONS = new Set([
@@ -66,6 +76,193 @@ const INTERNAL_DOMAIN_SCHEMAS = {
     },
   },
 };
+
+const SUCCESS_STATUS_CODES = ["200", "201"];
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function operationIdToSchemaPrefix(operationId) {
+  return operationId
+    .split(".")
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join("");
+}
+
+function isSdkWorkApiResponseRef(node) {
+  return node?.$ref === "#/components/schemas/SdkWorkApiResponse";
+}
+
+function withNullableType(propertySchema) {
+  if (!propertySchema || typeof propertySchema !== "object") {
+    return propertySchema;
+  }
+  if (propertySchema.nullable === true) {
+    return propertySchema;
+  }
+  const type = propertySchema.type;
+  if (typeof type === "string") {
+    return { ...propertySchema, type: [type, "null"] };
+  }
+  if (Array.isArray(type) && type.includes("null")) {
+    return propertySchema;
+  }
+  return propertySchema;
+}
+
+function applyDomainSchemaRequirements(openapi) {
+  openapi.components ??= {};
+  openapi.components.schemas ??= {};
+  const schemas = openapi.components.schemas;
+
+  for (const [schemaName, rules] of Object.entries(DOMAIN_SCHEMA_REQUIREMENTS)) {
+    const schema = schemas[schemaName];
+    if (!schema || typeof schema !== "object" || schema.allOf || schema.$ref) {
+      continue;
+    }
+    schema.additionalProperties = false;
+    schema.required = [...rules.required];
+    for (const propertyName of rules.nullableOptional ?? []) {
+      if (schema.properties?.[propertyName]) {
+        schema.properties[propertyName] = withNullableType(schema.properties[propertyName]);
+      }
+    }
+  }
+
+  const ticketDetail = schemas.TicketDetail;
+  if (ticketDetail?.allOf) {
+    for (const part of ticketDetail.allOf) {
+      if (!part?.properties) {
+        continue;
+      }
+      part.additionalProperties = false;
+      for (const propertyName of TICKET_DETAIL_NULLABLE_OPTIONAL) {
+        if (part.properties[propertyName]) {
+          part.properties[propertyName] = withNullableType(part.properties[propertyName]);
+        }
+      }
+    }
+  }
+}
+
+function extractInlinePageData(schema) {
+  if (!schema?.allOf || !Array.isArray(schema.allOf)) {
+    return null;
+  }
+  if (!schema.allOf.some(isSdkWorkApiResponseRef)) {
+    return null;
+  }
+  for (const part of schema.allOf) {
+    const data = part?.properties?.data;
+    if (!data || typeof data !== "object" || data.$ref) {
+      continue;
+    }
+    const required = new Set(data.required ?? []);
+    if (required.has("items") && required.has("pageInfo")) {
+      return cloneJson(data);
+    }
+  }
+  return null;
+}
+
+function extractInlineResourceData(schema) {
+  if (!schema?.allOf || !Array.isArray(schema.allOf)) {
+    return null;
+  }
+  if (!schema.allOf.some(isSdkWorkApiResponseRef)) {
+    return null;
+  }
+  for (const part of schema.allOf) {
+    const data = part?.properties?.data;
+    if (!data || typeof data !== "object" || data.$ref) {
+      continue;
+    }
+    const required = new Set(data.required ?? []);
+    if (required.has("item") && data.properties?.item) {
+      return cloneJson(data);
+    }
+  }
+  return null;
+}
+
+function materializeInlineEnvelopeResponses(openapi) {
+  openapi.components ??= {};
+  openapi.components.schemas ??= {};
+  const schemas = openapi.components.schemas;
+
+  for (const pathItem of Object.values(openapi.paths ?? {})) {
+    for (const operation of Object.values(pathItem ?? {})) {
+      if (!operation || typeof operation !== "object" || !operation.operationId) {
+        continue;
+      }
+      const prefix = operationIdToSchemaPrefix(operation.operationId);
+
+      for (const statusCode of SUCCESS_STATUS_CODES) {
+        const response = operation.responses?.[statusCode];
+        const responseSchema = response?.content?.["application/json"]?.schema;
+        if (!responseSchema || responseSchema.$ref) {
+          continue;
+        }
+
+        const pageData = extractInlinePageData(responseSchema);
+        if (pageData) {
+          const pageDataName = `${prefix}PageData`;
+          const responseName = `${prefix}Response`;
+          if (!(pageDataName in schemas)) {
+            schemas[pageDataName] = pageData;
+          }
+          if (!(responseName in schemas)) {
+            schemas[responseName] = {
+              allOf: [
+                { $ref: "#/components/schemas/SdkWorkApiResponse" },
+                {
+                  type: "object",
+                  required: ["data"],
+                  properties: {
+                    data: { $ref: `#/components/schemas/${pageDataName}` },
+                  },
+                },
+              ],
+            };
+          }
+          response.content["application/json"].schema = {
+            $ref: `#/components/schemas/${responseName}`,
+          };
+          continue;
+        }
+
+        const resourceData = extractInlineResourceData(responseSchema);
+        if (!resourceData) {
+          continue;
+        }
+
+        const resourceDataName = `${prefix}ResourceData`;
+        const responseName = `${prefix}Response`;
+        if (!(resourceDataName in schemas)) {
+          schemas[resourceDataName] = resourceData;
+        }
+        if (!(responseName in schemas)) {
+          schemas[responseName] = {
+            allOf: [
+              { $ref: "#/components/schemas/SdkWorkApiResponse" },
+              {
+                type: "object",
+                required: ["data"],
+                properties: {
+                  data: { $ref: `#/components/schemas/${resourceDataName}` },
+                },
+              },
+            ],
+          };
+        }
+        response.content["application/json"].schema = {
+          $ref: `#/components/schemas/${responseName}`,
+        };
+      }
+    }
+  }
+}
 
 function replaceLegacyItemRefs(node) {
   if (Array.isArray(node)) {
@@ -142,6 +339,18 @@ function collectSchemaRefs(node, refs = new Set()) {
   return refs;
 }
 
+function normalizePageInfoRefs(openapi) {
+  const schemas = openapi.components?.schemas ?? {};
+  for (const schema of Object.values(schemas)) {
+    if (!schema?.properties?.pageInfo || schema.properties.pageInfo.$ref) {
+      continue;
+    }
+    if (schema.properties.pageInfo.type === "object") {
+      schema.properties.pageInfo = { $ref: "#/components/schemas/PageInfo" };
+    }
+  }
+}
+
 function removeUnusedLegacySchemas(openapi) {
   const refs = collectSchemaRefs(openapi);
   const schemas = openapi.components?.schemas ?? {};
@@ -152,13 +361,39 @@ function removeUnusedLegacySchemas(openapi) {
   }
 }
 
-for (const relativePath of OPENAPI_FILES) {
-  const absolutePath = path.join(root, relativePath);
-  const openapi = JSON.parse(readFileSync(absolutePath, "utf8"));
+function alignOpenapi(openapi, relativePath) {
   ensureInternalDomainSchemas(openapi, relativePath);
   replaceLegacyItemRefs(openapi);
+  materializeInlineEnvelopeResponses(openapi);
   applyCommandResponseFix(openapi);
+  applyDomainSchemaRequirements(openapi);
+  normalizePageInfoRefs(openapi);
   removeUnusedLegacySchemas(openapi);
-  writeFileSync(absolutePath, `${JSON.stringify(openapi, null, 2)}\n`, "utf8");
+  return openapi;
+}
+
+let failed = false;
+
+for (const relativePath of OPENAPI_FILES) {
+  const absolutePath = path.join(root, relativePath);
+  const original = readFileSync(absolutePath, "utf8");
+  const openapi = alignOpenapi(JSON.parse(original), relativePath);
+  const next = `${JSON.stringify(openapi, null, 2)}\n`;
+
+  if (checkOnly) {
+    if (next !== original) {
+      console.error(`[customerservice_openapi_align] misaligned ${relativePath}; run pnpm api:materialize`);
+      failed = true;
+    } else {
+      console.log(`aligned (check ok) ${relativePath}`);
+    }
+    continue;
+  }
+
+  writeFileSync(absolutePath, next, "utf8");
   console.log(`aligned ${relativePath}`);
+}
+
+if (failed) {
+  process.exit(1);
 }

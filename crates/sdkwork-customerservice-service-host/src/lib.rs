@@ -62,6 +62,10 @@ impl CustomerServiceHost {
         &self.service
     }
 
+    pub fn service_arc(&self) -> Arc<CustomerServiceService<SqlxCustomerServiceRepository>> {
+        Arc::clone(&self.service)
+    }
+
     pub fn plugin_ports(&self) -> Arc<dyn PluginHostPorts> {
         Arc::clone(&self.plugin_ports)
     }

@@ -1,9 +1,8 @@
-import type { PageInfo } from './page-info';
-import type { TicketAttachment } from './ticket-attachment';
+import type { CustomerserviceTicketsAttachmentsListPageData } from './customerservice-tickets-attachments-list-page-data';
 
 export interface CustomerserviceTicketsAttachmentsListResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceTicketsAttachmentsListPageData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

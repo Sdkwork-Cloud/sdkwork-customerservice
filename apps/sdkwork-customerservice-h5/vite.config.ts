@@ -1,6 +1,9 @@
 import path from "node:path";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import { buildCustomerServiceViteDevProxy } from "../sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core/src/dev/viteDevProxy";
+
+const commonRoot = path.resolve(__dirname, "../sdkwork-customerservice-common/packages");
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, "");
@@ -25,16 +28,16 @@ export default defineConfig(({ mode }) => {
           "packages/sdkwork-customerservice-h5-shell/src/index.tsx",
         ),
         "@sdkwork/customerservice-contracts": path.resolve(
-          __dirname,
-          "../../packages/common/customerservice/sdkwork-customerservice-contracts/src/index.ts",
+          commonRoot,
+          "sdkwork-customerservice-contracts/src/index.ts",
         ),
         "@sdkwork/customerservice-service": path.resolve(
-          __dirname,
-          "../../packages/common/customerservice/sdkwork-customerservice-service/src/index.ts",
+          commonRoot,
+          "sdkwork-customerservice-service/src/index.ts",
         ),
         "@sdkwork/customerservice-client-core": path.resolve(
-          __dirname,
-          "../../packages/common/customerservice/sdkwork-customerservice-client-core/src/index.ts",
+          commonRoot,
+          "sdkwork-customerservice-client-core/src/index.ts",
         ),
         "@sdkwork/sdk-common": path.resolve(
           __dirname,
@@ -44,7 +47,16 @@ export default defineConfig(({ mode }) => {
           __dirname,
           "../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript/generated/server-openapi/src/index.ts",
         ),
+        "sdkwork-customerservice-backend-sdk-generated-typescript": path.resolve(
+          __dirname,
+          "../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript/generated/server-openapi/src/index.ts",
+        ),
       },
+    },
+    server: {
+      port: 5192,
+      host: "127.0.0.1",
+      proxy: buildCustomerServiceViteDevProxy(env),
     },
   };
 });

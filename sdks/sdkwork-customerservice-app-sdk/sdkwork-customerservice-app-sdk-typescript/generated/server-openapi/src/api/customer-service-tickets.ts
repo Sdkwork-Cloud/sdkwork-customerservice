@@ -1,7 +1,7 @@
 import { appApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { CreateTicketRequest, PageInfo, RegisterTicketAttachmentRequest, SendTicketMessageRequest, TicketAttachment, TicketDetail, TicketMessage, TicketSummary } from '../types';
+import type { CreateTicketRequest, CustomerserviceTicketsAttachmentsListPageData, CustomerserviceTicketsListPageData, CustomerserviceTicketsMessagesListPageData, RegisterTicketAttachmentRequest, SendTicketMessageRequest, TicketAttachment, TicketDetail, TicketMessage } from '../types';
 
 
 export class CustomerServiceTicketsCustomerserviceTicketsAttachmentsApi {
@@ -12,8 +12,8 @@ export class CustomerServiceTicketsCustomerserviceTicketsAttachmentsApi {
   }
 
 
-async list(ticketId: string): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(appApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/attachments`));
+async list(ticketId: string): Promise<CustomerserviceTicketsAttachmentsListPageData> {
+    return this.client.get<CustomerserviceTicketsAttachmentsListPageData>(appApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/attachments`));
   }
 
 async register(ticketId: string, body: RegisterTicketAttachmentRequest): Promise<TicketAttachment> {
@@ -29,8 +29,8 @@ export class CustomerServiceTicketsCustomerserviceTicketsMessagesApi {
   }
 
 
-async list(ticketId: string): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(appApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/messages`));
+async list(ticketId: string): Promise<CustomerserviceTicketsMessagesListPageData> {
+    return this.client.get<CustomerserviceTicketsMessagesListPageData>(appApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/messages`));
   }
 
 async create(ticketId: string, body: SendTicketMessageRequest): Promise<TicketMessage> {
@@ -40,7 +40,8 @@ async create(ticketId: string, body: SendTicketMessageRequest): Promise<TicketMe
 
 export interface CustomerServiceTicketsCustomerserviceTicketsListParams {
   status?: string;
-  cursor?: string;
+  page?: number;
+  pageSize?: number;
   limit?: number;
 }
 
@@ -56,13 +57,14 @@ export class CustomerServiceTicketsCustomerserviceTicketsApi {
   }
 
 
-async list(params?: CustomerServiceTicketsCustomerserviceTicketsListParams): Promise<Record<string, unknown>> {
+async list(params?: CustomerServiceTicketsCustomerserviceTicketsListParams): Promise<CustomerserviceTicketsListPageData> {
     const query = buildQueryString([
       { name: 'status', value: params?.status, style: 'form', explode: true, allowReserved: false },
-      { name: 'cursor', value: params?.cursor, style: 'form', explode: true, allowReserved: false },
+      { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
+      { name: 'pageSize', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
       { name: 'limit', value: params?.limit, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<Record<string, unknown>>(appendQueryString(appApiPath(`/customer_services/tickets`), query));
+    return this.client.get<CustomerserviceTicketsListPageData>(appendQueryString(appApiPath(`/customer_services/tickets`), query));
   }
 
 async create(body: CreateTicketRequest): Promise<TicketDetail> {

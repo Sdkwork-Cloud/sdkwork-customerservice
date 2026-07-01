@@ -1,8 +1,8 @@
-import type { ChannelAccountSummary } from './channel-account-summary';
+import type { CustomerserviceChannelsAdminAccountsUpdateResourceData } from './customerservice-channels-admin-accounts-update-resource-data';
 
 export interface CustomerserviceChannelsAdminAccountsUpdateResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceChannelsAdminAccountsUpdateResourceData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

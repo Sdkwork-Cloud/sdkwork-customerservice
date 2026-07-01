@@ -10,6 +10,7 @@ path = "src/lib.rs"
 
 [dependencies]
 axum = { workspace = true }
+async-trait = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 uuid = { workspace = true }
@@ -22,3 +23,11 @@ sdkwork_utils_rust = { workspace = true }
 sdkwork-web-axum = { workspace = true }
 sdkwork-web-bootstrap = { workspace = true }
 sdkwork-iam-web-adapter = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+tower = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+sdkwork_communication_customerservice_service = { workspace = true, features = ["test-support"] }
+sdkwork_iam_context_service = { workspace = true }

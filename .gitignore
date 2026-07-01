@@ -51,3 +51,10 @@ configs/topology/*.production.env
 **/test-results/
 **/playwright-report/
 **/coverage/
+!.env.postgres.example
+.idea/
+.vscode/
+**/.sdkwork/dart/pub-cache/
+**/.sdkwork/sdkwork-generator-changes.json
+**/.sdkwork/sdkwork-generator-manifest.json
+**/.sdkwork/sdkwork-generator-report.json

@@ -1645,7 +1645,9 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
+ "dotenvy",
  "sdkwork-communication-customerservice-service",
+ "sdkwork-customerservice-database-host",
  "sdkwork-database-sqlx",
  "serde",
  "serde_json",
@@ -1684,12 +1686,19 @@ name = "sdkwork-customerservice-gateway-assembly"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "sdkwork-communication-customerservice-service",
  "sdkwork-customerservice-service-host",
+ "sdkwork-database-sqlx",
+ "sdkwork-iam-context-service",
  "sdkwork-routes-customerservice-app-api",
  "sdkwork-routes-customerservice-backend-api",
  "sdkwork-routes-customerservice-internal-api",
  "sdkwork-web-bootstrap",
+ "serde_json",
+ "sqlx",
  "tokio",
+ "tower",
+ "uuid",
 ]
 
 [[package]]
@@ -1891,6 +1900,7 @@ dependencies = [
 name = "sdkwork-routes-customerservice-app-api"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "axum",
  "sdkwork-communication-customerservice-service",
  "sdkwork-customerservice-service-host",
@@ -1902,6 +1912,8 @@ dependencies = [
  "sdkwork-web-core",
  "serde",
  "serde_json",
+ "tokio",
+ "tower",
  "uuid",
 ]
 
@@ -1909,6 +1921,7 @@ dependencies = [
 name = "sdkwork-routes-customerservice-backend-api"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "axum",
  "sdkwork-communication-customerservice-plugin-runtime",
  "sdkwork-communication-customerservice-service",
@@ -1921,6 +1934,8 @@ dependencies = [
  "sdkwork-web-core",
  "serde",
  "serde_json",
+ "tokio",
+ "tower",
  "uuid",
 ]
 
@@ -1938,6 +1953,8 @@ dependencies = [
  "sdkwork-web-core",
  "serde",
  "serde_json",
+ "tokio",
+ "tower",
  "uuid",
 ]
 

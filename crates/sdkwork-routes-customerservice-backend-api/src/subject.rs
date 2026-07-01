@@ -9,11 +9,17 @@ pub struct AppRuntimeSubject {
     pub user_id: Uuid,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SubjectAuthError {
+    AuthenticationRequired,
+    InvalidContext(String),
+}
+
 pub fn app_runtime_subject_from_extension(
     context: Option<Extension<IamAppContext>>,
-) -> Result<AppRuntimeSubject, String> {
+) -> Result<AppRuntimeSubject, SubjectAuthError> {
     let Some(Extension(context)) = context else {
-        return Err("authenticated runtime context is required".to_owned());
+        return Err(SubjectAuthError::AuthenticationRequired);
     };
     let tenant_id = parse_uuid(&context.tenant_id, "tenant_id")?;
     let user_id = parse_uuid(&context.user_id, "user_id")?;
@@ -32,11 +38,16 @@ pub fn app_runtime_subject_from_extension(
     })
 }
 
-fn parse_uuid(value: &str, field: &str) -> Result<Uuid, String> {
+fn parse_uuid(value: &str, field: &str) -> Result<Uuid, SubjectAuthError> {
     let trimmed = value.trim();
     if trimmed.is_empty() {
-        return Err(format!("authenticated runtime context {field} is required"));
+        return Err(SubjectAuthError::InvalidContext(format!(
+            "authenticated runtime context {field} is required"
+        )));
     }
-    Uuid::parse_str(trimmed)
-        .map_err(|_| format!("authenticated runtime context {field} is invalid"))
+    Uuid::parse_str(trimmed).map_err(|_| {
+        SubjectAuthError::InvalidContext(format!(
+            "authenticated runtime context {field} is invalid"
+        ))
+    })
 }

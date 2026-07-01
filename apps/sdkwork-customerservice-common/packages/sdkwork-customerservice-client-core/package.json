@@ -1,0 +1,31 @@
+{
+  "name": "@sdkwork/customerservice-client-core",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@sdkwork/auth-pc-react": "workspace:*",
+    "@sdkwork/auth-runtime-pc-react": "workspace:*",
+    "@sdkwork/customerservice-contracts": "workspace:*",
+    "@sdkwork/drive-app-sdk": "workspace:*",
+    "@sdkwork/iam-app-sdk": "workspace:*",
+    "@sdkwork/iam-contracts": "workspace:*",
+    "@sdkwork/iam-credential-entry": "workspace:*",
+    "@sdkwork/iam-runtime": "workspace:*",
+    "@sdkwork/sdk-common": "workspace:*",
+    "@sdkwork/utils": "workspace:*",
+    "sdkwork-customerservice-app-sdk-generated-typescript": "workspace:*",
+    "sdkwork-customerservice-backend-sdk-generated-typescript": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "react": "^19.2.0",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0 <20.0.0"
+  }
+}

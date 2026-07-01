@@ -44,7 +44,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "afe8a4fcf7fbe420d6c60ab3688738f01ea341ae2e12374e0984bd62d8d3c2d4"
+      "sha256": "63b40ad71ee965b71b0f4da687f6f617ae2d4ece7eb0ed43a1e39df3ee00c441"
     },
     {
       "path": "sdkwork-sdk.json",
@@ -56,7 +56,7 @@
     },
     {
       "path": "src/api/customer-service-tickets.ts",
-      "sha256": "484dfb4656e9a9394ecc525412cc9896cae22c3405df8176e91c3490b87fc662"
+      "sha256": "73ca1186e9f84c68b00c52465d481cf64dc4357a6e506e65b7dcd3a35d86cb8d"
     },
     {
       "path": "src/api/index.ts",
@@ -95,32 +95,60 @@
       "sha256": "1fef99c320f418ba083b872e80897f569b5f5b212450080e4c7014a50ed2f2fd"
     },
     {
+      "path": "src/types/customerservice-tickets-attachments-list-page-data.ts",
+      "sha256": "c010d88967f2032ef58c861f022eb6af978f3443b3d1c6a2c39111fa0668902d"
+    },
+    {
       "path": "src/types/customerservice-tickets-attachments-list-response.ts",
-      "sha256": "e1a6a45cc4e29de27466f8fd745480fcf01066ec6a4ecaab367c260e8376cda7"
+      "sha256": "d626fcd94e197b9cf97285c263d60db18b026442adf70445cc0f5aa700d316d4"
     },
     {
-      "path": "src/types/customerservice-tickets-attachments-register-response201.ts",
-      "sha256": "f9ea6c49926239cd30cf533321e0538e733051528d957941e18cb6814b10cec7"
+      "path": "src/types/customerservice-tickets-attachments-register-resource-data.ts",
+      "sha256": "aa16e9b1b9bad892891460593df35985c48a8fceec332474990626c216dae2a5"
     },
     {
-      "path": "src/types/customerservice-tickets-create-response201.ts",
-      "sha256": "65582e1b1d533270f5e06ead879986c693fad5835c0a292c7716d61bda6c7a83"
+      "path": "src/types/customerservice-tickets-attachments-register-response.ts",
+      "sha256": "fa7ae924014207a05c3593becdcfc0e16a48ffe8fb0edb4c6a476a9a0d6e0e66"
+    },
+    {
+      "path": "src/types/customerservice-tickets-create-resource-data.ts",
+      "sha256": "408fd3c34c0464aad290fa46219981d0ff5c343129e2bb8fa0cd182350064781"
+    },
+    {
+      "path": "src/types/customerservice-tickets-create-response.ts",
+      "sha256": "4f6663be20f20a31eca9b7feeeea0133294661d3880bda2cc6bca65cb1a92a86"
+    },
+    {
+      "path": "src/types/customerservice-tickets-list-page-data.ts",
+      "sha256": "5d2caf56cd1389cf4021c60857c10f98aba96d010f9fa2c62f778d1767df0b83"
     },
     {
       "path": "src/types/customerservice-tickets-list-response.ts",
-      "sha256": "5a3abe0caea15d6f5993ac6f0598cd310824bcb2c6740820d5046961dc30e4e7"
+      "sha256": "03180e2fab98f26859f51f0de49883ea02674c13c739d99b1237a34fa95da945"
     },
     {
-      "path": "src/types/customerservice-tickets-messages-create-response201.ts",
-      "sha256": "600bed72169a0e991bf3cfeca95c761a0295bb2d7af06f7bd26268ec2dc4a130"
+      "path": "src/types/customerservice-tickets-messages-create-resource-data.ts",
+      "sha256": "0081c2be07effea58e5b7c53f983bc9d00f57648d26a3006ea66bd2426f68bcc"
+    },
+    {
+      "path": "src/types/customerservice-tickets-messages-create-response.ts",
+      "sha256": "559e2b18d589a023ade1b1e274b68c56edc27b312cd8868e0b89cc0a4e690262"
+    },
+    {
+      "path": "src/types/customerservice-tickets-messages-list-page-data.ts",
+      "sha256": "df1a782512f8bb9d34a22adb551aec64cc29be27f03a0cc9b22736f4a9d6f081"
     },
     {
       "path": "src/types/customerservice-tickets-messages-list-response.ts",
-      "sha256": "873bd65f4fcde7e9002217d49c5b20dbd0fd745addc308617b42be617c5a0a3a"
+      "sha256": "86f96d14882dc46c5aeadf62400d25bdef5e6563938c877e9ae2596b6677734a"
+    },
+    {
+      "path": "src/types/customerservice-tickets-retrieve-resource-data.ts",
+      "sha256": "78823d46f8f61ad19ce59f03f0fcd1e4a975a0a846592a27855a70035d808c7a"
     },
     {
       "path": "src/types/customerservice-tickets-retrieve-response.ts",
-      "sha256": "97ecc250749290100b411af0fa89116f7e323c5dff5d87ea06225b3976d6613c"
+      "sha256": "a53d242f1779f0265faefc242c178b04a5813f928ce6de15121c6fbbdd649075"
     },
     {
       "path": "src/types/field-error.ts",
@@ -128,7 +156,7 @@
     },
     {
       "path": "src/types/index.ts",
-      "sha256": "694b11cc916fa9d6df4c893d9b6b35555e583013585434177097a3796cd8a58f"
+      "sha256": "56b3d1e765c1b27620cdd1b426b19ed91f3175bd82741547e1d4016e2f12775a"
     },
     {
       "path": "src/types/page-info.ts",
@@ -180,19 +208,19 @@
     },
     {
       "path": "src/types/ticket-attachment.ts",
-      "sha256": "cd4f24c02aefab28159dbe2d033e7a4dd973ca351369da45d0fbb0e1853e84fa"
+      "sha256": "e7e7227949a68be90d4f4c7352f09a2d33efe6ba9aa3a87adb25508e9e16b8a3"
     },
     {
       "path": "src/types/ticket-detail.ts",
-      "sha256": "ee35c60220c37a8e7557a35da1c2077fd24b82a1f71beacffb6c15df0cdc9469"
+      "sha256": "53591c9e556d38b88e572ef2d09595d0e3ff1b650225683ba7e20270b808b37e"
     },
     {
       "path": "src/types/ticket-message.ts",
-      "sha256": "18a4734f68a66cebc508b17b08485113ac2c9bab4c13736b0e6a362dda0d4e4d"
+      "sha256": "dbae642882be6bf51cee1c427b47dd81b4039fdbe424277e5028331bc9fbad3b"
     },
     {
       "path": "src/types/ticket-summary.ts",
-      "sha256": "04332f4b7def90f2b83b5644a9dda685be5eba89efa7d2e0ea6075def402efb3"
+      "sha256": "268f93051b667f1bc0c4fdff49952d981c46b690cd0baf83863f2e19e55fdcc1"
     },
     {
       "path": "tsconfig.json",

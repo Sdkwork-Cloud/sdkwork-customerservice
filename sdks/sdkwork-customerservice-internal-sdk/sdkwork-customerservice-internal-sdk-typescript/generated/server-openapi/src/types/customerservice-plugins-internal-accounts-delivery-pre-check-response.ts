@@ -1,8 +1,8 @@
-import type { DeliveryPreCheckResult } from './delivery-pre-check-result';
+import type { CustomerservicePluginsInternalAccountsDeliveryPreCheckResourceData } from './customerservice-plugins-internal-accounts-delivery-pre-check-resource-data';
 
 export interface CustomerservicePluginsInternalAccountsDeliveryPreCheckResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerservicePluginsInternalAccountsDeliveryPreCheckResourceData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

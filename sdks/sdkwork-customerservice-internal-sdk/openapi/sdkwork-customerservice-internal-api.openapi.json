@@ -61,30 +61,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStartResponse"
                 }
               }
             }
@@ -132,30 +109,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStopResponse"
                 }
               }
             }
@@ -203,30 +157,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStatusResponse"
                 }
               }
             }
@@ -284,30 +215,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/SendPluginMessageResult"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsSendMessageResponse"
                 }
               }
             }
@@ -365,30 +273,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/DeliveryPreCheckResult"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsDeliveryPreCheckResponse"
                 }
               }
             }
@@ -427,7 +312,14 @@
           "workerActive": {
             "type": "boolean"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "accountId",
+          "pluginCode",
+          "connectionState",
+          "workerActive"
+        ]
       },
       "SendPluginMessageRequest": {
         "type": "object",
@@ -744,6 +636,151 @@
             ]
           }
         }
+      },
+      "CustomerservicePluginsInternalAccountsStartResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerservicePluginsInternalAccountsStartResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStartResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsInternalAccountsStopResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerservicePluginsInternalAccountsStopResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStopResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsInternalAccountsStatusResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerservicePluginsInternalAccountsStatusResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsStatusResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsInternalAccountsSendMessageResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/SendPluginMessageResult"
+          }
+        }
+      },
+      "CustomerservicePluginsInternalAccountsSendMessageResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsSendMessageResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsInternalAccountsDeliveryPreCheckResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/DeliveryPreCheckResult"
+          }
+        }
+      },
+      "CustomerservicePluginsInternalAccountsDeliveryPreCheckResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsInternalAccountsDeliveryPreCheckResourceData"
+              }
+            }
+          }
+        ]
       }
     }
   }

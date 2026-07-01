@@ -32,10 +32,16 @@
     }
   },
   "dependencies": {
+    "@sdkwork/auth-pc-react": "workspace:*",
+    "@sdkwork/auth-runtime-pc-react": "workspace:*",
     "@sdkwork/customerservice-client-core": "workspace:*",
     "@sdkwork/customerservice-contracts": "workspace:*",
     "@sdkwork/customerservice-service": "workspace:*",
-    "@sdkwork/drive-app-sdk": "file:../../../../../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript",
+    "@sdkwork/drive-app-sdk": "workspace:*",
+    "@sdkwork/iam-app-sdk": "workspace:*",
+    "@sdkwork/iam-contracts": "workspace:*",
+    "@sdkwork/iam-credential-entry": "workspace:*",
+    "@sdkwork/iam-runtime": "workspace:*",
     "@sdkwork/sdk-common": "workspace:*",
     "@sdkwork/utils": "workspace:*",
     "sdkwork-customerservice-app-sdk-generated-typescript": "workspace:*",

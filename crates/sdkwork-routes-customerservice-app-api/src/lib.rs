@@ -4,8 +4,14 @@ pub mod paths;
 pub mod response;
 pub mod routes;
 pub mod subject;
+pub mod ticket_api_port;
 pub mod web_bootstrap;
 
+#[cfg(test)]
+#[path = "http_integration_tests.rs"]
+mod http_integration_tests;
+
+pub use app_routes::{app_customerservice_router, app_customerservice_router_with_service};
 pub use http_route_manifest::app_route_manifest;
 pub use routes::{build_app_router_with_framework, gateway_mount_business};
 

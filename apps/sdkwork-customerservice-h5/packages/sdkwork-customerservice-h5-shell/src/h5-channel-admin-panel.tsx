@@ -79,43 +79,55 @@ export function H5ChannelAdminPanel({ session, backendClient }: H5ChannelAdminPa
       setStatusMessage("Session userId and display name required.");
       return;
     }
-    await createChannelAccount(backendClient, {
-      pluginCode: "goofish",
-      displayName: displayName.trim(),
-      ownerUserId: session.userId,
-    });
-    setDisplayName("");
-    await refresh();
-    setStatusMessage("Account created.");
+    try {
+      await createChannelAccount(backendClient, {
+        pluginCode: "goofish",
+        displayName: displayName.trim(),
+        ownerUserId: session.userId,
+      });
+      setDisplayName("");
+      await refresh();
+      setStatusMessage("Account created.");
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : "Failed to create account");
+    }
   };
 
   const onUpdateAccount = async () => {
     if (!selectedAccountId || !accountDisplayName.trim()) {
       return;
     }
-    await updateChannelAccount(backendClient, selectedAccountId, {
-      displayName: accountDisplayName.trim(),
-      enabled: accountEnabled,
-    });
-    await refresh();
-    setStatusMessage("Account updated.");
+    try {
+      await updateChannelAccount(backendClient, selectedAccountId, {
+        displayName: accountDisplayName.trim(),
+        enabled: accountEnabled,
+      });
+      await refresh();
+      setStatusMessage("Account updated.");
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : "Failed to update account");
+    }
   };
 
   const onRuntime = async (action: "start" | "stop" | "status") => {
     if (!selectedAccountId) {
       return;
     }
-    if (action === "start") {
-      await startChannelAccountRuntime(backendClient, selectedAccountId);
-    } else if (action === "stop") {
-      await stopChannelAccountRuntime(backendClient, selectedAccountId);
-    } else {
-      const data = await getChannelAccountRuntimeStatus(backendClient, selectedAccountId);
-      setStatusMessage(`Runtime: ${data?.connectionState ?? "unknown"}`);
-      return;
+    try {
+      if (action === "start") {
+        await startChannelAccountRuntime(backendClient, selectedAccountId);
+      } else if (action === "stop") {
+        await stopChannelAccountRuntime(backendClient, selectedAccountId);
+      } else {
+        const data = await getChannelAccountRuntimeStatus(backendClient, selectedAccountId);
+        setStatusMessage(`Runtime: ${data?.connectionState ?? "unknown"}`);
+        return;
+      }
+      await refresh();
+      setStatusMessage(`Runtime ${action} ok.`);
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : `Runtime ${action} failed`);
     }
-    await refresh();
-    setStatusMessage(`Runtime ${action} ok.`);
   };
 
   const onCreateKeywordRule = async () => {
@@ -123,41 +135,64 @@ export function H5ChannelAdminPanel({ session, backendClient }: H5ChannelAdminPa
       setStatusMessage("Keyword pattern and reply required.");
       return;
     }
-    await createAutoReplyRule(backendClient, {
-      pluginCode: "goofish",
-      ruleKind: "keyword",
-      matchPattern: keywordPattern.trim(),
-      replyContent: keywordReply.trim(),
-      accountId: selectedAccountId || undefined,
-      enabled: true,
-    });
-    setKeywordPattern("");
-    setKeywordReply("");
-    await refresh();
-    setStatusMessage("Keyword rule created.");
+    try {
+      await createAutoReplyRule(backendClient, {
+        pluginCode: "goofish",
+        ruleKind: "keyword",
+        matchPattern: keywordPattern.trim(),
+        replyContent: keywordReply.trim(),
+        accountId: selectedAccountId || undefined,
+        enabled: true,
+      });
+      setKeywordPattern("");
+      setKeywordReply("");
+      await refresh();
+      setStatusMessage("Keyword rule created.");
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : "Failed to create keyword rule");
+    }
+  };
+
+  const onRegisterCookie = async () => {
+    if (!selectedAccountId || !cookiePayload.trim()) {
+      return;
+    }
+    try {
+      await registerChannelCredential(backendClient, selectedAccountId, {
+        credentialKind: "cookie",
+        payload: cookiePayload.trim(),
+      });
+      setStatusMessage("Cookie registered.");
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : "Failed to register cookie");
+    }
   };
 
   const onSaveDeliveryRules = async () => {
     if (!selectedAccountId) {
       return;
     }
-    await upsertAccountDeliveryBlockRules(backendClient, selectedAccountId, {
-      pluginCode: "goofish",
-      rules: deliveryRules.map((rule) => ({
-        ruleCode: rule.ruleCode,
-        enabled: rule.enabled,
-        priority: rule.priority,
-      })),
-    });
-    await refresh();
-    setStatusMessage("Delivery rules saved.");
+    try {
+      await upsertAccountDeliveryBlockRules(backendClient, selectedAccountId, {
+        pluginCode: "goofish",
+        rules: deliveryRules.map((rule) => ({
+          ruleCode: rule.ruleCode,
+          enabled: rule.enabled,
+          priority: rule.priority,
+        })),
+      });
+      await refresh();
+      setStatusMessage("Delivery rules saved.");
+    } catch (cause: unknown) {
+      setStatusMessage(cause instanceof Error ? cause.message : "Failed to save delivery rules");
+    }
   };
 
   return (
     <section className="h5-channel-admin">
       <h2>Goofish operator</h2>
       {!hasSession ? (
-        <p className="hint">Save operator session JSON in localStorage key sdkwork.customerservice.h5.operator.session</p>
+        <p className="hint">Save operator session via the panel above (sessionStorage).</p>
       ) : null}
       <select
         value={selectedAccountId}
@@ -209,12 +244,7 @@ export function H5ChannelAdminPanel({ session, backendClient }: H5ChannelAdminPa
       <button
         type="button"
         disabled={!hasSession || !selectedAccountId || !cookiePayload.trim()}
-        onClick={() =>
-          void registerChannelCredential(backendClient, selectedAccountId, {
-            credentialKind: "cookie",
-            payload: cookiePayload.trim(),
-          }).then(() => setStatusMessage("Cookie registered."))
-        }
+        onClick={() => void onRegisterCookie()}
       >
         Register cookie
       </button>

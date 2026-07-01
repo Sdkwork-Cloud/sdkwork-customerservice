@@ -1,0 +1,13 @@
+{
+  "name": "@sdkwork/customerservice-contracts",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "sdkwork-customerservice-app-sdk-generated-typescript": "workspace:*",
+    "sdkwork-customerservice-backend-sdk-generated-typescript": "workspace:*"
+  }
+}

@@ -1,9 +1,8 @@
-import type { DeliveryBlockRuleSummary } from './delivery-block-rule-summary';
-import type { PageInfo } from './page-info';
+import type { CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData } from './customerservice-channels-admin-delivery-block-rules-upsert-page-data';
 
 export interface CustomerserviceChannelsAdminDeliveryBlockRulesUpsertResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

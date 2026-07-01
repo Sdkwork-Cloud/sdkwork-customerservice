@@ -76,60 +76,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/TicketSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [
-                                "mode",
-                                "hasMore"
-                              ],
-                              "properties": {
-                                "mode": {
-                                  "type": "string",
-                                  "enum": [
-                                    "cursor"
-                                  ]
-                                },
-                                "nextCursor": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "hasMore": {
-                                  "type": "boolean"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAdminListResponse"
                 }
               }
             }
@@ -171,30 +118,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketDetail"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAdminRetrieveResponse"
                 }
               }
             }
@@ -244,30 +168,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketDetail"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAdminUpdateResponse"
                 }
               }
             }
@@ -309,38 +210,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/TicketMessage"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAdminMessagesListResponse"
                 }
               }
             }
@@ -390,30 +260,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketMessage"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAdminMessagesCreateResponse"
                 }
               }
             }
@@ -444,38 +291,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/PluginCatalogEntry"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsAdminListResponse"
                 }
               }
             }
@@ -526,30 +342,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/PluginEnablementSummary"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerservicePluginsAdminEnablementUpsertResponse"
                 }
               }
             }
@@ -606,38 +399,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/ChannelAccountSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsListResponse"
                 }
               }
             }
@@ -676,30 +438,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/ChannelAccountSummary"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsCreateResponse"
                 }
               }
             }
@@ -751,30 +490,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/ChannelAccountSummary"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsUpdateResponse"
                 }
               }
             }
@@ -891,38 +607,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/AutoReplyRuleSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesListResponse"
                 }
               }
             }
@@ -961,30 +646,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AutoReplyRuleSummary"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesCreateResponse"
                 }
               }
             }
@@ -1036,30 +698,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AutoReplyRuleSummary"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesUpdateResponse"
                 }
               }
             }
@@ -1140,38 +779,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/DeliveryBlockRuleCatalogEntry"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesCatalogResponse"
                 }
               }
             }
@@ -1213,38 +821,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesListResponse"
                 }
               }
             }
@@ -1294,38 +871,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesUpsertResponse"
                 }
               }
             }
@@ -1367,30 +913,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStartResponse"
                 }
               }
             }
@@ -1432,30 +955,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStopResponse"
                 }
               }
             }
@@ -1497,30 +997,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/AccountRuntimeStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStatusResponse"
                 }
               }
             }
@@ -1575,7 +1052,10 @@
             "format": "uuid"
           },
           "assigneeUserId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "createdAt": {
@@ -1586,7 +1066,19 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ticketNo",
+          "subject",
+          "status",
+          "priority",
+          "channel",
+          "requesterUserId",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "TicketDetail": {
         "allOf": [
@@ -1597,14 +1089,21 @@
             "type": "object",
             "properties": {
               "organizationId": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "format": "uuid"
               },
               "closedAt": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "format": "date-time"
               }
-            }
+            },
+            "additionalProperties": false
           }
         ]
       },
@@ -1633,7 +1132,16 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ticketId",
+          "authorUserId",
+          "authorRole",
+          "body",
+          "createdAt"
+        ]
       },
       "UpdateTicketRequest": {
         "type": "object",
@@ -1735,7 +1243,10 @@
             "type": "string"
           },
           "tenantEnabled": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -1745,18 +1256,18 @@
             "type": "string",
             "format": "date-time"
           }
-        }
-      },
-      "PluginCatalogListResponse": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PluginCatalogEntry"
-            }
-          }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "pluginCode",
+          "displayName",
+          "version",
+          "capabilities",
+          "status",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "UpsertPluginEnablementRequest": {
         "type": "object",
@@ -1802,7 +1313,17 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenantId",
+          "pluginCode",
+          "enabled",
+          "config",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "ChannelAccountSummary": {
         "type": "object",
@@ -1816,14 +1337,20 @@
             "format": "uuid"
           },
           "organizationId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "pluginCode": {
             "type": "string"
           },
           "externalAccountId": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "displayName": {
             "type": "string"
@@ -1839,7 +1366,10 @@
             "format": "uuid"
           },
           "connectionState": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -1849,18 +1379,19 @@
             "type": "string",
             "format": "date-time"
           }
-        }
-      },
-      "ChannelAccountListResponse": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ChannelAccountSummary"
-            }
-          }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenantId",
+          "pluginCode",
+          "displayName",
+          "status",
+          "enabled",
+          "ownerUserId",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "CreateChannelAccountRequest": {
         "type": "object",
@@ -1930,7 +1461,10 @@
             "format": "uuid"
           },
           "accountId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "pluginCode": {
@@ -1946,10 +1480,16 @@
             "type": "boolean"
           },
           "matchPattern": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "replyContent": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -1959,18 +1499,18 @@
             "type": "string",
             "format": "date-time"
           }
-        }
-      },
-      "AutoReplyRuleListResponse": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AutoReplyRuleSummary"
-            }
-          }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenantId",
+          "pluginCode",
+          "ruleKind",
+          "priority",
+          "enabled",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "CreateAutoReplyRuleRequest": {
         "type": "object",
@@ -2039,13 +1579,24 @@
           "defaultActionConfig": {
             "type": "object"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "ruleCode",
+          "ruleName",
+          "ruleDescription",
+          "defaultPriority",
+          "defaultActionConfig"
+        ]
       },
       "DeliveryBlockRuleSummary": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "ruleCode": {
@@ -2075,29 +1626,18 @@
           "defaultActionConfig": {
             "type": "object"
           }
-        }
-      },
-      "DeliveryBlockRuleCatalogListResponse": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeliveryBlockRuleCatalogEntry"
-            }
-          }
-        }
-      },
-      "DeliveryBlockRuleListResponse": {
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
-            }
-          }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "ruleCode",
+          "ruleName",
+          "ruleDescription",
+          "enabled",
+          "priority",
+          "excludedExternalItemIds",
+          "actionConfig",
+          "defaultActionConfig"
+        ]
       },
       "UpsertDeliveryBlockRuleItem": {
         "type": "object",
@@ -2161,7 +1701,14 @@
           "workerActive": {
             "type": "boolean"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "accountId",
+          "pluginCode",
+          "connectionState",
+          "workerActive"
+        ]
       },
       "SdkWorkApiResponse": {
         "type": "object",
@@ -2365,6 +1912,621 @@
             "properties": {
               "data": {
                 "$ref": "#/components/schemas/SdkWorkCommandData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAdminListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceTicketsAdminListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAdminListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAdminMessagesListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketMessage"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceTicketsAdminMessagesListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAdminMessagesListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsAdminListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PluginCatalogEntry"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerservicePluginsAdminListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsAdminListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChannelAccountSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AutoReplyRuleSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryBlockRuleCatalogEntry"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesCatalogResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryBlockRuleSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminDeliveryBlockRulesUpsertResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAdminRetrieveResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketDetail"
+          }
+        }
+      },
+      "CustomerserviceTicketsAdminRetrieveResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAdminRetrieveResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAdminUpdateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketDetail"
+          }
+        }
+      },
+      "CustomerserviceTicketsAdminUpdateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAdminUpdateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAdminMessagesCreateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketMessage"
+          }
+        }
+      },
+      "CustomerserviceTicketsAdminMessagesCreateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAdminMessagesCreateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerservicePluginsAdminEnablementUpsertResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/PluginEnablementSummary"
+          }
+        }
+      },
+      "CustomerservicePluginsAdminEnablementUpsertResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerservicePluginsAdminEnablementUpsertResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsCreateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/ChannelAccountSummary"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsCreateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsCreateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsUpdateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/ChannelAccountSummary"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsUpdateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsUpdateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesCreateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AutoReplyRuleSummary"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesCreateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesCreateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesUpdateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AutoReplyRuleSummary"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAutoReplyRulesUpdateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAutoReplyRulesUpdateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStartResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStartResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStartResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStopResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStopResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStopResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStatusResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/AccountRuntimeStatus"
+          }
+        }
+      },
+      "CustomerserviceChannelsAdminAccountsRuntimeStatusResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceChannelsAdminAccountsRuntimeStatusResourceData"
               }
             }
           }

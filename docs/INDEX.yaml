@@ -4,5 +4,11 @@ repository: customerservice
 canon:
   prd: docs/product/prd/PRD.md
   techArchitecture: docs/architecture/tech/TECH_ARCHITECTURE.md
-entries: []
+entries:
+  - id: guides.developer
+    path: docs/guides/developer/README.md
+    kind: guide
+  - id: runbooks.customerservice-operations
+    path: docs/runbooks/customerservice-operations.md
+    kind: runbook
 domains: []

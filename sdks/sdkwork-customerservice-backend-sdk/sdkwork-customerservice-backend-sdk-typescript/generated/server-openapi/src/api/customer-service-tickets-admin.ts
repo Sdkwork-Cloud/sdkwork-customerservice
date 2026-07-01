@@ -1,7 +1,7 @@
 import { backendApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { PageInfo, SendTicketMessageRequest, TicketDetail, TicketMessage, TicketSummary, UpdateTicketRequest } from '../types';
+import type { CustomerserviceTicketsAdminListPageData, CustomerserviceTicketsAdminMessagesListPageData, SendTicketMessageRequest, TicketDetail, TicketMessage, UpdateTicketRequest } from '../types';
 
 
 export class CustomerServiceTicketsAdminCustomerserviceTicketsAdminMessagesApi {
@@ -12,8 +12,8 @@ export class CustomerServiceTicketsAdminCustomerserviceTicketsAdminMessagesApi {
   }
 
 
-async list(ticketId: string): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(backendApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/messages`));
+async list(ticketId: string): Promise<CustomerserviceTicketsAdminMessagesListPageData> {
+    return this.client.get<CustomerserviceTicketsAdminMessagesListPageData>(backendApiPath(`/customer_services/tickets/${serializePathParameter(ticketId, { name: 'ticketId', style: 'simple', explode: false })}/messages`));
   }
 
 async create(ticketId: string, body: SendTicketMessageRequest): Promise<TicketMessage> {
@@ -37,13 +37,13 @@ export class CustomerServiceTicketsAdminCustomerserviceTicketsAdminApi {
   }
 
 
-async list(params?: CustomerServiceTicketsAdminCustomerserviceTicketsAdminListParams): Promise<Record<string, unknown>> {
+async list(params?: CustomerServiceTicketsAdminCustomerserviceTicketsAdminListParams): Promise<CustomerserviceTicketsAdminListPageData> {
     const query = buildQueryString([
       { name: 'status', value: params?.status, style: 'form', explode: true, allowReserved: false },
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'pageSize', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<Record<string, unknown>>(appendQueryString(backendApiPath(`/customer_services/tickets`), query));
+    return this.client.get<CustomerserviceTicketsAdminListPageData>(appendQueryString(backendApiPath(`/customer_services/tickets`), query));
   }
 
 async retrieve(ticketId: string): Promise<TicketDetail> {

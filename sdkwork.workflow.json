@@ -104,6 +104,11 @@
         "name": "Validate deploy manifest",
         "shell": "pwsh",
         "run": "pnpm deploy:validate"
+      },
+      {
+        "name": "Postgres repository integration (requires CUSTOMER_SERVICE_DATABASE_URL)",
+        "shell": "pwsh",
+        "run": "pnpm test:postgres:required"
       }
     ]
   },

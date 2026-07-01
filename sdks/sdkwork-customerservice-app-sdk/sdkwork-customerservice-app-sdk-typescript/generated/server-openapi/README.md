@@ -29,8 +29,9 @@ client.setAccessToken('your-access-token');
 // Use the SDK
 const params = {
   status: 'status',
-  cursor: 'cursor',
-  limit: 3,
+  page: 2,
+  pageSize: 3,
+  limit: 4,
 };
 const result = await client.customerServiceTickets.customerservice.tickets.list(params);
 ```
@@ -69,8 +70,9 @@ const client = new SdkworkAppClient({
 // GET /app/v3/api/customer_services/tickets
 const params = {
   status: 'status',
-  cursor: 'cursor',
-  limit: 3,
+  page: 2,
+  pageSize: 3,
+  limit: 4,
 };
 const result = await client.customerServiceTickets.customerservice.tickets.list(params);
 ```
@@ -83,8 +85,9 @@ import { SdkworkAppClient, NetworkError, TimeoutError, AuthenticationError } fro
 try {
   const params = {
     status: 'status',
-    cursor: 'cursor',
-    limit: 3,
+    page: 2,
+    pageSize: 3,
+    limit: 4,
   };
   const result = await client.customerServiceTickets.customerservice.tickets.list(params);
 } catch (error) {

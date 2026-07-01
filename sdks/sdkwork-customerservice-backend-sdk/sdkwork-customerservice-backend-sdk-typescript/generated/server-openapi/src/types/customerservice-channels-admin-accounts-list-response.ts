@@ -1,9 +1,8 @@
-import type { ChannelAccountSummary } from './channel-account-summary';
-import type { PageInfo } from './page-info';
+import type { CustomerserviceChannelsAdminAccountsListPageData } from './customerservice-channels-admin-accounts-list-page-data';
 
 export interface CustomerserviceChannelsAdminAccountsListResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceChannelsAdminAccountsListPageData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

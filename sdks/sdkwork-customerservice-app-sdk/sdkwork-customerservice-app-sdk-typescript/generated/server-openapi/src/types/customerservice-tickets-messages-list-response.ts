@@ -1,9 +1,8 @@
-import type { PageInfo } from './page-info';
-import type { TicketMessage } from './ticket-message';
+import type { CustomerserviceTicketsMessagesListPageData } from './customerservice-tickets-messages-list-page-data';
 
 export interface CustomerserviceTicketsMessagesListResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceTicketsMessagesListPageData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

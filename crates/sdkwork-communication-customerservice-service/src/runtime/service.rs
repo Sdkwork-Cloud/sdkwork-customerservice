@@ -1,3 +1,4 @@
+use crate::credential_crypto::{encrypt_credential_payload, CREDENTIAL_KEY_VERSION_AES256GCM};
 use sdkwork_utils_rust::random_string;
 use uuid::Uuid;
 
@@ -68,13 +69,17 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
         &self,
         tenant_id: Uuid,
         requester_user_id: Uuid,
+        status: Option<&str>,
         page: u32,
         page_size: u32,
     ) -> Result<(Vec<TicketSummary>, u64), CustomerServiceError> {
         let page_size = page_size.clamp(1, 100);
         let offset = page.saturating_mul(page_size);
+        if let Some(raw_status) = status {
+            let _ = normalize_ticket_status(raw_status)?;
+        }
         self.repository
-            .list_tickets_for_requester(tenant_id, requester_user_id, page_size, offset)
+            .list_tickets_for_requester(tenant_id, requester_user_id, status, page_size, offset)
             .await
     }
 
@@ -104,6 +109,22 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
             .retrieve_ticket(tenant_id, ticket_id)
             .await?
             .ok_or_else(|| CustomerServiceError::NotFound("ticket not found".to_owned()))
+    }
+
+    /// App-api scoped ticket read: hides existence when the caller is not the requester.
+    pub async fn retrieve_ticket_for_requester(
+        &self,
+        tenant_id: Uuid,
+        requester_user_id: Uuid,
+        ticket_id: Uuid,
+    ) -> Result<TicketDetail, CustomerServiceError> {
+        let ticket = self.retrieve_ticket(tenant_id, ticket_id).await?;
+        if ticket.summary.requester_user_id != requester_user_id {
+            return Err(CustomerServiceError::NotFound(
+                "ticket not found".to_owned(),
+            ));
+        }
+        Ok(ticket)
     }
 
     pub async fn update_ticket(
@@ -141,6 +162,11 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
         let ticket = self
             .retrieve_ticket(command.tenant_id, command.ticket_id)
             .await?;
+        if role == "customer" && ticket.summary.requester_user_id != command.author_user_id {
+            return Err(CustomerServiceError::NotFound(
+                "ticket not found".to_owned(),
+            ));
+        }
         if ticket.summary.status == "closed" {
             return Err(CustomerServiceError::Validation(
                 "closed tickets cannot receive new messages".to_owned(),
@@ -171,6 +197,21 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
             .await
     }
 
+    pub async fn list_messages_for_requester(
+        &self,
+        tenant_id: Uuid,
+        requester_user_id: Uuid,
+        ticket_id: Uuid,
+        page: u32,
+        page_size: u32,
+    ) -> Result<(Vec<TicketMessage>, u64), CustomerServiceError> {
+        let _ = self
+            .retrieve_ticket_for_requester(tenant_id, requester_user_id, ticket_id)
+            .await?;
+        self.list_messages(tenant_id, ticket_id, page, page_size)
+            .await
+    }
+
     pub async fn register_drive_attachment(
         &self,
         command: RegisterAttachmentCommand,
@@ -189,6 +230,17 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
             .await
     }
 
+    pub async fn register_drive_attachment_for_requester(
+        &self,
+        requester_user_id: Uuid,
+        command: RegisterAttachmentCommand,
+    ) -> Result<TicketAttachment, CustomerServiceError> {
+        let _ = self
+            .retrieve_ticket_for_requester(command.tenant_id, requester_user_id, command.ticket_id)
+            .await?;
+        self.register_drive_attachment(command).await
+    }
+
     pub async fn list_attachments(
         &self,
         tenant_id: Uuid,
@@ -196,6 +248,18 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
     ) -> Result<Vec<TicketAttachment>, CustomerServiceError> {
         let _ = self.retrieve_ticket(tenant_id, ticket_id).await?;
         self.repository.list_attachments(tenant_id, ticket_id).await
+    }
+
+    pub async fn list_attachments_for_requester(
+        &self,
+        tenant_id: Uuid,
+        requester_user_id: Uuid,
+        ticket_id: Uuid,
+    ) -> Result<Vec<TicketAttachment>, CustomerServiceError> {
+        let _ = self
+            .retrieve_ticket_for_requester(tenant_id, requester_user_id, ticket_id)
+            .await?;
+        self.list_attachments(tenant_id, ticket_id).await
     }
 
     pub async fn list_plugin_catalog(&self) -> Result<Vec<PluginCatalogEntry>, CustomerServiceError>
@@ -304,9 +368,12 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
         }
         self.require_channel_account_for_tenant(command.tenant_id, command.account_id)
             .await?;
+        let encrypted = encrypt_credential_payload(&command.payload)?;
         self.repository
             .upsert_channel_credential(UpsertChannelCredentialCommand {
                 credential_kind,
+                payload: encrypted,
+                key_version: CREDENTIAL_KEY_VERSION_AES256GCM.to_owned(),
                 ..command
             })
             .await
@@ -365,6 +432,10 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
         let plugin_code = require_non_blank(&command.plugin_code, "pluginCode")?;
         let rule_kind = require_non_blank(&command.rule_kind, "ruleKind")?;
         let reply_content = require_non_blank(&command.reply_content, "replyContent")?;
+        if let Some(account_id) = command.account_id {
+            self.require_channel_account_for_tenant(command.tenant_id, account_id)
+                .await?;
+        }
         self.repository
             .create_auto_reply_rule(CreateAutoReplyRuleCommand {
                 plugin_code,
@@ -482,143 +553,12 @@ impl<R: CustomerServiceRepository> CustomerServiceService<R> {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Mutex;
-
-    use async_trait::async_trait;
-    use chrono::Utc;
-
     use super::*;
-    use crate::runtime::domain::TicketSummary;
-
-    struct MemoryRepo {
-        tickets: Mutex<Vec<TicketDetail>>,
-    }
-
-    impl MemoryRepo {
-        fn new() -> Self {
-            Self {
-                tickets: Mutex::new(Vec::new()),
-            }
-        }
-    }
-
-    #[async_trait]
-    impl CustomerServiceRepository for MemoryRepo {
-        async fn create_ticket(
-            &self,
-            command: CreateTicketCommand,
-            ticket_no: String,
-        ) -> Result<TicketDetail, CustomerServiceError> {
-            let now = Utc::now();
-            let summary = TicketSummary {
-                id: Uuid::new_v4(),
-                ticket_no,
-                subject: command.subject,
-                status: "open".to_owned(),
-                priority: command.priority.unwrap_or_else(|| "normal".to_owned()),
-                channel: command.channel.unwrap_or_else(|| "web".to_owned()),
-                requester_user_id: command.requester_user_id,
-                assignee_user_id: None,
-                created_at: now,
-                updated_at: now,
-            };
-            let detail = TicketDetail {
-                summary,
-                organization_id: command.organization_id,
-                closed_at: None,
-            };
-            self.tickets.lock().unwrap().push(detail.clone());
-            Ok(detail)
-        }
-
-        async fn list_tickets_for_requester(
-            &self,
-            _tenant_id: Uuid,
-            _requester_user_id: Uuid,
-            _limit: u32,
-            _offset: u32,
-        ) -> Result<(Vec<TicketSummary>, u64), CustomerServiceError> {
-            Ok((Vec::new(), 0))
-        }
-
-        async fn list_tickets_for_admin(
-            &self,
-            _tenant_id: Uuid,
-            _status: Option<&str>,
-            _limit: u32,
-            _offset: u32,
-        ) -> Result<(Vec<TicketSummary>, u64), CustomerServiceError> {
-            Ok((Vec::new(), 0))
-        }
-
-        async fn retrieve_ticket(
-            &self,
-            _tenant_id: Uuid,
-            ticket_id: Uuid,
-        ) -> Result<Option<TicketDetail>, CustomerServiceError> {
-            Ok(self
-                .tickets
-                .lock()
-                .unwrap()
-                .iter()
-                .find(|ticket| ticket.summary.id == ticket_id)
-                .cloned())
-        }
-
-        async fn update_ticket(
-            &self,
-            _command: UpdateTicketCommand,
-        ) -> Result<TicketDetail, CustomerServiceError> {
-            Err(CustomerServiceError::Persistence(
-                "not implemented".to_owned(),
-            ))
-        }
-
-        async fn append_message(
-            &self,
-            _command: SendMessageCommand,
-        ) -> Result<TicketMessage, CustomerServiceError> {
-            Ok(TicketMessage {
-                id: Uuid::new_v4(),
-                ticket_id: Uuid::new_v4(),
-                author_user_id: Uuid::new_v4(),
-                author_role: "customer".to_owned(),
-                body: "hello".to_owned(),
-                created_at: Utc::now(),
-            })
-        }
-
-        async fn list_messages(
-            &self,
-            _tenant_id: Uuid,
-            _ticket_id: Uuid,
-            _limit: u32,
-            _offset: u32,
-        ) -> Result<(Vec<TicketMessage>, u64), CustomerServiceError> {
-            Ok((Vec::new(), 0))
-        }
-
-        async fn register_attachment(
-            &self,
-            _command: RegisterAttachmentCommand,
-        ) -> Result<TicketAttachment, CustomerServiceError> {
-            Err(CustomerServiceError::Persistence(
-                "not implemented".to_owned(),
-            ))
-        }
-
-        async fn list_attachments(
-            &self,
-            _tenant_id: Uuid,
-            _ticket_id: Uuid,
-        ) -> Result<Vec<TicketAttachment>, CustomerServiceError> {
-            Ok(Vec::new())
-        }
-    }
+    use crate::testing::MemoryTicketRepository;
 
     #[tokio::test]
     async fn rejects_blank_subject() {
-        let service = CustomerServiceService::new(MemoryRepo::new());
+        let service = CustomerServiceService::new(MemoryTicketRepository::new());
         let result = service
             .create_ticket(CreateTicketCommand {
                 tenant_id: Uuid::new_v4(),
@@ -631,5 +571,29 @@ mod tests {
             })
             .await;
         assert!(matches!(result, Err(CustomerServiceError::Validation(_))));
+    }
+
+    #[tokio::test]
+    async fn hides_ticket_from_other_requester() {
+        let tenant_id = Uuid::new_v4();
+        let owner_id = Uuid::new_v4();
+        let other_id = Uuid::new_v4();
+        let service = CustomerServiceService::new(MemoryTicketRepository::new());
+        let created = service
+            .create_ticket(CreateTicketCommand {
+                tenant_id,
+                organization_id: None,
+                requester_user_id: owner_id,
+                subject: "help".to_owned(),
+                body: "please assist".to_owned(),
+                priority: None,
+                channel: None,
+            })
+            .await
+            .expect("create ticket");
+        let result = service
+            .retrieve_ticket_for_requester(tenant_id, other_id, created.summary.id)
+            .await;
+        assert!(matches!(result, Err(CustomerServiceError::NotFound(_))));
     }
 }

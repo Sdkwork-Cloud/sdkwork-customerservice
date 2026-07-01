@@ -19,6 +19,7 @@ pub trait CustomerServiceRepository: Send + Sync {
         &self,
         tenant_id: Uuid,
         requester_user_id: Uuid,
+        status: Option<&str>,
         limit: u32,
         offset: u32,
     ) -> Result<(Vec<TicketSummary>, u64), CustomerServiceError>;

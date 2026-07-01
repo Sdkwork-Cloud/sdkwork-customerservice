@@ -1,4 +1,5 @@
 # sdkwork-customerservice
+repository-kind: application
 
 SDKWork communication **customerservice** capability: support tickets, agent replies, and Drive-backed attachments.
 
@@ -7,7 +8,7 @@ SDKWork communication **customerservice** capability: support tickets, agent rep
 - Gateway: `crates/sdkwork-customerservice-standalone-gateway` (`customerservice-server`)
 - PC console: `apps/sdkwork-customerservice-pc`
 - Database: `database/` via `sdkwork-database`
-- OpenAPI: `apis/app-api/communication/` + `apis/backend-api/communication/`
+- OpenAPI: `apis/app-api/communication/`, `apis/backend-api/communication/`, `apis/internal-api/communication/` (materialize via `pnpm api:materialize`)
 - Deploy: `deployments/deploy.yaml` + `sdkwork.workflow.json`
 
 ## Documentation Canon
@@ -21,11 +22,14 @@ SDKWork communication **customerservice** capability: support tickets, agent rep
 pnpm install
 pnpm db:materialize:contract
 pnpm verify
-pnpm start          # HTTP API on CUSTOMER_SERVICE_API_BIND (default 0.0.0.0:18091)
-pnpm dev            # PC operator console on http://127.0.0.1:5191
+pnpm db:bootstrap      # Postgres migrations + seed (development)
+pnpm start             # HTTP API on CUSTOMER_SERVICE_API_BIND (default 0.0.0.0:18091)
+pnpm dev               # PC operator console on http://127.0.0.1:5191
 ```
 
-Copy `apps/sdkwork-customerservice-pc/.env.example` for local API URLs and optional dev IAM tokens.
+Development uses dual connectivity planes (see `configs/topology/README.md`): customerservice routes on **18091**, IAM/Drive on platform gateway **3900**. PC/H5 sign in at `/auth/login` via `@sdkwork/auth-pc-react`.
+
+Copy `apps/sdkwork-customerservice-pc/.env.example` for topology URLs. Manual token paste is dev-only (`VITE_SDKWORK_CUSTOMER_SERVICE_DEV_MANUAL_SESSION=true`).
 
 ## Database bootstrap
 
@@ -40,8 +44,11 @@ pnpm db:bootstrap
 | --- | --- |
 | App API | `/app/v3/api/customer_services/tickets` |
 | Backend API | `/backend/v3/api/customer_services/tickets` |
+| Internal API | `/internal/v3/api/customer_services/plugins` |
 
 Attachments register `driveNodeId` metadata only — upload bytes through `sdkwork-drive` per `DRIVE_SPEC.md`.
+
+Success bodies use `SdkWorkApiResponse` (`code: 0`, `data`, `traceId`); errors use HTTP 4xx/5xx `ProblemDetail`.
 
 ## Application Roots
 

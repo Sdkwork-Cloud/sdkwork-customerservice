@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import type { TicketDetail, TicketMessage, TicketSummary } from "@sdkwork/customerservice-contracts";
+import type { TicketAttachment, TicketDetail, TicketMessage, TicketSummary } from "@sdkwork/customerservice-contracts";
 import {
-  formatTicketHeadline,
-  formatTicketPriority,
-  formatTicketStatus,
-} from "@sdkwork/customerservice-service";
-import {
+  formatSdkError,
+  listMyTicketAttachments,
   listOperatorTicketMessages,
   listOperatorTickets,
   retrieveOperatorTicket,
   sendOperatorTicketMessage,
   updateOperatorTicket,
 } from "@sdkwork/customerservice-client-core";
+import {
+  formatTicketHeadline,
+  formatTicketPriority,
+  formatTicketStatus,
+} from "@sdkwork/customerservice-service";
+import type { SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
 import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
 import type { OperatorSession } from "@sdkwork/customerservice-pc-core";
 
@@ -21,12 +24,14 @@ const PRIORITY_OPTIONS = ["low", "normal", "high", "urgent"] as const;
 interface TicketWorkbenchPanelProps {
   session: OperatorSession | null;
   backendClient: SdkworkBackendClient;
+  appClient: SdkworkAppClient;
   onSelectedTicketChange?: (ticketId: string) => void;
 }
 
 export function TicketWorkbenchPanel({
   session,
   backendClient,
+  appClient,
   onSelectedTicketChange,
 }: TicketWorkbenchPanelProps) {
   const hasSession = Boolean(session?.accessToken || session?.authToken);
@@ -35,6 +40,7 @@ export function TicketWorkbenchPanel({
   const [selectedTicketId, setSelectedTicketId] = useState("");
   const [ticketDetail, setTicketDetail] = useState<TicketDetail | null>(null);
   const [messages, setMessages] = useState<TicketMessage[]>([]);
+  const [attachments, setAttachments] = useState<TicketAttachment[]>([]);
   const [assigneeUserId, setAssigneeUserId] = useState("");
   const [replyBody, setReplyBody] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,13 +58,13 @@ export function TicketWorkbenchPanel({
         status: statusFilter || undefined,
         pageSize: 50,
       });
-      setTickets(items as TicketSummary[]);
+      setTickets(items);
       if (!selectedTicketId && items[0]?.id) {
         setSelectedTicketId(String(items[0].id));
         onSelectedTicketChange?.(String(items[0].id));
       }
     } catch (cause: unknown) {
-      setStatusMessage(cause instanceof Error ? cause.message : "Failed to load tickets");
+      setStatusMessage(formatSdkError(cause));
     } finally {
       setLoading(false);
     }
@@ -68,18 +74,26 @@ export function TicketWorkbenchPanel({
     if (!hasSession || !selectedTicketId) {
       setTicketDetail(null);
       setMessages([]);
+      setAttachments([]);
       return;
     }
     try {
       const detail = await retrieveOperatorTicket(backendClient, selectedTicketId);
       const messageItems = await listOperatorTicketMessages(backendClient, selectedTicketId);
+      let attachmentItems: TicketAttachment[] = [];
+      try {
+        attachmentItems = await listMyTicketAttachments(appClient, selectedTicketId);
+      } catch {
+        attachmentItems = [];
+      }
       setTicketDetail(detail ?? null);
       setMessages(messageItems);
+      setAttachments(attachmentItems);
       setAssigneeUserId(detail?.assigneeUserId ?? "");
     } catch (cause: unknown) {
-      setStatusMessage(cause instanceof Error ? cause.message : "Failed to load ticket detail");
+      setStatusMessage(formatSdkError(cause));
     }
-  }, [backendClient, hasSession, selectedTicketId]);
+  }, [appClient, backendClient, hasSession, selectedTicketId]);
 
   useEffect(() => {
     void refreshTickets();
@@ -246,6 +260,18 @@ export function TicketWorkbenchPanel({
                   </ul>
                 )}
               </div>
+              {attachments.length > 0 ? (
+                <div aria-label="Attachments" style={{ marginBottom: "0.75rem" }}>
+                  <h4 style={{ margin: "0 0 0.5rem" }}>Attachments</h4>
+                  <ul style={{ margin: 0, paddingLeft: "1.25rem" }}>
+                    {attachments.map((attachment) => (
+                      <li key={String(attachment.id ?? attachment.driveNodeId)}>
+                        {attachment.fileName ?? attachment.driveNodeId}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               <textarea
                 rows={3}
                 placeholder="Agent reply"

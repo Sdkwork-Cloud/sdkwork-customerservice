@@ -47,10 +47,20 @@
             }
           },
           {
-            "name": "cursor",
+            "name": "page",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
             }
           },
           {
@@ -69,60 +79,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/TicketSummary"
-                              }
-                            },
-                            "pageInfo": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [
-                                "mode",
-                                "hasMore"
-                              ],
-                              "properties": {
-                                "mode": {
-                                  "type": "string",
-                                  "enum": [
-                                    "cursor"
-                                  ]
-                                },
-                                "nextCursor": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "hasMore": {
-                                  "type": "boolean"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsListResponse"
                 }
               }
             }
@@ -161,30 +118,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketDetail"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsCreateResponse"
                 }
               }
             }
@@ -226,30 +160,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketDetail"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsRetrieveResponse"
                 }
               }
             }
@@ -291,38 +202,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/TicketMessage"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsMessagesListResponse"
                 }
               }
             }
@@ -372,30 +252,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketMessage"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsMessagesCreateResponse"
                 }
               }
             }
@@ -437,38 +294,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "items",
-                            "pageInfo"
-                          ],
-                          "properties": {
-                            "items": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/components/schemas/TicketAttachment"
-                              }
-                            },
-                            "pageInfo": {
-                              "$ref": "#/components/schemas/PageInfo"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAttachmentsListResponse"
                 }
               }
             }
@@ -518,30 +344,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/TicketAttachment"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/components/schemas/CustomerserviceTicketsAttachmentsRegisterResponse"
                 }
               }
             }
@@ -596,7 +399,10 @@
             "format": "uuid"
           },
           "assigneeUserId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "createdAt": {
@@ -607,7 +413,19 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ticketNo",
+          "subject",
+          "status",
+          "priority",
+          "channel",
+          "requesterUserId",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "TicketDetail": {
         "allOf": [
@@ -618,14 +436,21 @@
             "type": "object",
             "properties": {
               "organizationId": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "format": "uuid"
               },
               "closedAt": {
-                "type": "string",
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "format": "date-time"
               }
-            }
+            },
+            "additionalProperties": false
           }
         ]
       },
@@ -654,7 +479,16 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ticketId",
+          "authorUserId",
+          "authorRole",
+          "body",
+          "createdAt"
+        ]
       },
       "TicketAttachment": {
         "type": "object",
@@ -675,10 +509,16 @@
             "type": "string"
           },
           "contentType": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "sizeBytes": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int64"
           },
           "uploadedByUserId": {
@@ -689,7 +529,16 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "ticketId",
+          "driveNodeId",
+          "fileName",
+          "uploadedByUserId",
+          "createdAt"
+        ]
       },
       "CreateTicketRequest": {
         "type": "object",
@@ -1000,6 +849,233 @@
             "properties": {
               "data": {
                 "$ref": "#/components/schemas/SdkWorkCommandData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketSummary"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceTicketsListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsMessagesListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketMessage"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceTicketsMessagesListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsMessagesListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAttachmentsListPageData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageInfo"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketAttachment"
+            }
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/PageInfo"
+          }
+        }
+      },
+      "CustomerserviceTicketsAttachmentsListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAttachmentsListPageData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsCreateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketDetail"
+          }
+        }
+      },
+      "CustomerserviceTicketsCreateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsCreateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsRetrieveResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketDetail"
+          }
+        }
+      },
+      "CustomerserviceTicketsRetrieveResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsRetrieveResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsMessagesCreateResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketMessage"
+          }
+        }
+      },
+      "CustomerserviceTicketsMessagesCreateResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsMessagesCreateResourceData"
+              }
+            }
+          }
+        ]
+      },
+      "CustomerserviceTicketsAttachmentsRegisterResourceData": {
+        "type": "object",
+        "required": [
+          "item"
+        ],
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/TicketAttachment"
+          }
+        }
+      },
+      "CustomerserviceTicketsAttachmentsRegisterResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/CustomerserviceTicketsAttachmentsRegisterResourceData"
               }
             }
           }

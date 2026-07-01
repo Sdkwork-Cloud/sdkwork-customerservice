@@ -43,7 +43,7 @@ export function H5TicketWorkbenchPanel({ session, backendClient }: H5TicketWorkb
         status: statusFilter || undefined,
         pageSize: 50,
       });
-      setTickets(items as TicketSummary[]);
+      setTickets(items);
       if (!selectedTicketId && items[0]?.id) {
         setSelectedTicketId(String(items[0].id));
       }

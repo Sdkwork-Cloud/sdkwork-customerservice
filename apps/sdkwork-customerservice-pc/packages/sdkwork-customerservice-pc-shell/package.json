@@ -8,11 +8,14 @@
     ".": "./src/index.tsx"
   },
   "dependencies": {
+    "@sdkwork/auth-pc-react": "workspace:*",
+    "@sdkwork/customerservice-client-core": "workspace:*",
     "@sdkwork/customerservice-contracts": "workspace:*",
     "@sdkwork/customerservice-pc-core": "workspace:*",
     "@sdkwork/customerservice-service": "workspace:*",
     "@sdkwork/utils": "workspace:*",
-    "react": "^19.2.0"
+    "react": "^19.2.0",
+    "react-router-dom": "catalog:"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

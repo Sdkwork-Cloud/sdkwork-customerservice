@@ -1,13 +1,13 @@
 use async_trait::async_trait;
 use chrono::Utc;
 use sdkwork_communication_customerservice_service::{
-    goofish_delivery_block_rule_catalog, goofish_order_status_rank, AutoReplyRuleSummary,
-    ChannelAccountSummary, ChannelPluginRepository, ConversationBridgeContext,
-    CreateAutoReplyRuleCommand, CreateChannelAccountCommand, CustomerServiceError,
-    DeliveryBlockRuleSummary, PersistChannelMessageCommand, PluginCatalogEntry,
-    PluginEnablementSummary, UpdateAutoReplyRuleCommand, UpdateChannelAccountCommand,
-    UpsertChannelCredentialCommand, UpsertDeliveryBlockRuleItem, UpsertGoofishOrderOverlayCommand,
-    UpsertPluginEnablementCommand,
+    decrypt_credential_payload, goofish_delivery_block_rule_catalog, goofish_order_status_rank,
+    AutoReplyRuleSummary, ChannelAccountSummary, ChannelPluginRepository,
+    ConversationBridgeContext, CreateAutoReplyRuleCommand, CreateChannelAccountCommand,
+    CustomerServiceError, DeliveryBlockRuleSummary, PersistChannelMessageCommand,
+    PluginCatalogEntry, PluginEnablementSummary, UpdateAutoReplyRuleCommand,
+    UpdateChannelAccountCommand, UpsertChannelCredentialCommand, UpsertDeliveryBlockRuleItem,
+    UpsertGoofishOrderOverlayCommand, UpsertPluginEnablementCommand,
 };
 use sqlx::Row;
 use uuid::Uuid;
@@ -479,7 +479,12 @@ impl ChannelPluginRepository for SqlxCustomerServiceRepository {
         .await
         .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
 
-        Ok(row.map(|(payload, key_version)| decode_credential_payload(&payload, &key_version)))
+        match row {
+            Some((payload, key_version)) => {
+                Ok(Some(decode_credential_payload(&payload, &key_version)?))
+            }
+            None => Ok(None),
+        }
     }
 
     async fn update_channel_account_runtime_state(
@@ -1102,8 +1107,11 @@ impl ChannelPluginRepository for SqlxCustomerServiceRepository {
     }
 }
 
-fn decode_credential_payload(payload: &[u8], _key_version: &str) -> String {
-    String::from_utf8_lossy(payload).into_owned()
+fn decode_credential_payload(
+    payload: &[u8],
+    key_version: &str,
+) -> Result<String, CustomerServiceError> {
+    decrypt_credential_payload(payload, key_version)
 }
 
 fn json_string_array(value: &serde_json::Value) -> Vec<String> {

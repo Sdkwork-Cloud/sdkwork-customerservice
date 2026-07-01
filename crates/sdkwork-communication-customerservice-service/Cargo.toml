@@ -17,5 +17,8 @@ thiserror = { workspace = true }
 uuid = { workspace = true }
 sdkwork_utils_rust = { workspace = true }
 
+[features]
+test-support = []
+
 [dev-dependencies]
 tokio = { workspace = true }

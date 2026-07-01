@@ -1,7 +1,7 @@
 import { backendApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { PageInfo, PluginCatalogEntry, PluginEnablementSummary, UpsertPluginEnablementRequest } from '../types';
+import type { CustomerservicePluginsAdminListPageData, PluginEnablementSummary, UpsertPluginEnablementRequest } from '../types';
 
 
 export class CustomerServicePluginsAdminCustomerservicePluginsAdminEnablementApi {
@@ -27,8 +27,8 @@ export class CustomerServicePluginsAdminCustomerservicePluginsAdminApi {
   }
 
 
-async list(): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(backendApiPath(`/customer_services/plugins`));
+async list(): Promise<CustomerservicePluginsAdminListPageData> {
+    return this.client.get<CustomerservicePluginsAdminListPageData>(backendApiPath(`/customer_services/plugins`));
   }
 }
 

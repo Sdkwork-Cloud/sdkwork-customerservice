@@ -100,3 +100,75 @@ test("deploy manifest and workflow contract exist", () => {
   assert.ok(readFileSync(path.join(root, "deployments/deploy.yaml"), "utf8").includes("cloud.split-services.production"));
   assert.ok(readFileSync(path.join(root, "sdkwork.workflow.json"), "utf8").includes("sdkwork-customerservice"));
 });
+
+test("OpenAPI list responses use named page schemas for SDK typing", () => {
+  const openapiPaths = [
+    "apis/app-api/communication/sdkwork-customerservice-app-api.openapi.json",
+    "apis/backend-api/communication/sdkwork-customerservice-backend-api.openapi.json",
+  ];
+  for (const relativePath of openapiPaths) {
+    const openapi = JSON.parse(readFileSync(path.join(root, relativePath), "utf8"));
+    for (const pathItem of Object.values(openapi.paths ?? {})) {
+      for (const operation of Object.values(pathItem ?? {})) {
+        if (!operation?.operationId || !operation.responses?.["200"]) {
+          continue;
+        }
+        const schema = operation.responses["200"]?.content?.["application/json"]?.schema;
+        if (!schema?.allOf) {
+          continue;
+        }
+        const pageData = schema.allOf
+          .map((part) => part?.properties?.data)
+          .find((data) => data?.required?.includes("items") && data?.required?.includes("pageInfo"));
+        if (pageData && !pageData.$ref) {
+          assert.fail(`${relativePath} ${operation.operationId} still uses inline list page data`);
+        }
+      }
+    }
+  }
+});
+
+test("OpenAPI domain schemas declare required fields for TicketSummary", () => {
+  const openapi = JSON.parse(
+    readFileSync(
+      path.join(root, "apis/backend-api/communication/sdkwork-customerservice-backend-api.openapi.json"),
+      "utf8",
+    ),
+  );
+  const ticketSummary = openapi.components?.schemas?.TicketSummary;
+  assert.ok(ticketSummary?.required?.includes("id"));
+  assert.ok(ticketSummary?.required?.includes("ticketNo"));
+  assert.equal(ticketSummary?.additionalProperties, false);
+});
+
+test("OpenAPI page data schemas reference PageInfo instead of inline objects", () => {
+  const openapi = JSON.parse(
+    readFileSync(
+      path.join(root, "apis/app-api/communication/sdkwork-customerservice-app-api.openapi.json"),
+      "utf8",
+    ),
+  );
+  const pageData = openapi.components?.schemas?.CustomerserviceTicketsListPageData;
+  assert.equal(pageData?.properties?.pageInfo?.$ref, "#/components/schemas/PageInfo");
+});
+
+test("shared client-core package lives under apps/sdkwork-customerservice-common", () => {
+  assert.ok(
+    existsSync(
+      path.join(
+        root,
+        "apps/sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core/src/index.ts",
+      ),
+    ),
+  );
+});
+
+test("contracts package re-exports generated SDK domain types", () => {
+  const contracts = readFileSync(
+    path.join(root, "apps/sdkwork-customerservice-common/packages/sdkwork-customerservice-contracts/src/index.ts"),
+    "utf8",
+  );
+  assert.match(contracts, /sdkwork-customerservice-backend-sdk-generated-typescript/);
+  assert.match(contracts, /sdkwork-customerservice-app-sdk-generated-typescript/);
+  assert.doesNotMatch(contracts, /interface TicketSummary/);
+});

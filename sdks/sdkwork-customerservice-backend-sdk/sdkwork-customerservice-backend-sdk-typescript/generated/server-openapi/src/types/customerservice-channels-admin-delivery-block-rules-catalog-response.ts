@@ -1,9 +1,8 @@
-import type { DeliveryBlockRuleCatalogEntry } from './delivery-block-rule-catalog-entry';
-import type { PageInfo } from './page-info';
+import type { CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData } from './customerservice-channels-admin-delivery-block-rules-catalog-page-data';
 
 export interface CustomerserviceChannelsAdminDeliveryBlockRulesCatalogResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

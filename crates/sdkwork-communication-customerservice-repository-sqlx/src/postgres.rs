@@ -83,38 +83,75 @@ impl CustomerServiceRepository for SqlxCustomerServiceRepository {
         &self,
         tenant_id: Uuid,
         requester_user_id: Uuid,
+        status: Option<&str>,
         limit: u32,
         offset: u32,
     ) -> Result<(Vec<TicketSummary>, u64), CustomerServiceError> {
-        let total: i64 = sqlx::query_scalar(
-            r#"
-            SELECT COUNT(*) FROM communication_cs_ticket
-            WHERE tenant_id = $1 AND requester_user_id = $2
-            "#,
-        )
-        .bind(tenant_id)
-        .bind(requester_user_id)
-        .fetch_one(&self.pool)
-        .await
-        .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
+        let (total, rows) = if let Some(status) = status {
+            let total: i64 = sqlx::query_scalar(
+                r#"
+                SELECT COUNT(*) FROM communication_cs_ticket
+                WHERE tenant_id = $1 AND requester_user_id = $2 AND status = $3
+                "#,
+            )
+            .bind(tenant_id)
+            .bind(requester_user_id)
+            .bind(status)
+            .fetch_one(&self.pool)
+            .await
+            .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
 
-        let rows = sqlx::query(
-            r#"
-            SELECT id, ticket_no, subject, status, priority, channel, requester_user_id,
-                   assignee_user_id, created_at, updated_at
-            FROM communication_cs_ticket
-            WHERE tenant_id = $1 AND requester_user_id = $2
-            ORDER BY updated_at DESC
-            LIMIT $3 OFFSET $4
-            "#,
-        )
-        .bind(tenant_id)
-        .bind(requester_user_id)
-        .bind(limit as i64)
-        .bind(offset as i64)
-        .fetch_all(&self.pool)
-        .await
-        .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
+            let rows = sqlx::query(
+                r#"
+                SELECT id, ticket_no, subject, status, priority, channel, requester_user_id,
+                       assignee_user_id, created_at, updated_at
+                FROM communication_cs_ticket
+                WHERE tenant_id = $1 AND requester_user_id = $2 AND status = $3
+                ORDER BY updated_at DESC
+                LIMIT $4 OFFSET $5
+                "#,
+            )
+            .bind(tenant_id)
+            .bind(requester_user_id)
+            .bind(status)
+            .bind(limit as i64)
+            .bind(offset as i64)
+            .fetch_all(&self.pool)
+            .await
+            .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
+            (total, rows)
+        } else {
+            let total: i64 = sqlx::query_scalar(
+                r#"
+                SELECT COUNT(*) FROM communication_cs_ticket
+                WHERE tenant_id = $1 AND requester_user_id = $2
+                "#,
+            )
+            .bind(tenant_id)
+            .bind(requester_user_id)
+            .fetch_one(&self.pool)
+            .await
+            .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
+
+            let rows = sqlx::query(
+                r#"
+                SELECT id, ticket_no, subject, status, priority, channel, requester_user_id,
+                       assignee_user_id, created_at, updated_at
+                FROM communication_cs_ticket
+                WHERE tenant_id = $1 AND requester_user_id = $2
+                ORDER BY updated_at DESC
+                LIMIT $3 OFFSET $4
+                "#,
+            )
+            .bind(tenant_id)
+            .bind(requester_user_id)
+            .bind(limit as i64)
+            .bind(offset as i64)
+            .fetch_all(&self.pool)
+            .await
+            .map_err(|error| CustomerServiceError::Persistence(error.to_string()))?;
+            (total, rows)
+        };
 
         Ok((
             rows.into_iter().map(map_ticket_summary).collect(),

@@ -10,6 +10,10 @@ profiles:
         tls: sdkwork.com
         mode: web+api
         web: pc
+      - domain: m.customerservice.sdkwork.com
+        tls: sdkwork.com
+        mode: web
+        web: h5
     packages: []
 
   standalone.unified-process.development:
@@ -18,6 +22,10 @@ profiles:
         tls: off
         mode: web+api
         web: pc
+      - domain: localhost
+        tls: off
+        mode: web
+        web: h5
     packages: []
 
   standalone.unified-process.production:
@@ -28,6 +36,10 @@ profiles:
         tls: off
         mode: web+api
         web: pc
+      - domain: m.customerservice.local
+        tls: off
+        mode: web
+        web: h5
     packages: []
 
   cloud.split-services.development:
@@ -36,4 +48,8 @@ profiles:
         tls: off
         mode: web+api
         web: pc
+      - domain: localhost
+        tls: off
+        mode: web
+        web: h5
     packages: []

@@ -10,6 +10,7 @@ import {
 } from "@sdkwork/customerservice-pc-core";
 import { OperatorSessionPanel } from "./operator-session-panel";
 import { ChannelAdminPanel } from "./channel-admin-panel";
+import { PluginAdminPanel } from "./plugin-admin-panel";
 import { TicketWorkbenchPanel } from "./ticket-workbench-panel";
 
 function useOperatorRuntime(session: OperatorSession | null) {
@@ -72,9 +73,11 @@ export function CustomerServiceAppShell() {
         key={reloadKey}
         session={session}
         backendClient={backendClient}
+        appClient={appClients.customerService}
         onSelectedTicketChange={setUploadTicketId}
       />
       <ChannelAdminPanel session={session} backendClient={backendClient} />
+      <PluginAdminPanel session={session} backendClient={backendClient} />
       <section aria-labelledby="attachment-upload-heading" style={{ marginTop: "1.5rem" }}>
         <h2 id="attachment-upload-heading">Attachment upload</h2>
         <p style={{ color: "#57606a", marginTop: 0 }}>

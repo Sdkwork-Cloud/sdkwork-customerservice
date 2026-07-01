@@ -9,16 +9,12 @@
     "protocol": "http",
     "packageName": "sdkwork-customerservice-app-sdk-generated-typescript"
   },
-  "changeFingerprint": "41ff68fdc212c44ec4d768844b437632dcfae4abb34bed9783ce02a8cf137d5a",
+  "changeFingerprint": "93dd49d2d9e486143631cc95b21e25167d1646e53594bc0b1f9231d3e6f83d24",
   "changes": {
     "createdGeneratedFiles": [],
     "updatedGeneratedFiles": [
-      "src/api/customer-service-tickets.ts",
-      "src/types/customerservice-tickets-attachments-register-response201.ts",
-      "src/types/customerservice-tickets-create-response201.ts",
-      "src/types/customerservice-tickets-messages-create-response201.ts",
-      "src/types/customerservice-tickets-retrieve-response.ts",
-      "src/types/index.ts"
+      "README.md",
+      "src/api/customer-service-tickets.ts"
     ],
     "unchangedGeneratedFiles": [
       "bin/publish-core.mjs",
@@ -29,7 +25,6 @@
       "CHANGELOG.md",
       "LICENSE",
       "package.json",
-      "README.md",
       "sdkwork-sdk.json",
       "src/api/base.ts",
       "src/api/index.ts",
@@ -41,10 +36,22 @@
       "src/sdk.ts",
       "src/types/common.ts",
       "src/types/create-ticket-request.ts",
+      "src/types/customerservice-tickets-attachments-list-page-data.ts",
       "src/types/customerservice-tickets-attachments-list-response.ts",
+      "src/types/customerservice-tickets-attachments-register-resource-data.ts",
+      "src/types/customerservice-tickets-attachments-register-response.ts",
+      "src/types/customerservice-tickets-create-resource-data.ts",
+      "src/types/customerservice-tickets-create-response.ts",
+      "src/types/customerservice-tickets-list-page-data.ts",
       "src/types/customerservice-tickets-list-response.ts",
+      "src/types/customerservice-tickets-messages-create-resource-data.ts",
+      "src/types/customerservice-tickets-messages-create-response.ts",
+      "src/types/customerservice-tickets-messages-list-page-data.ts",
       "src/types/customerservice-tickets-messages-list-response.ts",
+      "src/types/customerservice-tickets-retrieve-resource-data.ts",
+      "src/types/customerservice-tickets-retrieve-response.ts",
       "src/types/field-error.ts",
+      "src/types/index.ts",
       "src/types/page-info.ts",
       "src/types/problem-detail.ts",
       "src/types/register-ticket-attachment-request.ts",
@@ -63,14 +70,7 @@
       "src/types/ticket-summary.ts",
       "tsconfig.json"
     ],
-    "deletedGeneratedFiles": [
-      "src/types/ticket-attachment-list-response.ts",
-      "src/types/ticket-attachment-response.ts",
-      "src/types/ticket-detail-response.ts",
-      "src/types/ticket-list-response.ts",
-      "src/types/ticket-message-list-response.ts",
-      "src/types/ticket-message-response.ts"
-    ],
+    "deletedGeneratedFiles": [],
     "scaffoldedFiles": [],
     "preservedScaffoldFiles": [
       "custom/build-runtime.mjs",
@@ -82,7 +82,7 @@
     "schemaVersion": 1,
     "areas": [
       "api-surface",
-      "models"
+      "documentation"
     ],
     "details": [
       {
@@ -92,35 +92,25 @@
         ]
       },
       {
-        "area": "models",
+        "area": "documentation",
         "paths": [
-          "src/types/customerservice-tickets-attachments-register-response201.ts",
-          "src/types/customerservice-tickets-create-response201.ts",
-          "src/types/customerservice-tickets-messages-create-response201.ts",
-          "src/types/customerservice-tickets-retrieve-response.ts",
-          "src/types/index.ts",
-          "src/types/ticket-attachment-list-response.ts",
-          "src/types/ticket-attachment-response.ts",
-          "src/types/ticket-detail-response.ts",
-          "src/types/ticket-list-response.ts",
-          "src/types/ticket-message-list-response.ts",
-          "src/types/ticket-message-response.ts"
+          "README.md"
         ]
       }
     ],
     "requiresVerification": true,
-    "summary": "Detected impact areas: api-surface, models. Verification is required."
+    "summary": "Detected impact areas: api-surface, documentation. Verification is required."
   },
   "verificationPlan": {
     "shouldRun": true,
     "runPhase": "now",
-    "summary": "Detected impact areas: api-surface, models. Verification is required. Run the required verification commands now against the generated SDK output.",
+    "summary": "Detected impact areas: api-surface, documentation. Verification is required. Run the required verification commands now against the generated SDK output.",
     "steps": [
       {
         "id": "check",
         "title": "Unified package check",
         "required": true,
-        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, models.",
+        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, documentation.",
         "workingDirectory": "E:\\sdkwork-space\\sdkwork-customerservice\\sdks\\sdkwork-customerservice-app-sdk\\sdkwork-customerservice-app-sdk-typescript\\generated\\server-openapi",
         "command": "node",
         "args": [
@@ -138,7 +128,7 @@
         "id": "build",
         "title": "Unified package build",
         "required": true,
-        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, models.",
+        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, documentation.",
         "workingDirectory": "E:\\sdkwork-space\\sdkwork-customerservice\\sdks\\sdkwork-customerservice-app-sdk\\sdkwork-customerservice-app-sdk-typescript\\generated\\server-openapi",
         "command": "node",
         "args": [
@@ -156,14 +146,12 @@
   },
   "executionDecision": {
     "schemaVersion": 1,
-    "riskLevel": "high",
+    "riskLevel": "medium",
     "nextAction": "verify",
     "requiresManualReview": false,
     "applyRequiresExpectedFingerprint": false,
     "summary": "Changes have been applied. Run the required verification plan now.",
     "reasons": [
-      "deleted-generated-files",
-      "manual-review-required",
       "verification-required"
     ]
   },

@@ -1,7 +1,7 @@
 import { backendApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { AccountRuntimeStatus, AutoReplyRuleSummary, ChannelAccountSummary, CreateAutoReplyRuleRequest, CreateChannelAccountRequest, DeliveryBlockRuleCatalogEntry, DeliveryBlockRuleSummary, PageInfo, RegisterChannelCredentialRequest, SdkWorkCommandData, UpdateAutoReplyRuleRequest, UpdateChannelAccountRequest, UpsertDeliveryBlockRulesRequest } from '../types';
+import type { AccountRuntimeStatus, AutoReplyRuleSummary, ChannelAccountSummary, CreateAutoReplyRuleRequest, CreateChannelAccountRequest, CustomerserviceChannelsAdminAccountsListPageData, CustomerserviceChannelsAdminAutoReplyRulesListPageData, CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData, CustomerserviceChannelsAdminDeliveryBlockRulesListPageData, CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData, RegisterChannelCredentialRequest, SdkWorkCommandData, UpdateAutoReplyRuleRequest, UpdateChannelAccountRequest, UpsertDeliveryBlockRulesRequest } from '../types';
 
 
 export interface CustomerServiceChannelsAdminCustomerserviceChannelsAdminDeliveryBlockRulesCatalogParams {
@@ -16,19 +16,19 @@ export class CustomerServiceChannelsAdminCustomerserviceChannelsAdminDeliveryBlo
   }
 
 
-async catalog(params: CustomerServiceChannelsAdminCustomerserviceChannelsAdminDeliveryBlockRulesCatalogParams): Promise<Record<string, unknown>> {
+async catalog(params: CustomerServiceChannelsAdminCustomerserviceChannelsAdminDeliveryBlockRulesCatalogParams): Promise<CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData> {
     const query = buildQueryString([
       { name: 'pluginCode', value: params.pluginCode, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<Record<string, unknown>>(appendQueryString(backendApiPath(`/customer_services/channels/delivery_block_rules/catalog`), query));
+    return this.client.get<CustomerserviceChannelsAdminDeliveryBlockRulesCatalogPageData>(appendQueryString(backendApiPath(`/customer_services/channels/delivery_block_rules/catalog`), query));
   }
 
-async list(accountId: string): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(backendApiPath(`/customer_services/channels/accounts/${serializePathParameter(accountId, { name: 'accountId', style: 'simple', explode: false })}/delivery_block_rules`));
+async list(accountId: string): Promise<CustomerserviceChannelsAdminDeliveryBlockRulesListPageData> {
+    return this.client.get<CustomerserviceChannelsAdminDeliveryBlockRulesListPageData>(backendApiPath(`/customer_services/channels/accounts/${serializePathParameter(accountId, { name: 'accountId', style: 'simple', explode: false })}/delivery_block_rules`));
   }
 
-async upsert(accountId: string, body: UpsertDeliveryBlockRulesRequest): Promise<Record<string, unknown>> {
-    return this.client.put<Record<string, unknown>>(backendApiPath(`/customer_services/channels/accounts/${serializePathParameter(accountId, { name: 'accountId', style: 'simple', explode: false })}/delivery_block_rules`), body, undefined, undefined, 'application/json');
+async upsert(accountId: string, body: UpsertDeliveryBlockRulesRequest): Promise<CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData> {
+    return this.client.put<CustomerserviceChannelsAdminDeliveryBlockRulesUpsertPageData>(backendApiPath(`/customer_services/channels/accounts/${serializePathParameter(accountId, { name: 'accountId', style: 'simple', explode: false })}/delivery_block_rules`), body, undefined, undefined, 'application/json');
   }
 }
 
@@ -47,14 +47,14 @@ export class CustomerServiceChannelsAdminCustomerserviceChannelsAdminAutoReplyRu
   }
 
 
-async list(params?: CustomerServiceChannelsAdminCustomerserviceChannelsAdminAutoReplyRulesListParams): Promise<Record<string, unknown>> {
+async list(params?: CustomerServiceChannelsAdminCustomerserviceChannelsAdminAutoReplyRulesListParams): Promise<CustomerserviceChannelsAdminAutoReplyRulesListPageData> {
     const query = buildQueryString([
       { name: 'pluginCode', value: params?.pluginCode, style: 'form', explode: true, allowReserved: false },
       { name: 'accountId', value: params?.accountId, style: 'form', explode: true, allowReserved: false },
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'pageSize', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<Record<string, unknown>>(appendQueryString(backendApiPath(`/customer_services/channels/auto_reply_rules`), query));
+    return this.client.get<CustomerserviceChannelsAdminAutoReplyRulesListPageData>(appendQueryString(backendApiPath(`/customer_services/channels/auto_reply_rules`), query));
   }
 
 async create(body: CreateAutoReplyRuleRequest): Promise<AutoReplyRuleSummary> {
@@ -122,13 +122,13 @@ export class CustomerServiceChannelsAdminCustomerserviceChannelsAdminAccountsApi
   }
 
 
-async list(params?: CustomerServiceChannelsAdminCustomerserviceChannelsAdminAccountsListParams): Promise<Record<string, unknown>> {
+async list(params?: CustomerServiceChannelsAdminCustomerserviceChannelsAdminAccountsListParams): Promise<CustomerserviceChannelsAdminAccountsListPageData> {
     const query = buildQueryString([
       { name: 'pluginCode', value: params?.pluginCode, style: 'form', explode: true, allowReserved: false },
       { name: 'page', value: params?.page, style: 'form', explode: true, allowReserved: false },
       { name: 'pageSize', value: params?.pageSize, style: 'form', explode: true, allowReserved: false },
     ]);
-    return this.client.get<Record<string, unknown>>(appendQueryString(backendApiPath(`/customer_services/channels/accounts`), query));
+    return this.client.get<CustomerserviceChannelsAdminAccountsListPageData>(appendQueryString(backendApiPath(`/customer_services/channels/accounts`), query));
   }
 
 async create(body: CreateChannelAccountRequest): Promise<ChannelAccountSummary> {

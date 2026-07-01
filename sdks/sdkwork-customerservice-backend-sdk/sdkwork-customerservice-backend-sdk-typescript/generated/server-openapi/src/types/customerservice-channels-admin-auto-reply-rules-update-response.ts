@@ -1,8 +1,8 @@
-import type { AutoReplyRuleSummary } from './auto-reply-rule-summary';
+import type { CustomerserviceChannelsAdminAutoReplyRulesUpdateResourceData } from './customerservice-channels-admin-auto-reply-rules-update-resource-data';
 
 export interface CustomerserviceChannelsAdminAutoReplyRulesUpdateResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerserviceChannelsAdminAutoReplyRulesUpdateResourceData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

@@ -31,7 +31,7 @@ test("shared client-core package exists", () => {
     existsSync(
       path.join(
         root,
-        "packages/common/customerservice/sdkwork-customerservice-client-core/src/index.ts",
+        "apps/sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core/src/index.ts",
       ),
     ),
   );
@@ -42,7 +42,7 @@ test("operator admin surfaces are wired in client-core and PC shell", () => {
     existsSync(
       path.join(
         root,
-        "packages/common/customerservice/sdkwork-customerservice-client-core/src/services/ticketAdminService.ts",
+        "apps/sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core/src/services/ticketAdminService.ts",
       ),
     ),
   );

@@ -6,11 +6,13 @@ use sdkwork_utils_rust::{
     SdkWorkApiResponse, SdkWorkCommandData, SdkWorkProblemDetail, SdkWorkResourceData,
     SdkWorkResultCode, SDKWORK_TRACE_ID_HEADER,
 };
-use sdkwork_web_core::new_request_id;
+use sdkwork_web_core::{new_request_id, WebRequestContext};
 use serde::Serialize;
 
-fn resolved_trace_id() -> String {
-    new_request_id()
+pub fn resolved_trace_id(web_context: Option<&WebRequestContext>) -> String {
+    web_context
+        .map(WebRequestContext::resolved_trace_id)
+        .unwrap_or_else(new_request_id)
 }
 
 fn attach_trace_header(response: &mut Response, trace_id: &str) {
@@ -21,16 +23,12 @@ fn attach_trace_header(response: &mut Response, trace_id: &str) {
     }
 }
 
-fn success_json<T: Serialize>(status: StatusCode, data: T) -> Response {
-    let trace_id = resolved_trace_id();
-    let envelope = SdkWorkApiResponse::success(data, trace_id.clone());
-    let mut response = (status, Json(envelope)).into_response();
-    attach_trace_header(&mut response, &trace_id);
-    response
-}
-
-fn problem(status_code: SdkWorkResultCode, detail: impl Into<String>) -> Response {
-    let trace_id = resolved_trace_id();
+fn problem(
+    status_code: SdkWorkResultCode,
+    detail: impl Into<String>,
+    web_context: Option<&WebRequestContext>,
+) -> Response {
+    let trace_id = resolved_trace_id(web_context);
     let problem = SdkWorkProblemDetail::platform(status_code, detail, trace_id.clone());
     let status = StatusCode::from_u16(problem.status).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
     let mut response = (status, Json(problem)).into_response();
@@ -42,41 +40,95 @@ fn problem(status_code: SdkWorkResultCode, detail: impl Into<String>) -> Respons
     response
 }
 
-pub fn ok_resource<T: Serialize>(item: T) -> Response {
-    success_json(StatusCode::OK, SdkWorkResourceData { item })
+fn success_json<T: Serialize>(
+    status: StatusCode,
+    data: T,
+    web_context: Option<&WebRequestContext>,
+) -> Response {
+    let trace_id = resolved_trace_id(web_context);
+    let envelope = SdkWorkApiResponse::success(data, trace_id.clone());
+    let mut response = (status, Json(envelope)).into_response();
+    attach_trace_header(&mut response, &trace_id);
+    response
 }
 
-pub fn ok_command() -> Response {
-    success_json(StatusCode::OK, SdkWorkCommandData::accepted())
+pub fn ok_resource<T: Serialize>(item: T, web_context: Option<&WebRequestContext>) -> Response {
+    success_json(StatusCode::OK, SdkWorkResourceData { item }, web_context)
 }
 
-pub fn service_error(error: CustomerServiceError) -> Response {
+pub fn ok_command(web_context: Option<&WebRequestContext>) -> Response {
+    success_json(StatusCode::OK, SdkWorkCommandData::accepted(), web_context)
+}
+
+pub fn service_error(
+    error: CustomerServiceError,
+    web_context: Option<&WebRequestContext>,
+) -> Response {
     match error {
         CustomerServiceError::Validation(message) => {
-            problem(SdkWorkResultCode::ValidationError, message)
+            problem(SdkWorkResultCode::ValidationError, message, web_context)
         }
-        CustomerServiceError::NotFound(message) => problem(SdkWorkResultCode::NotFound, message),
+        CustomerServiceError::NotFound(message) => {
+            problem(SdkWorkResultCode::NotFound, message, web_context)
+        }
         CustomerServiceError::Forbidden(message) => {
-            problem(SdkWorkResultCode::PermissionRequired, message)
+            problem(SdkWorkResultCode::PermissionRequired, message, web_context)
         }
         CustomerServiceError::Persistence(message) => {
-            problem(SdkWorkResultCode::InternalError, message)
+            problem(SdkWorkResultCode::InternalError, message, web_context)
         }
     }
 }
 
-pub fn bad_request(message: &str) -> Response {
-    problem(SdkWorkResultCode::ValidationError, message.to_owned())
+pub fn bad_request(message: &str, web_context: Option<&WebRequestContext>) -> Response {
+    problem(
+        SdkWorkResultCode::ValidationError,
+        message.to_owned(),
+        web_context,
+    )
 }
 
-pub fn not_found(message: &str) -> Response {
-    problem(SdkWorkResultCode::NotFound, message.to_owned())
+pub fn unauthorized(message: &str, web_context: Option<&WebRequestContext>) -> Response {
+    problem(
+        SdkWorkResultCode::AuthenticationRequired,
+        message.to_owned(),
+        web_context,
+    )
 }
 
-pub fn conflict(message: &str) -> Response {
-    problem(SdkWorkResultCode::Conflict, message.to_owned())
+pub fn not_found(message: &str, web_context: Option<&WebRequestContext>) -> Response {
+    problem(SdkWorkResultCode::NotFound, message.to_owned(), web_context)
 }
 
-pub fn internal_error(message: impl Into<String>) -> Response {
-    problem(SdkWorkResultCode::InternalError, message)
+pub fn conflict(message: &str, web_context: Option<&WebRequestContext>) -> Response {
+    problem(SdkWorkResultCode::Conflict, message.to_owned(), web_context)
+}
+
+pub fn service_unavailable(message: &str, web_context: Option<&WebRequestContext>) -> Response {
+    problem(
+        SdkWorkResultCode::ServiceUnavailable,
+        message.to_owned(),
+        web_context,
+    )
+}
+
+pub fn runtime_error(
+    error: sdkwork_communication_customerservice_plugin_runtime::PluginRuntimeError,
+    web_context: Option<&WebRequestContext>,
+) -> Response {
+    match error {
+        sdkwork_communication_customerservice_plugin_runtime::PluginRuntimeError::AccountNotFound => {
+            not_found("channel account not found", web_context)
+        }
+        sdkwork_communication_customerservice_plugin_runtime::PluginRuntimeError::RuntimeNotActive => {
+            conflict("account runtime is not active", web_context)
+        }
+        sdkwork_communication_customerservice_plugin_runtime::PluginRuntimeError::SessionNotConfigured(
+            message,
+        ) => bad_request(&message, web_context),
+        sdkwork_communication_customerservice_plugin_runtime::PluginRuntimeError::PluginNotFound(
+            message,
+        ) => bad_request(&message, web_context),
+        other => problem(SdkWorkResultCode::InternalError, other.to_string(), web_context),
+    }
 }

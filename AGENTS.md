@@ -9,9 +9,44 @@ Read `../sdkwork-specs/SOUL.md` before executing tasks in this root.
 - `../sdkwork-specs/README.md`
 - `../sdkwork-specs/SOUL.md`
 - `../sdkwork-specs/AGENTS_SPEC.md`
+- `../sdkwork-specs/DEPENDENCY_MANAGEMENT_SPEC.md`
+- `../sdkwork-specs/SDKWORK_WORKSPACE_SPEC.md`
 - `../sdkwork-specs/WEB_FRAMEWORK_SPEC.md`
 - `../sdkwork-specs/DATABASE_FRAMEWORK_SPEC.md`
 - `../sdkwork-specs/DRIVE_SPEC.md`
+
+## Dependency And Workspace Rules
+
+Sibling SDKWork packages (`@sdkwork/drive-app-sdk`, `@sdkwork/iam-app-sdk`, `@sdkwork/utils`, generated SDKs, etc.) **MUST** follow `DEPENDENCY_MANAGEMENT_SPEC.md`:
+
+- Declare each sibling source path **once** in repository-root `pnpm-workspace.yaml` `packages:` (materialized from `sdkwork-specs/workspace/consumers/sdkwork-customerservice.json` via `sync-workspace.mjs`).
+- Member `package.json` files **MUST** consume SDKWork siblings with `workspace:*` only.
+- **Forbidden:** `file:` / `link:` on SDKWork cross-workspace sources, or redeclaring sibling paths inside member packages.
+
+When adding or changing SDK dependencies:
+
+```bash
+# 1. Update sdkwork-specs/workspace/consumers/sdkwork-customerservice.json
+node ../sdkwork-specs/tools/sync-workspace.mjs --repo sdkwork-customerservice --root .
+node ../tools/sync-workspace-catalog.mjs --target sdkwork-customerservice   # from sdkwork-space root when catalog drift
+pnpm install
+pnpm run check:workspace
+```
+
+`pnpm run check:workspace` runs (in order): `sync-workspace --check`, `check-workspace-member-protocol`, `check-workspace-federation-paths`, `check-workspace-lock-package-paths`. These gates are also included in `pnpm check` / `pnpm verify` through `check:app-composition` (`verify-repo.mjs` includes member-protocol checks).
+
+Do not bypass federation failures with ad-hoc `file:` paths. Extend the consumer overlay and transitive workspace members instead (see `sdkwork-im` for Drive + IAM federation reference).
+
+## Integration Resolution Order
+
+When debugging 401/404 across PC/H5 shells and the Rust gateway:
+
+1. **Topology** — confirm `specs/topology.spec.json` profile and `configs/topology/*.env` axes (`application` vs `platform` URLs).
+2. **Archetype** — customerservice is `application-http-gateway`; customerservice routes live on application ingress, IAM/Drive on platform gateway.
+3. **Dev proxy** — PC/H5 Vite uses `buildCustomerServiceViteDevProxy()`; SDK base URLs become same-origin relative in dev unless `VITE_SDKWORK_CUSTOMER_SERVICE_VITE_DEV_PROXY_ENABLED=false`.
+4. **IAM** — PC uses `/auth/login` (`appAuthRuntime`); dual-token (`accessToken` + `authToken`) required for backend/app SDK calls.
+5. **Gateway** — `pnpm start` serves customerservice only; run platform gateway on `3900` for IAM/Drive or expect 404 on those planes.
+6. **Validate** — `pnpm topology:validate`, `pnpm verify`, `node ../sdkwork-specs/tools/check-api-response-envelope.mjs --workspace .`
 
 ## Application Identity
 
@@ -34,7 +69,14 @@ This repository root is the communication **customerservice** capability workspa
 
 ```bash
 pnpm verify
+pnpm run check:workspace
 pnpm db:validate
+```
+
+Postgres integration (CI / pre-release with database):
+
+```bash
+pnpm test:postgres:required
 ```
 
 ## Documentation Canon

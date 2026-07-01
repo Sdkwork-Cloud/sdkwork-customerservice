@@ -23,3 +23,40 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Verify standards alignment
         run: pnpm verify
+
+  postgres-integration:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sdkwork_customerservice
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d sdkwork_customerservice"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      CUSTOMER_SERVICE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/sdkwork_customerservice
+      CUSTOMER_SERVICE_DATABASE_ENGINE: postgres
+      SDKWORK_CUSTOMER_SERVICE_DATABASE_AUTO_MIGRATE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Bootstrap PostgreSQL schema
+        run: pnpm db:bootstrap
+      - name: Postgres repository integration tests
+        run: pnpm test:postgres

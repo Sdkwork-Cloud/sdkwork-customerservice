@@ -13,7 +13,8 @@
     "@sdkwork/customerservice-h5-shell": "workspace:*",
     "@sdkwork/utils": "workspace:*",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "catalog:"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

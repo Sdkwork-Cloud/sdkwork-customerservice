@@ -1,22 +1,24 @@
-use axum::extract::{Path, State};
+use axum::extract::{Extension, Path, State};
+use axum::http::HeaderMap;
 use axum::response::{IntoResponse, Response};
 use axum::routing::{get, post};
 use axum::{Json, Router};
-use sdkwork_communication_customerservice_plugin_runtime::{
-    PluginRuntimeError, SendChannelTextCommand,
-};
+use sdkwork_communication_customerservice_plugin_runtime::SendChannelTextCommand;
 use sdkwork_communication_customerservice_plugin_spi::{
     DeliveryAction, DeliveryCheckContext, OrderContext,
 };
 use sdkwork_customerservice_service_host::CustomerServiceHost;
+use sdkwork_web_core::WebRequestContext;
 use serde::Deserialize;
 use std::sync::Arc;
 use uuid::Uuid;
 
 use crate::ingress_auth::with_ingress_auth;
 use crate::response::{
-    bad_request, conflict, internal_error, not_found, ok_resource, service_error,
+    bad_request, ok_resource, runtime_error, service_error, service_unavailable,
 };
+
+const TENANT_HEADER: &str = "x-sdkwork-tenant-id";
 
 #[derive(Clone)]
 struct InternalState {
@@ -66,70 +68,131 @@ pub fn internal_customerservice_router(host: Arc<CustomerServiceHost>) -> Router
     )
 }
 
+fn web_ctx(context: &Option<Extension<WebRequestContext>>) -> Option<&WebRequestContext> {
+    context.as_ref().map(|extension| &extension.0)
+}
+
+fn tenant_id_from_headers(headers: &HeaderMap) -> Option<Uuid> {
+    let raw = headers
+        .get(TENANT_HEADER)
+        .and_then(|value| value.to_str().ok())
+        .map(str::trim)
+        .filter(|value| !value.is_empty())?;
+    Uuid::parse_str(raw).ok()
+}
+
+async fn require_account_for_tenant(
+    state: &InternalState,
+    tenant_id: Uuid,
+    account_id: Uuid,
+    plugin_code: &str,
+    web: Option<&WebRequestContext>,
+) -> Result<(), Response> {
+    let account = state
+        .host
+        .service()
+        .require_channel_account_for_tenant(tenant_id, account_id)
+        .await
+        .map_err(|error| service_error(error, web))?;
+    if account.plugin_code != plugin_code {
+        return Err(bad_request("pluginCode does not match account plugin", web).into_response());
+    }
+    Ok(())
+}
+
 async fn start_account(
     State(state): State<InternalState>,
+    headers: HeaderMap,
+    web_context: Option<Extension<WebRequestContext>>,
     Path((plugin_code, account_id)): Path<(String, Uuid)>,
 ) -> Response {
+    let web = web_ctx(&web_context);
     if plugin_code.trim().is_empty() {
-        return bad_request("pluginCode is required");
+        return bad_request("pluginCode is required", web);
+    }
+    let Some(tenant_id) = tenant_id_from_headers(&headers) else {
+        return bad_request("x-sdkwork-tenant-id header is required", web);
+    };
+    if let Err(response) =
+        require_account_for_tenant(&state, tenant_id, account_id, &plugin_code, web).await
+    {
+        return response;
     }
     match state.host.plugin_runtime().start_account(account_id).await {
-        Ok(data) => {
-            if data.plugin_code != plugin_code {
-                return bad_request("pluginCode does not match account plugin");
-            }
-            ok_resource(data).into_response()
-        }
-        Err(error) => runtime_error(error),
+        Ok(data) => ok_resource(data, web).into_response(),
+        Err(error) => runtime_error(error, web),
     }
 }
 
 async fn stop_account(
     State(state): State<InternalState>,
+    headers: HeaderMap,
+    web_context: Option<Extension<WebRequestContext>>,
     Path((plugin_code, account_id)): Path<(String, Uuid)>,
 ) -> Response {
+    let web = web_ctx(&web_context);
     if plugin_code.trim().is_empty() {
-        return bad_request("pluginCode is required");
+        return bad_request("pluginCode is required", web);
+    }
+    let Some(tenant_id) = tenant_id_from_headers(&headers) else {
+        return bad_request("x-sdkwork-tenant-id header is required", web);
+    };
+    if let Err(response) =
+        require_account_for_tenant(&state, tenant_id, account_id, &plugin_code, web).await
+    {
+        return response;
     }
     match state.host.plugin_runtime().stop_account(account_id).await {
-        Ok(data) => {
-            if data.plugin_code != plugin_code {
-                return bad_request("pluginCode does not match account plugin");
-            }
-            ok_resource(data).into_response()
-        }
-        Err(error) => runtime_error(error),
+        Ok(data) => ok_resource(data, web).into_response(),
+        Err(error) => runtime_error(error, web),
     }
 }
 
 async fn account_status(
     State(state): State<InternalState>,
+    headers: HeaderMap,
+    web_context: Option<Extension<WebRequestContext>>,
     Path((plugin_code, account_id)): Path<(String, Uuid)>,
 ) -> Response {
+    let web = web_ctx(&web_context);
     if plugin_code.trim().is_empty() {
-        return bad_request("pluginCode is required");
+        return bad_request("pluginCode is required", web);
+    }
+    let Some(tenant_id) = tenant_id_from_headers(&headers) else {
+        return bad_request("x-sdkwork-tenant-id header is required", web);
+    };
+    if let Err(response) =
+        require_account_for_tenant(&state, tenant_id, account_id, &plugin_code, web).await
+    {
+        return response;
     }
     match state.host.plugin_runtime().status(account_id).await {
-        Ok(data) => {
-            if data.plugin_code != plugin_code {
-                return bad_request("pluginCode does not match account plugin");
-            }
-            ok_resource(data).into_response()
-        }
-        Err(error) => runtime_error(error),
+        Ok(data) => ok_resource(data, web).into_response(),
+        Err(error) => runtime_error(error, web),
     }
 }
 
 async fn send_message(
     State(state): State<InternalState>,
+    headers: HeaderMap,
+    web_context: Option<Extension<WebRequestContext>>,
     Path((plugin_code, account_id)): Path<(String, Uuid)>,
     Json(body): Json<SendMessageBody>,
 ) -> Response {
+    let web = web_ctx(&web_context);
     if plugin_code.trim().is_empty() {
-        return bad_request("pluginCode is required");
+        return bad_request("pluginCode is required", web);
     }
     if body.external_conversation_id.trim().is_empty() || body.body.trim().is_empty() {
-        return bad_request("externalConversationId and body are required");
+        return bad_request("externalConversationId and body are required", web);
+    }
+    let Some(tenant_id) = tenant_id_from_headers(&headers) else {
+        return bad_request("x-sdkwork-tenant-id header is required", web);
+    };
+    if let Err(response) =
+        require_account_for_tenant(&state, tenant_id, account_id, &plugin_code, web).await
+    {
+        return response;
     }
     match state
         .host
@@ -142,37 +205,43 @@ async fn send_message(
         })
         .await
     {
-        Ok(external_message_id) => {
-            ok_resource(serde_json::json!({ "externalMessageId": external_message_id }))
-                .into_response()
-        }
-        Err(error) => runtime_error(error),
+        Ok(external_message_id) => ok_resource(
+            serde_json::json!({ "externalMessageId": external_message_id }),
+            web,
+        )
+        .into_response(),
+        Err(error) => runtime_error(error, web),
     }
 }
 
 async fn delivery_pre_check(
     State(state): State<InternalState>,
+    headers: HeaderMap,
+    web_context: Option<Extension<WebRequestContext>>,
     Path((plugin_code, account_id)): Path<(String, Uuid)>,
     Json(body): Json<DeliveryPreCheckBody>,
 ) -> Response {
+    let web = web_ctx(&web_context);
     if plugin_code.trim().is_empty() {
-        return bad_request("pluginCode is required");
+        return bad_request("pluginCode is required", web);
     }
     if body.external_order_id.trim().is_empty() {
-        return bad_request("externalOrderId is required");
+        return bad_request("externalOrderId is required", web);
     }
+    let Some(tenant_id) = tenant_id_from_headers(&headers) else {
+        return bad_request("x-sdkwork-tenant-id header is required", web);
+    };
     let account = match state
         .host
         .service()
-        .get_channel_account_by_id(account_id)
+        .require_channel_account_for_tenant(tenant_id, account_id)
         .await
     {
-        Ok(Some(account)) => account,
-        Ok(None) => return not_found("channel account not found"),
-        Err(error) => return service_error(error),
+        Ok(account) => account,
+        Err(error) => return service_error(error, web),
     };
     if account.plugin_code != plugin_code {
-        return bad_request("pluginCode does not match account plugin");
+        return bad_request("pluginCode does not match account plugin", web);
     }
     let ctx = DeliveryCheckContext {
         tenant_id: account.tenant_id,
@@ -187,11 +256,14 @@ async fn delivery_pre_check(
         excluded_external_item_ids: Vec::new(),
     };
     match state.host.plugin_ports().run_delivery_pre_check(&ctx).await {
-        Ok(action) => ok_resource(serde_json::json!({
-            "action": delivery_action_name(action),
-        }))
+        Ok(action) => ok_resource(
+            serde_json::json!({
+                "action": delivery_action_name(action),
+            }),
+            web,
+        )
         .into_response(),
-        Err(error) => bad_request(&error.to_string()).into_response(),
+        Err(error) => bad_request(&error.to_string(), web).into_response(),
     }
 }
 
@@ -203,12 +275,7 @@ fn delivery_action_name(action: DeliveryAction) -> &'static str {
     }
 }
 
-fn runtime_error(error: PluginRuntimeError) -> Response {
-    match error {
-        PluginRuntimeError::AccountNotFound => not_found("channel account not found"),
-        PluginRuntimeError::RuntimeNotActive => conflict("account runtime is not active"),
-        PluginRuntimeError::SessionNotConfigured(message) => bad_request(&message),
-        PluginRuntimeError::PluginNotFound(message) => bad_request(&message),
-        other => internal_error(other.to_string()),
-    }
+#[allow(dead_code)]
+fn unavailable(message: &str, web: Option<&WebRequestContext>) -> Response {
+    service_unavailable(message, web)
 }

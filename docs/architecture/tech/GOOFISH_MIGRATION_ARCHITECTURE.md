@@ -79,12 +79,12 @@ Host **never** imports Goofish protocol crates. Plugin **never** writes ticket t
 | H5 | `apps/sdkwork-customerservice-h5` | backend-api (mobile operator) + app-api (end-user mode) | Mobile operator / buyer |
 | Flutter | `apps/sdkwork-customerservice-flutter` | app-api (+ backend for operator build) | Native mobile |
 
-All three HTTP surfaces (app / backend / internal) serialize success as `SdkWorkApiResponse` and errors as `ProblemDetail`. OpenAPI contracts are normalized via `tools/customerservice_openapi_align.mjs` during `pnpm api:materialize`.
+All three HTTP surfaces (app / backend / internal) serialize success as `SdkWorkApiResponse` and errors as `ProblemDetail`. OpenAPI contracts are normalized and aligned via `tools/customerservice_openapi_align.mjs` (typed list/resource envelopes, domain `required` fields, legacy wrapper removal) during `pnpm api:materialize`.
 
 Shared packages:
 
 ```text
-packages/common/customerservice/
+apps/sdkwork-customerservice-common/packages/
   sdkwork-customerservice-contracts/    # DTOs, labels
   sdkwork-customerservice-service/      # formatters, demo data
   sdkwork-customerservice-client-core/  # API URL, SDK factories (all web clients)

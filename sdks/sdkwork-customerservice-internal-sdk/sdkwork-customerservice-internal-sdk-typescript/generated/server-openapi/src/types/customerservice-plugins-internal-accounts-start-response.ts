@@ -1,8 +1,8 @@
-import type { AccountRuntimeStatus } from './account-runtime-status';
+import type { CustomerservicePluginsInternalAccountsStartResourceData } from './customerservice-plugins-internal-accounts-start-resource-data';
 
 export interface CustomerservicePluginsInternalAccountsStartResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & CustomerservicePluginsInternalAccountsStartResourceData;
   /** Server-owned request correlation id. */
   traceId: string;
 }

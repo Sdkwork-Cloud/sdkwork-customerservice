@@ -32,9 +32,13 @@
     }
   },
   "dependencies": {
+    "@sdkwork/auth-runtime-pc-react": "workspace:*",
     "@sdkwork/customerservice-client-core": "workspace:*",
     "@sdkwork/customerservice-contracts": "workspace:*",
     "@sdkwork/customerservice-service": "workspace:*",
+    "@sdkwork/drive-app-sdk": "workspace:*",
+    "@sdkwork/iam-app-sdk": "workspace:*",
+    "@sdkwork/iam-contracts": "workspace:*",
     "@sdkwork/sdk-common": "workspace:*",
     "@sdkwork/utils": "workspace:*",
     "sdkwork-customerservice-app-sdk-generated-typescript": "workspace:*",
