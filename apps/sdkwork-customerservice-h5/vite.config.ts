@@ -43,13 +43,13 @@ export default defineConfig(({ mode }) => {
           __dirname,
           "../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/src/index.ts",
         ),
-        "sdkwork-customerservice-app-sdk-generated-typescript": path.resolve(
+        "@sdkwork/customerservice-app-sdk": path.resolve(
           __dirname,
-          "../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript/generated/server-openapi/src/index.ts",
+          "../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript/src/index.ts",
         ),
-        "sdkwork-customerservice-backend-sdk-generated-typescript": path.resolve(
+        "@sdkwork/customerservice-backend-sdk": path.resolve(
           __dirname,
-          "../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript/generated/server-openapi/src/index.ts",
+          "../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript/src/index.ts",
         ),
       },
     },

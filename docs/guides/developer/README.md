@@ -9,6 +9,12 @@ Local setup, verification, and release gates for `sdkwork-customerservice`.
 - PostgreSQL 16 (local or Docker)
 - Sibling SDKWork repositories materialized per workspace overlay (`../sdkwork-database`, `../sdkwork-web-framework`, `../sdkwork-iam`, `../sdkwork-utils`, etc.)
 
+Isolated CI checkouts materialize siblings automatically:
+
+```bash
+pnpm run workflow:prepare-ci-dependencies
+```
+
 From repository root:
 
 ```bash
@@ -30,8 +36,9 @@ Development defaults live in `configs/topology/standalone.unified-process.develo
 | Command | Purpose |
 | --- | --- |
 | `pnpm verify` | Full standards gate (OpenAPI, SDK, topology, Rust tests, clippy, Node contracts) |
-| `pnpm test:postgres` | Postgres repository integration (`#[ignore]` tests; requires migrated DB) |
+| `pnpm test:postgres` | Postgres repository + gateway HTTP integration (`#[ignore]` tests; requires migrated DB) |
 | `pnpm test:postgres:required` | Same as above but fails when `CUSTOMER_SERVICE_DATABASE_URL` is unset (CI/release) |
+| `pnpm smoke:gateway` | Post-deploy infra smoke (`/healthz`, `/readyz`, `/metrics`; optional app-api list with `CUSTOMER_SERVICE_SMOKE_*`) |
 
 ## Local dev servers
 
@@ -47,8 +54,9 @@ IAM login and Drive require the platform API gateway on `127.0.0.1:3900` (see `c
 
 `.github/workflows/governance.yml` runs:
 
-1. `pnpm verify` on every PR/push to `main`
-2. `postgres-integration` job — Postgres 16 service, `pnpm db:bootstrap`, `pnpm test:postgres`
+1. `pnpm run workflow:prepare-ci-dependencies` — clone sibling SDKWork repos from `sdkwork.workflow.json`
+2. `pnpm verify` on every PR/push to `main`
+3. `postgres-integration` job — Postgres 16 service, `pnpm db:bootstrap`, `pnpm test:postgres`
 
 Release workflow (`sdkwork.workflow.json`) runs `pnpm test:postgres:required` in the `validate` lifecycle when packaging with a configured database URL.
 

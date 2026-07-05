@@ -7,7 +7,7 @@ export {
   type TicketAdminListParams,
 } from "@sdkwork/customerservice-client-core";
 
-import type { SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
+import type { SdkworkAppClient } from "@sdkwork/customerservice-app-sdk";
 
 export async function registerTicketAttachmentMetadata(
   appClient: SdkworkAppClient,

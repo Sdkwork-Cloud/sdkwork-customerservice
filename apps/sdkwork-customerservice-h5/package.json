@@ -22,5 +22,12 @@
     "@vitejs/plugin-react": "^5.1.0",
     "typescript": "^6.0.2",
     "vite": "^7.2.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   }
 }

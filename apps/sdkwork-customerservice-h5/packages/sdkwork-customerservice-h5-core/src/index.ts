@@ -1,4 +1,4 @@
-import { createClient, type SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
+import { createClient, type SdkworkAppClient } from "@sdkwork/customerservice-app-sdk";
 import { createClient as createDriveClient, type SdkworkDriveAppClient } from "@sdkwork/drive-app-sdk";
 import {
   buildOperatorSdkHeaders,

@@ -6,7 +6,7 @@ import type {
   TicketMessage,
   TicketSummary,
 } from "@sdkwork/customerservice-contracts";
-import type { SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
+import type { SdkworkAppClient } from "@sdkwork/customerservice-app-sdk";
 
 export interface TicketAppListParams {
   status?: string;

@@ -11,8 +11,10 @@
     "build": "pnpm --dir apps/sdkwork-customerservice-pc build",
     "start": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server",
     "test": "pnpm test:node && cargo test --workspace",
-    "test:postgres": "cargo test -p sdkwork-communication-customerservice-repository-sqlx --test postgres_ticket_repository -- --ignored --nocapture",
+    "test:postgres": "cargo test -p sdkwork-communication-customerservice-repository-sqlx --test postgres_ticket_repository -p sdkwork-customerservice-gateway-assembly --test postgres_http_integration -- --ignored --nocapture",
     "test:postgres:required": "node tools/customerservice_postgres_test_required.mjs",
+    "smoke:gateway": "node tools/customerservice_gateway_smoke.mjs",
+    "workflow:prepare-ci-dependencies": "node scripts/prepare-ci-dependencies.mjs",
     "gateway:assembly:materialize": "node scripts/gateway/assembly-materialize.mjs",
     "gateway:assembly:validate": "node scripts/gateway/assembly-validate.mjs",
     "test:node": "node --test tests/static/*.test.mjs tests/contract/*.test.mjs",
@@ -48,5 +50,12 @@
   "devDependencies": {
     "@types/node": "^25.5.2",
     "typescript": "^6.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   }
 }

@@ -3,11 +3,11 @@ import { createClient as createDriveClient } from "@sdkwork/drive-app-sdk";
 import {
   createClient as createAppClient,
   type SdkworkAppClient,
-} from "sdkwork-customerservice-app-sdk-generated-typescript";
+} from "@sdkwork/customerservice-app-sdk";
 import {
   createClient as createBackendClient,
   type SdkworkBackendClient,
-} from "sdkwork-customerservice-backend-sdk-generated-typescript";
+} from "@sdkwork/customerservice-backend-sdk";
 import {
   resolveCustomerServiceApiBaseUrl,
   resolveDriveApiBaseUrl,

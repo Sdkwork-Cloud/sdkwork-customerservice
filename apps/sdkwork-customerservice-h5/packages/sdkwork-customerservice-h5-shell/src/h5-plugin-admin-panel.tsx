@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 import type { PluginCatalogEntry } from "@sdkwork/customerservice-contracts";
 import {
   formatSdkError,

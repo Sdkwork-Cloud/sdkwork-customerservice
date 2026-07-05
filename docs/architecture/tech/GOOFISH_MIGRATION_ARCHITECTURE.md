@@ -1,7 +1,7 @@
 # Goofish (闲鱼) Migration Architecture
 
-- Version: 1.1.0
-- Status: active (P1 complete, P2 partial)
+- Version: 1.2.0
+- Status: active — **launch scope complete** for core tickets + channel plugin host; live Goofish WebSocket worker remains post-launch (see PRD non-goals)
 - Reference: `external/xianyu-auto-reply` (read-only; not imported at runtime)
 - Target: `sdkwork-customerservice` communication/customerservice capability
 
@@ -77,7 +77,7 @@ Host **never** imports Goofish protocol crates. Plugin **never** writes ticket t
 | --- | --- | --- | --- |
 | PC | `apps/sdkwork-customerservice-pc` | backend-api (+ app-api attachments) | Operator / seller admin |
 | H5 | `apps/sdkwork-customerservice-h5` | backend-api (mobile operator) + app-api (end-user mode) | Mobile operator / buyer |
-| Flutter | `apps/sdkwork-customerservice-flutter` | app-api (+ backend for operator build) | Native mobile |
+| Flutter | `apps/sdkwork-customerservice-flutter` | app-api (+ backend for operator build) | Native mobile (post-launch placeholder) |
 
 All three HTTP surfaces (app / backend / internal) serialize success as `SdkWorkApiResponse` and errors as `ProblemDetail`. OpenAPI contracts are normalized and aligned via `tools/customerservice_openapi_align.mjs` (typed list/resource envelopes, domain `required` fields, legacy wrapper removal) during `pnpm api:materialize`.
 
@@ -96,9 +96,10 @@ Surface packages (`pc-core`, `h5-core`) add session model and feature modules on
 
 | Phase | Deliverable | Status |
 | --- | --- | --- |
-| P1 | Migration spec, plugin runtime scaffold, overlay DDL, client-core, H5/Flutter init, channel account create API | **done** |
-| P2 | WebSocket worker + ingest (base64 + MessagePack sync decrypt) + runtime control; inbound pipeline; real LWP outbound; PC/H5 operator admin (tickets, channels, auto-reply, delivery block rules); DB-backed delivery rule evaluation + tenant plugin enablement | **partial** (buyer_credit external API + auto-delivery remain) |
-| P3 | Delivery rules CRUD, order sync, card overlay APIs, real Goofish outbound protocol | planned |
+| P1 | Migration spec, plugin runtime crate, overlay DDL, client-core, H5 init, channel account create API | **done** (launch) |
+| P2 (launch) | PC/H5 operator admin (tickets, channels, auto-reply, delivery block rules); DB-backed delivery rule evaluation + tenant plugin enablement; internal worker control API + ingress auth | **done** (launch) |
+| P2 (post-launch) | Live Goofish WebSocket worker + production inbound/outbound pipeline; buyer_credit external API; auto-delivery execution | **planned** (PRD non-goals for current release) |
+| P3 | Delivery rules CRUD extensions, order sync, card overlay APIs, real Goofish outbound protocol hardening | planned |
 | P4 | Scheduler parity, AI reply, publish/monitor (optional product modules) | planned |
 
 ## 7. Inbound pipeline (implemented)
@@ -118,7 +119,8 @@ GoofishWebSocketWorker
 ```bash
 pnpm plugin:validate
 pnpm verify
-cargo test -p sdkwork-customerservice-plugin-goofish-runtime
+pnpm test:postgres          # when CUSTOMER_SERVICE_DATABASE_URL is configured
+cargo test -p sdkwork-customerservice-plugin-goofish
 ```
 
 ## 9. References

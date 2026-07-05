@@ -8,6 +8,9 @@ entries:
   - id: guides.developer
     path: docs/guides/developer/README.md
     kind: guide
+  - id: architecture.goofish-migration
+    path: docs/architecture/tech/GOOFISH_MIGRATION_ARCHITECTURE.md
+    kind: architecture
   - id: runbooks.customerservice-operations
     path: docs/runbooks/customerservice-operations.md
     kind: runbook

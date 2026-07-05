@@ -29,5 +29,74 @@
   "generatorName": "@sdkwork/sdk-generator",
   "generatorEntryPoint": "E:\\sdkwork-space\\sdkwork-sdk-generator\\bin\\sdkgen.js",
   "standardProfile": "sdkwork-v3",
-  "ownerOnlyOperationCount": 7
+  "ownerOnlyOperationCount": 7,
+  "packageName": "@sdkwork/customerservice-app-sdk",
+  "transportPackageName": "sdkwork-customerservice-app-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-customerservice-app-sdk-typescript",
+    "composedEntry": "sdkwork-customerservice-app-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-customerservice-app-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-customerservice-app-sdk-typescript/generated/server-openapi/src/index.ts"
+  },
+  "workspace": "sdkwork-customerservice-app-sdk",
+  "authoritySpec": "openapi/sdkwork-customerservice-app-api.openapi.json",
+  "derivedSpecs": {
+    "default": "openapi/sdkwork-customerservice-app-api.sdkgen.json"
+  },
+  "discoverySurface": {
+    "sdkTarget": "app",
+    "apiPrefix": "/app/v3/api",
+    "generatedProtocols": [
+      "http-openapi"
+    ],
+    "manualTransports": []
+  },
+  "languages": [
+    {
+      "language": "typescript",
+      "workspace": "sdkwork-customerservice-app-sdk-typescript",
+      "generationState": "declared",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-customerservice-app-sdk-typescript/generated/server-openapi",
+      "version": "0.1.0",
+      "consumerPackageName": "@sdkwork/sdkwork-customerservice-app-sdk",
+      "transportPackageName": "sdkwork-customerservice-app-sdk-generated-typescript"
+    },
+    {
+      "language": "rust",
+      "workspace": "sdkwork-customerservice-app-sdk-rust",
+      "generationState": "declared",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-customerservice-app-sdk-rust/generated/server-openapi",
+      "name": "sdkwork-customerservice-app-sdk",
+      "version": "0.1.0"
+    },
+    {
+      "language": "java",
+      "workspace": "sdkwork-customerservice-app-sdk-java",
+      "generationState": "declared",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-customerservice-app-sdk-java/generated/server-openapi",
+      "name": "com.sdkwork:sdkwork-customerservice-app-sdk",
+      "version": "0.1.0"
+    },
+    {
+      "language": "python",
+      "workspace": "sdkwork-customerservice-app-sdk-python",
+      "generationState": "declared",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-customerservice-app-sdk-python/generated/server-openapi",
+      "name": "sdkwork-customerservice-app-sdk",
+      "version": "0.1.0"
+    },
+    {
+      "language": "go",
+      "workspace": "sdkwork-customerservice-app-sdk-go",
+      "generationState": "declared",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-customerservice-app-sdk-go/generated/server-openapi",
+      "name": "github.com/sdkwork/sdkwork-customerservice-app-sdk",
+      "version": "0.1.0"
+    }
+  ]
 }

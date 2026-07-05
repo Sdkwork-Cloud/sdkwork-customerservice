@@ -37,7 +37,7 @@ Deliver a **communication / customerservice** capability for SDKWork tenants: se
 ## Acceptance
 
 - `pnpm verify` passes (deploy, OpenAPI, SDK, database, topology, gateway assembly, envelope check, TypeScript, Rust tests)
-- `pnpm test:postgres` passes when `CUSTOMER_SERVICE_DATABASE_URL` points at a migrated database
+- `pnpm test:postgres` passes when `CUSTOMER_SERVICE_DATABASE_URL` points at a migrated database (11 integration tests: repository persistence + gateway HTTP for app-api, backend-api, and internal ingress auth)
 - CI `postgres-integration` job and `pnpm test:postgres:required` pass on release pipelines with Postgres
 - `pnpm db:materialize:contract` keeps `contract/table-registry.json` aligned with `contract/schema.yaml`
 - OpenAPI authorities under `apis/` match route handlers (`pnpm api:check`)

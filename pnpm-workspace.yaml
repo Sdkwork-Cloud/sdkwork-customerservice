@@ -19,8 +19,8 @@ packages:
   - "../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-runtime-pc-react"
   - "../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-iam-react"
   - "../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-credential-entry"
-  - "../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi"
-  - "../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi"
+  - "../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript"
+  - "../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript"
   - "../sdkwork-appbase/packages/common/foundation/sdkwork-runtime-bootstrap"
   - "../sdkwork-appbase/packages/pc-react/foundation/sdkwork-appbase-pc-react"
   - "../sdkwork-appbase/packages/pc-react/foundation/sdkwork-i18n-pc-react"
@@ -31,12 +31,6 @@ packages:
   - "../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript"
 
 catalog:
-  react: ^19.2.4
-  react-dom: ^19.2.4
-  typescript: ~6.0.2
-  vite: ^8.0.3
-  "@types/react": ^19.2.14
-  "@types/react-dom": ^19.2.3
   "@monaco-editor/react": ^4.7.0
   "@playwright/test": ^1.52.0
   "@radix-ui/react-avatar": ^1.1.11
@@ -99,6 +93,8 @@ catalog:
   "@types/markdown-it": ^14.1.2
   "@types/node": ^25.9.2
   "@types/qrcode": ^1.5.6
+  "@types/react": ^19.2.14
+  "@types/react-dom": ^19.2.3
   "@vitejs/plugin-react": ^6.0.1
   "@xterm/addon-fit": ^0.11.0
   "@xterm/addon-image": ^0.9.0
@@ -124,6 +120,8 @@ catalog:
   motion: ^12.23.24
   postcss: ^8.5.8
   qrcode: ^1.5.4
+  react: ^19.2.4
+  react-dom: ^19.2.4
   react-hook-form: ^7.72.1
   react-i18next: ^17.0.7
   react-markdown: ^10.1.0
@@ -135,6 +133,8 @@ catalog:
   tailwindcss-animate: ^1.0.7
   tsup: ^8.5.0
   tsx: ^4.21.0
+  typescript: ~6.0.2
+  vite: ^8.0.3
   vite-plugin-dts: ^4.5.4
   vitest: ^4.1.8
   zustand: ^5.0.12

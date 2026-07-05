@@ -4,7 +4,7 @@ import type {
   TicketSummary,
   UpdateTicketRequest,
 } from "@sdkwork/customerservice-contracts";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 
 export interface TicketAdminListParams {
   status?: string;

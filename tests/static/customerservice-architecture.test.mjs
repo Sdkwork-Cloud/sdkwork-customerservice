@@ -99,6 +99,17 @@ test("plugin system migration DDL exists", () => {
 test("deploy manifest and workflow contract exist", () => {
   assert.ok(readFileSync(path.join(root, "deployments/deploy.yaml"), "utf8").includes("cloud.split-services.production"));
   assert.ok(readFileSync(path.join(root, "sdkwork.workflow.json"), "utf8").includes("sdkwork-customerservice"));
+  assert.ok(existsSync(path.join(root, ".github/workflows/package.yml")));
+  const envExample = readFileSync(path.join(root, ".env.example"), "utf8");
+  assert.match(envExample, /CUSTOMER_SERVICE_CREDENTIAL_MASTER_KEY/);
+  assert.match(envExample, /SDKWORK_CUSTOMERSERVICE_INGRESS_TOKEN/);
+  const techArch = readFileSync(path.join(root, "docs/architecture/tech/TECH_ARCHITECTURE.md"), "utf8");
+  assert.match(techArch, /Launch readiness/);
+  const runbook = readFileSync(path.join(root, "docs/runbooks/customerservice-operations.md"), "utf8");
+  assert.match(runbook, /Pre-launch checklist/);
+  assert.ok(existsSync(path.join(root, "tools/customerservice_gateway_smoke.mjs")));
+  const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
+  assert.ok(pkg.scripts?.["smoke:gateway"]);
 });
 
 test("OpenAPI list responses use named page schemas for SDK typing", () => {
@@ -170,5 +181,7 @@ test("contracts package re-exports generated SDK domain types", () => {
   );
   assert.match(contracts, /sdkwork-customerservice-backend-sdk-generated-typescript/);
   assert.match(contracts, /sdkwork-customerservice-app-sdk-generated-typescript/);
+  assert.match(contracts, /TICKET_STATUS_OPTIONS/);
+  assert.match(contracts, /TICKET_PRIORITY_OPTIONS/);
   assert.doesNotMatch(contracts, /interface TicketSummary/);
 });

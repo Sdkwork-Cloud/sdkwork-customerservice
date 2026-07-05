@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { TicketDetail, TicketMessage, TicketSummary } from "@sdkwork/customerservice-contracts";
+import { TICKET_PRIORITY_OPTIONS, TICKET_STATUS_OPTIONS } from "@sdkwork/customerservice-contracts";
 import {
   formatTicketHeadline,
   formatTicketPriority,
@@ -12,11 +13,8 @@ import {
   sendOperatorTicketMessage,
   updateOperatorTicket,
 } from "@sdkwork/customerservice-client-core";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 import type { OperatorSession } from "@sdkwork/customerservice-h5-core";
-
-const STATUS_OPTIONS = ["open", "pending", "resolved", "closed"] as const;
-const PRIORITY_OPTIONS = ["low", "normal", "high", "urgent"] as const;
 
 interface H5TicketWorkbenchPanelProps {
   session: OperatorSession | null;
@@ -102,7 +100,7 @@ export function H5TicketWorkbenchPanel({ session, backendClient }: H5TicketWorkb
           aria-label="Filter by status"
         >
           <option value="">All statuses</option>
-          {STATUS_OPTIONS.map((status) => (
+          {TICKET_STATUS_OPTIONS.map((status) => (
             <option key={status} value={status}>
               {formatTicketStatus(status)}
             </option>
@@ -141,7 +139,7 @@ export function H5TicketWorkbenchPanel({ session, backendClient }: H5TicketWorkb
               }
               aria-label="Ticket status"
             >
-              {STATUS_OPTIONS.map((status) => (
+              {TICKET_STATUS_OPTIONS.map((status) => (
                 <option key={status} value={status}>
                   {formatTicketStatus(status)}
                 </option>
@@ -156,7 +154,7 @@ export function H5TicketWorkbenchPanel({ session, backendClient }: H5TicketWorkb
               }
               aria-label="Ticket priority"
             >
-              {PRIORITY_OPTIONS.map((priority) => (
+              {TICKET_PRIORITY_OPTIONS.map((priority) => (
                 <option key={priority} value={priority}>
                   {formatTicketPriority(priority)}
                 </option>

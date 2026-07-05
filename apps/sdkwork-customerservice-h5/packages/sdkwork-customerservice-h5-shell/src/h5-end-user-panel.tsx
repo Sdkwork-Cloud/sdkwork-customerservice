@@ -11,7 +11,7 @@ import {
   sendMyTicketMessage,
 } from "@sdkwork/customerservice-client-core";
 import { formatTicketHeadline, formatTicketRow } from "@sdkwork/customerservice-service";
-import type { SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
+import type { SdkworkAppClient } from "@sdkwork/customerservice-app-sdk";
 import {
   createEndUserDriveAttachmentUploadPort,
   type EndUserSession,

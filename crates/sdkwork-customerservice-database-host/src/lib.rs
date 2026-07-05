@@ -71,3 +71,6 @@ fn resolve_app_root() -> PathBuf {
                 .unwrap_or_else(|_| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../.."))
         })
 }
+
+#[cfg(feature = "test-support")]
+pub mod testing;

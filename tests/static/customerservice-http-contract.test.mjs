@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
@@ -119,17 +119,41 @@ test("backend routes include HTTP integration tests with memory repository", () 
 });
 
 test("postgres repository integration tests are defined", () => {
-  const source = readFileSync(
+  const repoSource = readFileSync(
     path.join(
       repoRoot,
       "crates/sdkwork-communication-customerservice-repository-sqlx/tests/postgres_ticket_repository.rs",
     ),
     "utf8",
   );
-  assert.match(source, /postgres_retrieve_ticket_isolates_requester/);
-  assert.match(source, /postgres_retrieve_ticket_isolates_tenant/);
+  assert.match(repoSource, /postgres_retrieve_ticket_isolates_requester/);
+  assert.match(repoSource, /postgres_retrieve_ticket_isolates_tenant/);
+  const httpSource = readFileSync(
+    path.join(
+      repoRoot,
+      "crates/sdkwork-customerservice-gateway-assembly/tests/postgres_http_integration.rs",
+    ),
+    "utf8",
+  );
+  assert.match(httpSource, /postgres_gateway_create_ticket_returns_sdkwork_envelope/);
+  assert.match(httpSource, /postgres_gateway_retrieve_hides_ticket_from_other_requester/);
+  assert.match(httpSource, /postgres_gateway_backend_list_and_retrieve_ticket/);
+  assert.match(httpSource, /postgres_gateway_backend_retrieve_hides_ticket_from_other_tenant/);
+  assert.match(httpSource, /postgres_gateway_internal_missing_ingress_token_returns_401/);
+  assert.match(httpSource, /postgres_gateway_internal_valid_ingress_requires_tenant_header/);
+  assert.match(httpSource, /postgres_gateway_internal_valid_ingress_and_tenant_reaches_service_layer/);
+  assert.match(httpSource, /assemble_application_router/);
+  const bootstrapSource = readFileSync(
+    path.join(
+      repoRoot,
+      "crates/sdkwork-customerservice-database-host/src/testing/postgres_integration.rs",
+    ),
+    "utf8",
+  );
+  assert.match(bootstrapSource, /try_bootstrap_database_host/);
   const pkg = JSON.parse(readFileSync(path.join(repoRoot, "package.json"), "utf8"));
   assert.match(pkg.scripts["test:postgres"], /--ignored/);
+  assert.match(pkg.scripts["test:postgres"], /postgres_http_integration/);
   assert.match(pkg.scripts["test:postgres:required"], /customerservice_postgres_test_required/);
 });
 
@@ -142,6 +166,38 @@ test("governance workflow runs postgres integration job", () => {
   assert.match(source, /image: postgres:16/);
   assert.match(source, /pnpm db:bootstrap/);
   assert.match(source, /pnpm test:postgres/);
+  assert.match(source, /workflow:prepare-ci-dependencies/);
+});
+
+test("CI materializes sibling SDKWork repositories from sdkwork.workflow.json", () => {
+  assert.ok(
+    existsSync(path.join(repoRoot, "scripts/prepare-ci-dependencies.mjs")),
+    "scripts/prepare-ci-dependencies.mjs must exist",
+  );
+  const materializer = readFileSync(
+    path.join(repoRoot, "scripts/prepare-ci-dependencies.mjs"),
+    "utf8",
+  );
+  assert.match(materializer, /sdkwork\.workflow\.json/);
+  assert.match(materializer, /path\.resolve\(repoRoot, '\.\.'\)/);
+  assert.match(materializer, /tokenSecret/);
+  const workflow = JSON.parse(readFileSync(path.join(repoRoot, "sdkwork.workflow.json"), "utf8"));
+  const dependencyIds = (workflow.dependencies ?? []).map((dependency) => dependency.id);
+  for (const requiredId of [
+    "sdkwork-database",
+    "sdkwork-web-framework",
+    "sdkwork-iam",
+    "sdkwork-utils",
+    "sdkwork-drive",
+    "sdkwork-core",
+    "sdkwork-ui",
+    "sdkwork-sdk-commons",
+    "sdkwork-specs",
+  ]) {
+    assert.ok(dependencyIds.includes(requiredId), `sdkwork.workflow.json must declare ${requiredId}`);
+  }
+  const pkg = JSON.parse(readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+  assert.match(pkg.scripts["workflow:prepare-ci-dependencies"], /prepare-ci-dependencies\.mjs/);
 });
 
 test("operations runbook documents health probes and failure modes", () => {

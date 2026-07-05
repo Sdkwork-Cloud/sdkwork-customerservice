@@ -1,7 +1,7 @@
 import {
   createClient,
   type SdkworkAppClient,
-} from "sdkwork-customerservice-app-sdk-generated-typescript";
+} from "@sdkwork/customerservice-app-sdk";
 import { createClient as createDriveClient } from "@sdkwork/drive-app-sdk";
 import type { AuthTokenManager } from "@sdkwork/sdk-common";
 

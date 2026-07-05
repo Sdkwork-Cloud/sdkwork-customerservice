@@ -14,7 +14,7 @@ Customer service must support multiple marketplace channels (闲鱼/Goofish, 淘
 - Registry-based delivery rules (`delivery_rules/rule_registry.py`)
 - Host DB models for accounts, keyword rules, delivery block rules, orders
 
-Current customerservice core supports ticket lifecycle with a `channel` field (default `web`). Host plugin tables, SPI traits, `ChannelPluginHost`, and backend catalog/channel list APIs are implemented; marketplace worker plugins (Goofish/Taobao) remain planned adapters.
+Current customerservice core supports ticket lifecycle with a `channel` field (default `web`). Host plugin tables, SPI traits, `ChannelPluginHost`, backend channel/admin APIs, internal worker control APIs, and the Goofish runtime capability crate are implemented for launch. Live marketplace WebSocket workers remain **planned** per PRD non-goals until post-launch adapters land.
 
 ## Decision
 
@@ -46,12 +46,12 @@ Adopt a **host + channel plugin** architecture:
 ### Negative
 
 - Additional tables and migration complexity.
-- Phase 2 requires bridging Python worker or rewriting Goofish protocol in Rust.
+- Phase 2 post-launch requires production Goofish WebSocket worker or Python bridge hardening behind internal control APIs.
 
 ### Follow-up
 
-- Port goofish worker adapter behind `ChannelPluginHost` ports (P2).
-- Add channel account CRUD and internal worker control APIs (P2/P4).
+- **Launch (done):** channel account CRUD, internal worker control APIs, plugin enablement, delivery rule evaluation, PC/H5 operator admin.
+- **Post-launch:** port live Goofish WebSocket worker behind `ChannelPluginHost` ports; buyer_credit external API; auto-delivery execution.
 
 ## Verification
 

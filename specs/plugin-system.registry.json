@@ -8,7 +8,7 @@
     {
       "code": "goofish",
       "displayName": "Goofish / 闲鱼",
-      "status": "scaffold",
+      "status": "planned",
       "packagePath": "plugins/sdkwork-customerservice-plugin-goofish",
       "referenceImplementation": "external/xianyu-auto-reply",
       "capabilities": [

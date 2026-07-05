@@ -3,7 +3,7 @@ import type {
   PluginEnablementSummary,
   SdkworkBackendClient,
   UpsertPluginEnablementRequest,
-} from "sdkwork-customerservice-backend-sdk-generated-typescript";
+} from "@sdkwork/customerservice-backend-sdk";
 
 function pluginsAdmin(client: SdkworkBackendClient) {
   return client.customerServicePluginsAdmin.customerservice.plugins.admin;

@@ -65,8 +65,17 @@ For IAM login and Drive uploads in development, also run the platform API gatewa
 ```bash
 pnpm verify
 pnpm db:drift:check
-curl -fsS http://127.0.0.1:18091/healthz
-curl -fsS http://127.0.0.1:18091/readyz
+pnpm smoke:gateway
+```
+
+Optional authenticated app-api list (requires valid IAM dual-token against the running gateway):
+
+```bash
+export CUSTOMER_SERVICE_SMOKE_AUTH_TOKEN=...
+export CUSTOMER_SERVICE_SMOKE_ACCESS_TOKEN=...
+export CUSTOMER_SERVICE_SMOKE_TENANT_ID=...
+export CUSTOMER_SERVICE_SMOKE_USER_ID=...
+pnpm smoke:gateway
 ```
 
 `pnpm verify` includes:
@@ -85,7 +94,22 @@ pnpm test:postgres
 pnpm test:postgres:required
 ```
 
+Covers repository-layer persistence/isolation and gateway HTTP envelope checks for app-api (create/retrieve IDOR), backend-api (list/retrieve + tenant isolation), and internal-api ingress auth (401/400/404 ProblemDetail).
+
 Requires `CUSTOMER_SERVICE_DATABASE_URL` (see `configs/topology/standalone.unified-process.development.env`).
+
+GitHub Actions (`.github/workflows/governance.yml`) materializes sibling SDKWork repositories via `pnpm run workflow:prepare-ci-dependencies` before install, then runs `pnpm verify` and the `postgres-integration` job.
+
+## Pre-launch checklist
+
+Before first production deploy:
+
+1. `pnpm verify` and `pnpm test:postgres:required` (with migrated Postgres)
+2. Set `CUSTOMER_SERVICE_DATABASE_URL`, `CUSTOMER_SERVICE_CREDENTIAL_MASTER_KEY`, `SDKWORK_CUSTOMERSERVICE_INGRESS_TOKEN` (see [`.env.example`](../../.env.example))
+3. Confirm topology profile URLs (`configs/topology/cloud.split-services.production.env`) for application ingress and platform IAM/Drive gateway
+4. Run `pnpm db:bootstrap` or `pnpm db:migrate` against production database
+5. Run `pnpm smoke:gateway` (infra probes; optional app-api list when `CUSTOMER_SERVICE_SMOKE_*` tokens are set)
+6. Ensure `CUSTOMER_SERVICE_CORS_ALLOW_ALL` is **not** set in production
 
 ## Logs
 

@@ -5,8 +5,8 @@ import type {
   DeliveryBlockRuleCatalogEntry,
   DeliveryBlockRuleSummary,
   SdkWorkCommandData,
-} from "sdkwork-customerservice-backend-sdk-generated-typescript";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+} from "@sdkwork/customerservice-backend-sdk";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 
 function channelsAdmin(client: SdkworkBackendClient) {
   return client.customerServiceChannelsAdmin.customerservice.channels.admin;

@@ -1,12 +1,19 @@
 {
-  "name": "sdkwork-customerservice-app-sdk-generated-typescript",
+  "name": "@sdkwork/customerservice-app-sdk",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./generated/server-openapi/src/index.ts"
+    ".": {
+      "types": "./generated/server-openapi/src/index.ts",
+      "import": "./generated/server-openapi/src/index.ts",
+      "default": "./generated/server-openapi/src/index.ts"
+    }
   },
   "dependencies": {
     "@sdkwork/sdk-common": "workspace:*"
-  }
+  },
+  "main": "./generated/server-openapi/src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts"
 }

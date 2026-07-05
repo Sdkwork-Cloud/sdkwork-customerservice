@@ -1,12 +1,12 @@
 # SDKWork Customer Service Flutter
 
-Mobile native shell for end-user and operator builds (Phase 1 scaffold).
+Mobile native shell placeholder for a future Flutter surface (post-launch).
 
 - App key: `sdkwork-customerservice-flutter`
-- API: app-api via generated Dart SDK (P2)
-- Dev port: N/A (Flutter tooling)
+- API: app-api via generated Dart SDK (planned)
+- Current release scope: PC + H5 operator/end-user consoles (`docs/product/prd/PRD.md`)
 
-Run locally after Flutter SDK install:
+After Flutter SDK install:
 
 ```bash
 cd apps/sdkwork-customerservice-flutter

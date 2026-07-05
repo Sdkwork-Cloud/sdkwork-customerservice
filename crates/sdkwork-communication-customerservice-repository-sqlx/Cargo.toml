@@ -16,9 +16,8 @@ serde_json = { workspace = true }
 sqlx = { workspace = true }
 uuid = { workspace = true }
 sdkwork_communication_customerservice_service = { workspace = true }
-sdkwork_database_sqlx = { workspace = true }
+sdkwork-database-sqlx = { workspace = true }
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
-dotenvy = { workspace = true }
-sdkwork_customerservice_database_host = { workspace = true }
+sdkwork_customerservice_database_host = { workspace = true, features = ["test-support"] }

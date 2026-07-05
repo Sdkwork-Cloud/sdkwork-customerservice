@@ -9,7 +9,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 test("goofish migration architecture doc exists", () => {
   const doc = path.join(root, "docs/architecture/tech/GOOFISH_MIGRATION_ARCHITECTURE.md");
   assert.ok(existsSync(doc));
-  assert.match(readFileSync(doc, "utf8"), /external\/xianyu-auto-reply/);
+  const text = readFileSync(doc, "utf8");
+  assert.match(text, /external\/xianyu-auto-reply/);
+  assert.match(text, /launch scope complete/);
+  assert.doesNotMatch(text, /P2 partial/);
 });
 
 test("goofish plugin runtime crate exposes register factory", () => {

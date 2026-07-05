@@ -114,6 +114,7 @@ pnpm db:validate
 pnpm topology:validate
 pnpm topology:profile:check
 pnpm test:postgres:required
+pnpm smoke:gateway
 node ../sdkwork-specs/tools/check-api-response-envelope.mjs --workspace .
 cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server
 ```
@@ -129,7 +130,11 @@ cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-se
 | Internal ingress | `crates/sdkwork-routes-customerservice-internal-api/src/ingress_auth.rs` |
 | Gateway infra + app mount | `crates/sdkwork-customerservice-gateway-assembly/tests/gateway_infra_contract.rs` |
 | Postgres repository | `crates/sdkwork-communication-customerservice-repository-sqlx/tests/postgres_ticket_repository.rs` |
+| Postgres HTTP (gateway + Sqlx) | `crates/sdkwork-customerservice-gateway-assembly/tests/postgres_http_integration.rs` (app-api + backend-api + internal ingress auth; requester/tenant isolation) |
+| Postgres bootstrap helper | `crates/sdkwork-customerservice-database-host/src/testing/postgres_integration.rs` (`test-support` feature) |
+| CI governance | `.github/workflows/governance.yml` — `workflow:prepare-ci-dependencies`, `pnpm verify` |
 | CI / release Postgres gate | `.github/workflows/governance.yml` (`postgres-integration`), `pnpm test:postgres:required` |
+| Post-deploy gateway smoke | `tools/customerservice_gateway_smoke.mjs` (`pnpm smoke:gateway`) |
 | Node static/contract | `tests/static/*.test.mjs`, `tests/contract/*.test.mjs` |
 
 Service-layer ownership checks reuse `MemoryTicketRepository` from `service/src/testing/`.
@@ -146,3 +151,18 @@ Service-layer ownership checks reuse `MemoryTicketRepository` from `service/src/
 | HTTP metrics | `GET /metrics` exposes `sdkwork_http_requests_total` via `sdkwork-web-bootstrap` |
 
 Application-owned business counters (`customerservice_*`) remain optional until split-service traffic baselines are defined in production.
+
+## Launch readiness
+
+| Area | Release status |
+| --- | --- |
+| Ticket lifecycle (app + backend APIs) | Ready |
+| IAM login (PC/H5) + Drive attachments | Ready |
+| Postgres persistence + 11 integration tests | Ready |
+| CI governance + sibling repo materialize | Ready |
+| Post-deploy gateway smoke (`pnpm smoke:gateway`) | Ready |
+| Channel plugin host + admin APIs | Ready |
+| Goofish live WebSocket worker | Post-launch (PRD non-goal) |
+| Flutter native shell | Post-launch placeholder |
+
+Authority: [docs/product/prd/PRD.md](../../product/prd/PRD.md), [docs/architecture/decisions/ADR-20250627-customerservice-channel-plugin-system.md](../decisions/ADR-20250627-customerservice-channel-plugin-system.md).

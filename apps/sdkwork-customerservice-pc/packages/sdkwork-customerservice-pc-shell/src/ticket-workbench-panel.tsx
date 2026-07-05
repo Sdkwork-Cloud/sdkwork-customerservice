@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { TicketAttachment, TicketDetail, TicketMessage, TicketSummary } from "@sdkwork/customerservice-contracts";
+import { TICKET_PRIORITY_OPTIONS, TICKET_STATUS_OPTIONS } from "@sdkwork/customerservice-contracts";
 import {
   formatSdkError,
   listMyTicketAttachments,
@@ -14,12 +15,9 @@ import {
   formatTicketPriority,
   formatTicketStatus,
 } from "@sdkwork/customerservice-service";
-import type { SdkworkAppClient } from "sdkwork-customerservice-app-sdk-generated-typescript";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+import type { SdkworkAppClient } from "@sdkwork/customerservice-app-sdk";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 import type { OperatorSession } from "@sdkwork/customerservice-pc-core";
-
-const STATUS_OPTIONS = ["open", "pending", "resolved", "closed"] as const;
-const PRIORITY_OPTIONS = ["low", "normal", "high", "urgent"] as const;
 
 interface TicketWorkbenchPanelProps {
   session: OperatorSession | null;
@@ -158,7 +156,7 @@ export function TicketWorkbenchPanel({
           aria-label="Filter by status"
         >
           <option value="">All statuses</option>
-          {STATUS_OPTIONS.map((status) => (
+          {TICKET_STATUS_OPTIONS.map((status) => (
             <option key={status} value={status}>{formatTicketStatus(status)}</option>
           ))}
         </select>
@@ -207,7 +205,7 @@ export function TicketWorkbenchPanel({
                   onChange={(event) => void onUpdateTicket({ status: event.target.value })}
                   aria-label="Ticket status"
                 >
-                  {STATUS_OPTIONS.map((status) => (
+                  {TICKET_STATUS_OPTIONS.map((status) => (
                     <option key={status} value={status}>{formatTicketStatus(status)}</option>
                   ))}
                 </select>
@@ -216,7 +214,7 @@ export function TicketWorkbenchPanel({
                   onChange={(event) => void onUpdateTicket({ priority: event.target.value })}
                   aria-label="Ticket priority"
                 >
-                  {PRIORITY_OPTIONS.map((priority) => (
+                  {TICKET_PRIORITY_OPTIONS.map((priority) => (
                     <option key={priority} value={priority}>{formatTicketPriority(priority)}</option>
                   ))}
                 </select>

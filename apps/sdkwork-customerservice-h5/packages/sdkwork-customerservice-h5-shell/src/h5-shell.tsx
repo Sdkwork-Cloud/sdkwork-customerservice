@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { SdkworkBackendClient } from "sdkwork-customerservice-backend-sdk-generated-typescript";
+import type { SdkworkBackendClient } from "@sdkwork/customerservice-backend-sdk";
 import {
   createCustomerServiceAppClient,
   createCustomerServiceBackendClient,

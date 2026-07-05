@@ -34,6 +34,15 @@ test("plugin registry host tables are declared in schema contract", () => {
   for (const tableName of registry.hostTables ?? []) {
     assert.match(schemaYaml, new RegExp(`name: ${tableName}`));
   }
+  const goofish = (registry.plugins ?? []).find((plugin) => plugin.code === "goofish");
+  const manifest = JSON.parse(
+    readFileSync(
+      path.join(root, "plugins/sdkwork-customerservice-plugin-goofish/sdkwork.plugin.manifest.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(goofish?.status, manifest.plugin?.status, "registry status must match plugin manifest");
+  assert.equal(goofish?.status, "planned");
 });
 
 test("package.json defines full database lifecycle scripts", () => {

@@ -44,16 +44,11 @@ sdkwork-web-bootstrap = { path = "../sdkwork-web-framework/crates/sdkwork-web-bo
 sdkwork-iam-web-adapter = { path = "../sdkwork-iam/crates/sdkwork-iam-web-adapter" }
 sdkwork_iam_context_service = { path = "../sdkwork-iam/crates/sdkwork-iam-context-service", package = "sdkwork-iam-context-service" }
 sdkwork-customerservice-gateway-assembly = { path = "crates/sdkwork-customerservice-gateway-assembly" }
-sdkwork_customerservice_gateway_assembly = { path = "crates/sdkwork-customerservice-gateway-assembly", package = "sdkwork-customerservice-gateway-assembly" }
 sdkwork-database-config = { path = "../sdkwork-database/crates/sdkwork-database-config" }
 sdkwork-database-lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle" }
 sdkwork-database-spi = { path = "../sdkwork-database/crates/sdkwork-database-spi" }
 sdkwork-database-sqlx = { path = "../sdkwork-database/crates/sdkwork-database-sqlx" }
 sdkwork-database-ops-http = { path = "../sdkwork-database/crates/sdkwork-database-ops-http" }
-sdkwork_database_config = { path = "../sdkwork-database/crates/sdkwork-database-config", package = "sdkwork-database-config" }
-sdkwork_database_lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle", package = "sdkwork-database-lifecycle" }
-sdkwork_database_spi = { path = "../sdkwork-database/crates/sdkwork-database-spi", package = "sdkwork-database-spi" }
-sdkwork_database_sqlx = { path = "../sdkwork-database/crates/sdkwork-database-sqlx", package = "sdkwork-database-sqlx" }
 sdkwork_utils_rust = { path = "../sdkwork-utils/packages/sdkwork-utils-rust", package = "sdkwork-utils-rust" }
 sdkwork_communication_customerservice_service = { path = "crates/sdkwork-communication-customerservice-service", package = "sdkwork-communication-customerservice-service" }
 sdkwork_communication_customerservice_repository_sqlx = { path = "crates/sdkwork-communication-customerservice-repository-sqlx", package = "sdkwork-communication-customerservice-repository-sqlx" }

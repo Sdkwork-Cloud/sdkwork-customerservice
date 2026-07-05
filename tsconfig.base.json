@@ -7,8 +7,8 @@
     "baseUrl": ".",
     "paths": {
       "@sdkwork/utils": ["../sdkwork-utils/packages/sdkwork-utils-typescript/src/index.ts"],
-      "@sdkwork/iam-app-sdk": ["../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi/src/index.ts"],
-      "@sdkwork/iam-backend-sdk": ["../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi/src/index.ts"],
+      "@sdkwork/iam-app-sdk": ["../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"],
+      "@sdkwork/iam-backend-sdk": ["../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"],
       "@sdkwork/auth-pc-react": ["../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-pc-react/src/index.ts"],
       "@sdkwork/auth-runtime-pc-react": ["../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-runtime-pc-react/src/index.ts"],
       "@sdkwork/iam-runtime": ["../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-runtime/src/index.ts"],
@@ -24,8 +24,8 @@
       "@sdkwork/customerservice-h5-core": ["apps/sdkwork-customerservice-h5/packages/sdkwork-customerservice-h5-core/src/index.ts"],
       "@sdkwork/customerservice-h5-shell": ["apps/sdkwork-customerservice-h5/packages/sdkwork-customerservice-h5-shell/src/index.tsx"],
       "@sdkwork/drive-app-sdk": ["../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript/src/index.ts"],
-      "sdkwork-customerservice-app-sdk-generated-typescript": ["sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript/generated/server-openapi/src/index.ts"],
-      "sdkwork-customerservice-backend-sdk-generated-typescript": ["sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript/generated/server-openapi/src/index.ts"]
+      "@sdkwork/customerservice-app-sdk": ["sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript/src/index.ts"],
+      "@sdkwork/customerservice-backend-sdk": ["sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript/src/index.ts"]
     },
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",

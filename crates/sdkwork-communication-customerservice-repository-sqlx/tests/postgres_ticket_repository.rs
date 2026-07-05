@@ -1,44 +1,18 @@
-use std::path::PathBuf;
-
 use sdkwork_communication_customerservice_repository_sqlx::SqlxCustomerServiceRepository;
-use sdkwork_communication_customerservice_service::{
-    CreateTicketCommand, CustomerServiceError, CustomerServiceService,
-};
+use sdkwork_communication_customerservice_service::CustomerServiceService;
 use sdkwork_customerservice_database_host::{
-    bootstrap_customerservice_database_from_env, CustomerServiceDatabaseHost,
+    testing::postgres_integration, CustomerServiceDatabaseHost,
 };
-use uuid::Uuid;
-
-fn app_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../..")
-        .canonicalize()
-        .unwrap_or_else(|_| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../.."))
-}
-
-async fn try_bootstrap() -> Option<CustomerServiceDatabaseHost> {
-    if std::env::var("CUSTOMER_SERVICE_DATABASE_URL").is_err() {
-        return None;
-    }
-
-    std::env::set_var("SDKWORK_CUSTOMER_SERVICE_APP_ROOT", app_root());
-    std::env::set_var("SDKWORK_CUSTOMER_SERVICE_DATABASE_AUTO_MIGRATE", "true");
-    let _ = dotenvy::dotenv();
-
-    match bootstrap_customerservice_database_from_env().await {
-        Ok(host) => Some(host),
-        Err(error) => {
-            eprintln!("SKIP postgres integration: bootstrap failed: {error}");
-            None
-        }
-    }
-}
 
 fn service(
     host: &CustomerServiceDatabaseHost,
 ) -> CustomerServiceService<SqlxCustomerServiceRepository> {
     let repository = SqlxCustomerServiceRepository::new(host.pool().clone());
     CustomerServiceService::new(repository)
+}
+
+async fn try_bootstrap() -> Option<CustomerServiceDatabaseHost> {
+    postgres_integration::try_bootstrap_database_host().await
 }
 
 #[tokio::test]
@@ -48,9 +22,10 @@ async fn postgres_create_ticket_persists_and_lists_for_requester() {
         eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
         return;
     };
+    use sdkwork_communication_customerservice_service::CreateTicketCommand;
     let service = service(&host);
-    let tenant_id = Uuid::new_v4();
-    let requester_user_id = Uuid::new_v4();
+    let tenant_id = uuid::Uuid::new_v4();
+    let requester_user_id = uuid::Uuid::new_v4();
 
     let created = service
         .create_ticket(CreateTicketCommand {
@@ -83,10 +58,13 @@ async fn postgres_retrieve_ticket_isolates_requester() {
         eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
         return;
     };
+    use sdkwork_communication_customerservice_service::{
+        CreateTicketCommand, CustomerServiceError,
+    };
     let service = service(&host);
-    let tenant_id = Uuid::new_v4();
-    let owner_id = Uuid::new_v4();
-    let other_id = Uuid::new_v4();
+    let tenant_id = uuid::Uuid::new_v4();
+    let owner_id = uuid::Uuid::new_v4();
+    let other_id = uuid::Uuid::new_v4();
 
     let created = service
         .create_ticket(CreateTicketCommand {
@@ -114,10 +92,13 @@ async fn postgres_retrieve_ticket_isolates_tenant() {
         eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
         return;
     };
+    use sdkwork_communication_customerservice_service::{
+        CreateTicketCommand, CustomerServiceError,
+    };
     let service = service(&host);
-    let tenant_a = Uuid::new_v4();
-    let tenant_b = Uuid::new_v4();
-    let requester_user_id = Uuid::new_v4();
+    let tenant_a = uuid::Uuid::new_v4();
+    let tenant_b = uuid::Uuid::new_v4();
+    let requester_user_id = uuid::Uuid::new_v4();
 
     let created = service
         .create_ticket(CreateTicketCommand {

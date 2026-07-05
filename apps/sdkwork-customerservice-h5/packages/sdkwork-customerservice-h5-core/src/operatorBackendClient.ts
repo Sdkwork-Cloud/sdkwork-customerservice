@@ -1,7 +1,7 @@
 import {
   createClient,
   type SdkworkBackendClient,
-} from "sdkwork-customerservice-backend-sdk-generated-typescript";
+} from "@sdkwork/customerservice-backend-sdk";
 import type { AuthTokenManager } from "@sdkwork/sdk-common";
 import {
   buildOperatorSdkHeaders,

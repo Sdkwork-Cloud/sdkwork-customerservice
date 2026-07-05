@@ -1645,7 +1645,6 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
- "dotenvy",
  "sdkwork-communication-customerservice-service",
  "sdkwork-customerservice-database-host",
  "sdkwork-database-sqlx",
@@ -1686,7 +1685,9 @@ name = "sdkwork-customerservice-gateway-assembly"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "dotenvy",
  "sdkwork-communication-customerservice-service",
+ "sdkwork-customerservice-database-host",
  "sdkwork-customerservice-service-host",
  "sdkwork-database-sqlx",
  "sdkwork-iam-context-service",
