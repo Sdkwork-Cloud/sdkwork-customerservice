@@ -53,7 +53,6 @@ fn require_host(
 #[serde(rename_all = "camelCase")]
 struct AdminListQuery {
     page: Option<u32>,
-    #[serde(alias = "limit")]
     page_size: Option<u32>,
     status: Option<String>,
 }

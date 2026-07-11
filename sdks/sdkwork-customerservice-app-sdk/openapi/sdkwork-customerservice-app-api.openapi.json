@@ -55,7 +55,7 @@
             }
           },
           {
-            "name": "pageSize",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -64,7 +64,7 @@
             }
           },
           {
-            "name": "limit",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",

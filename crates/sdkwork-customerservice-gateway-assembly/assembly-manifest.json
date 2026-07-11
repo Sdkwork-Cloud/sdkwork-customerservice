@@ -4,7 +4,7 @@
   "applicationCode": "customerservice",
   "packageName": "sdkwork-customerservice-gateway-assembly",
   "crateDir": "crates/sdkwork-customerservice-gateway-assembly",
-  "generatedAt": "2026-06-27T10:27:14.351Z",
+  "generatedAt": "2026-07-08T01:33:37.446Z",
   "routeCrates": [
     {
       "packageName": "sdkwork-routes-customerservice-app-api",

@@ -10,8 +10,9 @@ name = "sdkwork_customerservice_gateway_assembly"
 path = "src/lib.rs"
 
 [dependencies]
+axum.workspace = true
+tokio = { version = "1.48", features = ["macros", "rt-multi-thread"] }
 axum = { workspace = true }
-tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
 sqlx = { workspace = true }
 sdkwork_customerservice_service_host = { workspace = true }
 sdkwork-database-sqlx = { workspace = true }
@@ -19,12 +20,3 @@ sdkwork-web-bootstrap = { workspace = true }
 sdkwork_routes_customerservice_app_api = { package = "sdkwork-routes-customerservice-app-api", path = "../sdkwork-routes-customerservice-app-api" }
 sdkwork_routes_customerservice_backend_api = { package = "sdkwork-routes-customerservice-backend-api", path = "../sdkwork-routes-customerservice-backend-api" }
 sdkwork_routes_customerservice_internal_api = { package = "sdkwork-routes-customerservice-internal-api", path = "../sdkwork-routes-customerservice-internal-api" }
-
-[dev-dependencies]
-tower = { workspace = true }
-serde_json = { workspace = true }
-uuid = { workspace = true }
-dotenvy = { workspace = true }
-sdkwork_communication_customerservice_service = { workspace = true, features = ["test-support"] }
-sdkwork_customerservice_database_host = { workspace = true, features = ["test-support"] }
-sdkwork_iam_context_service = { workspace = true }

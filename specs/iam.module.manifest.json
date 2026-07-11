@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.iam.module",
+  "moduleId": "customerservice",
+  "domain": "customerservice",
+  "permissions": {
+    "catalog": [
+      {
+        "code": "customerservice.channels.admin.read",
+        "description": "Permission customerservice.channels.admin.read",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.channels.admin.write",
+        "description": "Permission customerservice.channels.admin.write",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.plugins.admin.read",
+        "description": "Permission customerservice.plugins.admin.read",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.plugins.admin.write",
+        "description": "Permission customerservice.plugins.admin.write",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.tickets.admin.read",
+        "description": "Permission customerservice.tickets.admin.read",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.tickets.admin.write",
+        "description": "Permission customerservice.tickets.admin.write",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.tickets.read",
+        "description": "Permission customerservice.tickets.read",
+        "source": "openapi"
+      },
+      {
+        "code": "customerservice.tickets.write",
+        "description": "Permission customerservice.tickets.write",
+        "source": "openapi"
+      }
+    ]
+  }
+}
