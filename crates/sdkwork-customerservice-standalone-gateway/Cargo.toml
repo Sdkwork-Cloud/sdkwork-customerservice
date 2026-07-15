@@ -16,5 +16,7 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true, features = ["env-filter"] }
 tower-http = { workspace = true }
 sdkwork-web-bootstrap = { workspace = true }
+sdkwork-web-axum = { workspace = true }
+sdkwork-web-core = { workspace = true }
 sdkwork-customerservice-gateway-assembly.workspace = true
 sdkwork_customerservice_service_host = { workspace = true }

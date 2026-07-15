@@ -1,7 +1,6 @@
 use sdkwork_customerservice_gateway_assembly::assemble_application_router;
 use sdkwork_customerservice_service_host::CustomerServiceHost;
 use std::sync::Arc;
-use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() {
@@ -14,22 +13,17 @@ async fn main() {
     tracing::info!(service = "customerservice-server", "starting api server");
 
     let host = Arc::new(CustomerServiceHost::new().await);
-    let mut app = assemble_application_router(host).await.router;
-
-    if std::env::var("CUSTOMER_SERVICE_CORS_ALLOW_ALL")
-        .ok()
-        .is_some_and(|value| value == "true" || value == "1")
-    {
-        tracing::warn!(
-            "CUSTOMER_SERVICE_CORS_ALLOW_ALL is enabled; do not use this setting in production"
-        );
-        app = app.layer(
-            CorsLayer::new()
-                .allow_origin(Any)
-                .allow_methods(Any)
-                .allow_headers(Any),
-        );
-    }
+    let environment = sdkwork_web_bootstrap::web_environment_from_env(&[
+        "SDKWORK_CUSTOMER_SERVICE_ENVIRONMENT",
+    ]);
+    let policy = sdkwork_web_bootstrap::security_policy_for_environment(
+        &environment,
+        std::iter::empty(),
+    );
+    let app = assemble_application_router(host)
+        .await
+        .router
+        .layer(sdkwork_web_axum::cors_layer_from_policy(policy.cors));
 
     let addr =
         std::env::var("CUSTOMER_SERVICE_API_BIND").unwrap_or_else(|_| "0.0.0.0:18091".to_owned());

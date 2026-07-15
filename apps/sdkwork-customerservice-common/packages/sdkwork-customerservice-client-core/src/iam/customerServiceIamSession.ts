@@ -38,16 +38,25 @@ export function toOperatorSession(
   });
 }
 
-function browserSessionStorage(): Storage | undefined {
+function browserSessionStorage(storageKey: string): Storage | undefined {
   if (typeof window === "undefined") {
     return undefined;
   }
-  return window.sessionStorage;
+
+  const { fullStorageKey } = createCustomerServiceIamSessionStorageKeys(storageKey);
+  const legacySession = window.sessionStorage.getItem(fullStorageKey);
+  if (legacySession && !window.localStorage.getItem(fullStorageKey)) {
+    window.localStorage.setItem(fullStorageKey, legacySession);
+  }
+  if (legacySession) {
+    window.sessionStorage.removeItem(fullStorageKey);
+  }
+  return window.localStorage;
 }
 
 export function loadCustomerServiceIamSession(storageKey: string): CustomerServiceIamSession | null {
   const { fullStorageKey } = createCustomerServiceIamSessionStorageKeys(storageKey);
-  const storage = browserSessionStorage();
+  const storage = browserSessionStorage(storageKey);
   if (!storage) {
     return null;
   }
@@ -67,7 +76,7 @@ export function saveCustomerServiceIamSession(
   session: CustomerServiceIamSession | null,
 ): void {
   const { operatorStorageKey, fullStorageKey } = createCustomerServiceIamSessionStorageKeys(storageKey);
-  const storage = browserSessionStorage();
+  const storage = browserSessionStorage(storageKey);
   const operator = toOperatorSession(session);
   saveOperatorSessionToStorage(operatorStorageKey, operator);
   if (!storage) {

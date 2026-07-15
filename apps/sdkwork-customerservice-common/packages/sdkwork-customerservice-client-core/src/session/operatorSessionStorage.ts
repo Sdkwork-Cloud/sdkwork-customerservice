@@ -40,10 +40,10 @@ function browserStorage(): Storage | undefined {
   if (typeof window === "undefined") {
     return undefined;
   }
-  return window.sessionStorage;
+  return window.localStorage;
 }
 
-/** Loads IAM session from sessionStorage; migrates legacy localStorage entries once. */
+/** Loads the durable IAM session and migrates legacy tab-scoped entries once. */
 export function loadOperatorSessionFromStorage(storageKey: string): OperatorSession | null {
   const storage = browserStorage();
   if (!storage) {
@@ -51,10 +51,10 @@ export function loadOperatorSessionFromStorage(storageKey: string): OperatorSess
   }
   let raw = storage.getItem(storageKey);
   if (!raw && typeof window !== "undefined") {
-    raw = window.localStorage.getItem(storageKey);
+    raw = window.sessionStorage.getItem(storageKey);
     if (raw) {
       storage.setItem(storageKey, raw);
-      window.localStorage.removeItem(storageKey);
+      window.sessionStorage.removeItem(storageKey);
     }
   }
   if (!raw) {
@@ -78,12 +78,12 @@ export function saveOperatorSessionToStorage(
   if (!session) {
     storage.removeItem(storageKey);
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem(storageKey);
+      window.sessionStorage.removeItem(storageKey);
     }
     return;
   }
   storage.setItem(storageKey, JSON.stringify(session));
   if (typeof window !== "undefined") {
-    window.localStorage.removeItem(storageKey);
+    window.sessionStorage.removeItem(storageKey);
   }
 }
