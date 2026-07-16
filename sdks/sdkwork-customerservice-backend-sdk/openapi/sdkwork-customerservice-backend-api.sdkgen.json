@@ -61,7 +61,7 @@
             }
           },
           {
-            "name": "pageSize",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -310,7 +310,7 @@
         "tags": [
           "customerServicePluginsAdmin"
         ],
-        "operationId": "customerservice.plugins.admin.enablement.upsert",
+        "operationId": "customerservice.plugins.admin.enablement.update",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
@@ -384,7 +384,7 @@
             }
           },
           {
-            "name": "pageSize",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -509,7 +509,7 @@
         "tags": [
           "customerServiceChannelsAdmin"
         ],
-        "operationId": "customerservice.channels.admin.accounts.credentials.register",
+        "operationId": "customerservice.channels.admin.accounts.credentials.create",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
@@ -537,7 +537,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -592,7 +592,7 @@
             }
           },
           {
-            "name": "pageSize",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -733,15 +733,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SdkWorkCommandResponse"
-                }
-              }
-            }
+          "204": {
+            "description": "Success"
           }
         },
         "security": [
@@ -757,7 +750,7 @@
         "tags": [
           "customerServiceChannelsAdmin"
         ],
-        "operationId": "customerservice.channels.admin.deliveryBlockRules.catalog",
+        "operationId": "customerservice.channels.admin.deliveryBlockRules.retrieve",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
@@ -838,7 +831,7 @@
         "tags": [
           "customerServiceChannelsAdmin"
         ],
-        "operationId": "customerservice.channels.admin.deliveryBlockRules.upsert",
+        "operationId": "customerservice.channels.admin.deliveryBlockRules.update",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",
@@ -974,7 +967,7 @@
         "tags": [
           "customerServiceChannelsAdmin"
         ],
-        "operationId": "customerservice.channels.admin.accounts.runtime.status",
+        "operationId": "customerservice.channels.admin.accounts.runtime.retrieve",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-backend-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-backend-api",

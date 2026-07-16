@@ -135,7 +135,7 @@ function componentSpec(family, operations) {
       languages: OFFICIAL_LANGUAGE_ORDER,
       generated: true,
       private: true,
-      manifests: [".sdkwork-assembly.json"],
+      manifests: ["sdk-manifest.json"],
     },
     contracts: {
       publicExports: [],
@@ -165,9 +165,12 @@ function syncFamily(family) {
 
   writeJson(authorityPath, openapi);
   writeJson(sdkgenPath, openapi);
-  writeJson(path.join(familyRoot, ".sdkwork-assembly.json"), {
+  writeJson(path.join(familyRoot, "sdk-manifest.json"), {
     schemaVersion: 1,
     workspace: family.familyName,
+    sdkName: family.familyName,
+    sdkFamily: family.familyName,
+    sdkType: family.sdkType,
     sdkOwner: "sdkwork-customerservice",
     apiAuthority: family.authorityName,
     sourceAuthoritySpec: `../../${family.sourceOpenapi}`,
@@ -183,18 +186,6 @@ function syncFamily(family) {
       manualTransports: [],
     },
     languages: languageEntries(family),
-    sdkDependencies: family.sdkDependencies,
-  });
-  writeJson(path.join(familyRoot, "sdk-manifest.json"), {
-    schemaVersion: 1,
-    sdkName: family.familyName,
-    sdkOwner: "sdkwork-customerservice",
-    apiAuthority: family.authorityName,
-    sdkFamily: family.familyName,
-    sdkType: family.sdkType,
-    apiPrefix: family.apiPrefix,
-    sourceAuthoritySpec: `../../${family.sourceOpenapi}`,
-    generationInputSpec: `openapi/${family.authorityName}.sdkgen.json`,
     sdkDependencies: family.sdkDependencies,
     generatorName: "@sdkwork/sdk-generator",
     generatorEntryPoint: GENERATOR_BIN,

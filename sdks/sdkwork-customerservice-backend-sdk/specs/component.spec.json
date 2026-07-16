@@ -21,7 +21,7 @@
     "generated": true,
     "private": true,
     "manifests": [
-      ".sdkwork-assembly.json"
+      "sdk-manifest.json"
     ]
   },
   "contracts": {
@@ -37,19 +37,19 @@
       "customerservice.channels.admin.accounts.list",
       "customerservice.channels.admin.accounts.create",
       "customerservice.channels.admin.accounts.update",
-      "customerservice.channels.admin.accounts.credentials.register",
+      "customerservice.channels.admin.accounts.credentials.create",
       "customerservice.channels.admin.deliveryBlockRules.list",
-      "customerservice.channels.admin.deliveryBlockRules.upsert",
+      "customerservice.channels.admin.deliveryBlockRules.update",
       "customerservice.channels.admin.accounts.runtime.start",
-      "customerservice.channels.admin.accounts.runtime.status",
+      "customerservice.channels.admin.accounts.runtime.retrieve",
       "customerservice.channels.admin.accounts.runtime.stop",
       "customerservice.channels.admin.autoReplyRules.list",
       "customerservice.channels.admin.autoReplyRules.create",
       "customerservice.channels.admin.autoReplyRules.delete",
       "customerservice.channels.admin.autoReplyRules.update",
-      "customerservice.channels.admin.deliveryBlockRules.catalog",
+      "customerservice.channels.admin.deliveryBlockRules.retrieve",
       "customerservice.plugins.admin.list",
-      "customerservice.plugins.admin.enablement.upsert",
+      "customerservice.plugins.admin.enablement.update",
       "customerservice.tickets.admin.list",
       "customerservice.tickets.admin.retrieve",
       "customerservice.tickets.admin.update",

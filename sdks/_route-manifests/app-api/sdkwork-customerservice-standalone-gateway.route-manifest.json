@@ -42,7 +42,7 @@
     {
       "method": "POST",
       "path": "/app/v3/api/customer_services/tickets/{ticketId}/attachments",
-      "operationId": "customerservice.tickets.attachments.register",
+      "operationId": "customerservice.tickets.attachments.create",
       "apiSurface": "app-api",
       "requestContext": "WebRequestContext"
     },
@@ -119,7 +119,7 @@
     {
       "method": "POST",
       "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/credentials",
-      "operationId": "customerservice.channels.admin.accounts.credentials.register",
+      "operationId": "customerservice.channels.admin.accounts.credentials.create",
       "apiSurface": "backend-api",
       "requestContext": "WebRequestContext"
     },
@@ -154,7 +154,7 @@
     {
       "method": "GET",
       "path": "/backend/v3/api/customer_services/channels/delivery_block_rules/catalog",
-      "operationId": "customerservice.channels.admin.deliveryBlockRules.catalog",
+      "operationId": "customerservice.channels.admin.deliveryBlockRules.retrieve",
       "apiSurface": "backend-api",
       "requestContext": "WebRequestContext"
     },
@@ -168,7 +168,7 @@
     {
       "method": "PUT",
       "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/delivery_block_rules",
-      "operationId": "customerservice.channels.admin.deliveryBlockRules.upsert",
+      "operationId": "customerservice.channels.admin.deliveryBlockRules.update",
       "apiSurface": "backend-api",
       "requestContext": "WebRequestContext"
     },
@@ -189,14 +189,14 @@
     {
       "method": "GET",
       "path": "/backend/v3/api/customer_services/channels/accounts/{accountId}/runtime/status",
-      "operationId": "customerservice.channels.admin.accounts.runtime.status",
+      "operationId": "customerservice.channels.admin.accounts.runtime.retrieve",
       "apiSurface": "backend-api",
       "requestContext": "WebRequestContext"
     },
     {
       "method": "PUT",
       "path": "/backend/v3/api/customer_services/plugins/{pluginCode}/enablement",
-      "operationId": "customerservice.plugins.admin.enablement.upsert",
+      "operationId": "customerservice.plugins.admin.enablement.update",
       "apiSurface": "backend-api",
       "requestContext": "WebRequestContext"
     },

@@ -311,7 +311,7 @@
         "tags": [
           "customerServiceTickets"
         ],
-        "operationId": "customerservice.tickets.attachments.register",
+        "operationId": "customerservice.tickets.attachments.create",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-app-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-app-api",

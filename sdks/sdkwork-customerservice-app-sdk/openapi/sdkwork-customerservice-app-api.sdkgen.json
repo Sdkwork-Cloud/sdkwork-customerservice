@@ -55,7 +55,7 @@
             }
           },
           {
-            "name": "pageSize",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -64,7 +64,7 @@
             }
           },
           {
-            "name": "limit",
+            "name": "page_size",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -311,7 +311,7 @@
         "tags": [
           "customerServiceTickets"
         ],
-        "operationId": "customerservice.tickets.attachments.register",
+        "operationId": "customerservice.tickets.attachments.create",
         "x-sdkwork-owner": "sdkwork-customerservice",
         "x-sdkwork-api-authority": "sdkwork-customerservice-app-api",
         "x-sdkwork-source-route-crate": "sdkwork-routes-customerservice-app-api",

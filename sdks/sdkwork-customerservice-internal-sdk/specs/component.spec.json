@@ -21,7 +21,7 @@
     "generated": true,
     "private": true,
     "manifests": [
-      ".sdkwork-assembly.json"
+      "sdk-manifest.json"
     ]
   },
   "contracts": {

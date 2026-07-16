@@ -21,7 +21,7 @@
     "generated": true,
     "private": true,
     "manifests": [
-      ".sdkwork-assembly.json"
+      "sdk-manifest.json"
     ]
   },
   "contracts": {
@@ -55,7 +55,7 @@
       "customerservice.tickets.create",
       "customerservice.tickets.retrieve",
       "customerservice.tickets.attachments.list",
-      "customerservice.tickets.attachments.register",
+      "customerservice.tickets.attachments.create",
       "customerservice.tickets.messages.list",
       "customerservice.tickets.messages.create"
     ]

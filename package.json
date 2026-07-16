@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev": "pnpm --dir apps/sdkwork-customerservice-pc dev",
+    "stop": "node ../sdkwork-specs/tools/stop-sdkwork-workspace-processes.mjs --workspace .",    "dev": "pnpm --dir apps/sdkwork-customerservice-pc dev",
     "dev:h5": "pnpm --dir apps/sdkwork-customerservice-h5 dev",
     "dev:pc": "pnpm --dir apps/sdkwork-customerservice-pc dev",
     "build": "pnpm --dir apps/sdkwork-customerservice-pc build",
