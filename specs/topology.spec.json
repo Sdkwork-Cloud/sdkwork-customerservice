@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 4,
+  "schemaVersion": 5,
   "kind": "sdkwork.app.topology",
   "appId": "sdkwork-customerservice",
   "archetype": "application-http-gateway",
@@ -55,8 +55,6 @@
       "protocols": [
         "http"
       ],
-      "owner": "sdkwork-api-cloud-gateway",
-      "bindEnv": "SDKWORK_API_CLOUD_GATEWAY_BIND",
       "httpUrlEnv": "SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL",
       "clientHttpEnv": "VITE_SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL"
     }
@@ -68,12 +66,6 @@
     "applicationServer": {
       "crate": "sdkwork-customerservice-standalone-gateway",
       "binary": "customerservice-server"
-    },
-    "cloudGateway": {
-      "crate": "sdkwork-api-cloud-gateway",
-      "binary": "sdkwork-api-cloud-gateway",
-      "repository": "sdkwork-api-cloud-gateway",
-      "configGlob": "configs/sdkwork-api-cloud-gateway.customerservice.{profile}.toml"
     }
   },
   "orchestration": {
@@ -81,33 +73,25 @@
       "standalone.development": {
         "processes": [
           {
-            "name": "customerservice-api",
-            "command": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server"
+            "id": "customerservice-api",
+            "crate": "sdkwork-customerservice-standalone-gateway",
+            "binary": "customerservice-server",
+            "role": "api-standalone-gateway"
           }
         ]
       },
       "standalone.production": {
         "processes": [
           {
-            "name": "customerservice-api",
-            "command": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server"
+            "id": "customerservice-api",
+            "crate": "sdkwork-customerservice-standalone-gateway",
+            "binary": "customerservice-server",
+            "role": "api-standalone-gateway"
           }
         ]
       },
       "cloud.development": {
-        "processes": [
-          {
-            "id": "platform.api-gateway",
-            "crate": "sdkwork-api-cloud-gateway",
-            "binary": "sdkwork-api-cloud-gateway",
-            "repository": "sdkwork-api-cloud-gateway",
-            "required": false
-          },
-          {
-            "name": "customerservice-api",
-            "command": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server"
-          }
-        ],
+        "processes": [],
         "healthSurfaces": [
           "application.public-ingress",
           "platform.api-gateway"
@@ -116,15 +100,10 @@
       "cloud.production": {
         "processes": [
           {
-            "id": "platform.api-gateway",
-            "crate": "sdkwork-api-cloud-gateway",
-            "binary": "sdkwork-api-cloud-gateway",
-            "repository": "sdkwork-api-cloud-gateway",
-            "required": false
-          },
-          {
-            "name": "customerservice-api",
-            "command": "cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server"
+            "id": "customerservice-api",
+            "crate": "sdkwork-customerservice-standalone-gateway",
+            "binary": "customerservice-server",
+            "role": "api-standalone-gateway"
           }
         ],
         "healthSurfaces": [
@@ -140,10 +119,7 @@
     }
   },
   "packaging": {
-    "cloudConfigFiles": [
-      "sdkwork-api-cloud-gateway.customerservice.development.toml",
-      "sdkwork-api-cloud-gateway.customerservice.production.toml"
-    ],
+    "cloudConfigFiles": [],
     "targets": [
       {
         "id": "container-noarch-cloud-container-config-bundle-tar-gz",

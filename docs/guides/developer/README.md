@@ -29,7 +29,7 @@ export CUSTOMER_SERVICE_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432
 pnpm db:bootstrap
 ```
 
-Development defaults live in `configs/topology/standalone.unified-process.development.env`.
+Development defaults live in `configs/topology/standalone.development.env`.
 
 ## Verification
 
@@ -45,7 +45,7 @@ Development defaults live in `configs/topology/standalone.unified-process.develo
 ```bash
 pnpm start          # customerservice gateway @ 18091
 pnpm dev            # PC shell @ 5191
-pnpm dev:h5         # H5 shell @ 5192
+pnpm dev:browser         # H5 shell @ 5192
 ```
 
 IAM login and Drive require the platform API gateway on `127.0.0.1:3900` (see `configs/topology/README.md`).

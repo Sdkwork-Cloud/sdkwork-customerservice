@@ -117,7 +117,7 @@ GoofishWebSocketWorker
 ## 8. Verification
 
 ```bash
-pnpm plugin:validate
+pnpm check:plugin
 pnpm verify
 pnpm test:postgres          # when CUSTOMER_SERVICE_DATABASE_URL is configured
 cargo test -p sdkwork-customerservice-plugin-goofish

@@ -56,7 +56,7 @@ Adopt a **host + channel plugin** architecture:
 ## Verification
 
 - `pnpm db:validate` passes with new contract tables.
-- `pnpm plugin:validate` passes against manifest stubs and host wiring.
+- `pnpm check:plugin` passes against manifest stubs and host wiring.
 - `TECH_ARCHITECTURE.md` links this ADR and plugin layering.
 
 ## Supersedes / Superseded By

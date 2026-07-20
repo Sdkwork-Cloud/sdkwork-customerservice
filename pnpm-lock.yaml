@@ -38,12 +38,17 @@ importers:
 
   .:
     devDependencies:
+      '@sdkwork/app-topology':
+        specifier: workspace:*
+        version: link:../sdkwork-app-topology
       '@types/node':
         specifier: ^25.5.2
         version: 25.9.4
       typescript:
         specifier: ^6.0.2
         version: 6.0.3
+
+  ../sdkwork-app-topology: {}
 
   ../sdkwork-appbase/packages/common/foundation/sdkwork-runtime-bootstrap:
     dependencies:
@@ -63,6 +68,9 @@ importers:
       '@sdkwork/utils':
         specifier: workspace:*
         version: link:../../../../../sdkwork-utils/packages/sdkwork-utils-typescript
+      lucide-react:
+        specifier: 'catalog:'
+        version: 1.7.0(react@19.2.4)
       react:
         specifier: '>=18.2.0 <20.0.0'
         version: 19.2.4
@@ -136,7 +144,7 @@ importers:
     dependencies:
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/sdk-common':
         specifier: ^1.0.3
         version: 1.0.3
@@ -152,7 +160,7 @@ importers:
     dependencies:
       '@sdkwork/iam-backend-sdk':
         specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi
+        version: link:../../../../sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript
       '@sdkwork/iam-sdk-adapter':
         specifier: workspace:*
         version: link:../sdkwork-iam-sdk-adapter
@@ -187,10 +195,7 @@ importers:
     dependencies:
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
-      '@sdkwork/runtime-bootstrap':
-        specifier: workspace:*
-        version: link:../../../../../sdkwork-appbase/packages/common/foundation/sdkwork-runtime-bootstrap
+        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/sdk-common':
         specifier: ^1.0.2
         version: 1.0.3
@@ -206,10 +211,10 @@ importers:
     dependencies:
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/iam-backend-sdk':
         specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi
+        version: link:../../../../sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript
       '@sdkwork/iam-contracts':
         specifier: workspace:*
         version: link:../sdkwork-iam-contracts
@@ -322,7 +327,7 @@ importers:
     dependencies:
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/iam-contracts':
         specifier: workspace:*
         version: link:../../../sdkwork-iam-common/packages/sdkwork-iam-contracts
@@ -356,37 +361,23 @@ importers:
         specifier: ^6.0.2
         version: 6.0.3
 
-  ../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi:
+  ../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript:
     dependencies:
       '@sdkwork/sdk-common':
-        specifier: ^1.0.2
-        version: 1.0.3
-    devDependencies:
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.43
-      rollup:
-        specifier: ^4.0.0
-        version: 4.62.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.9.3
+        specifier: workspace:*
+        version: link:../../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript
 
-  ../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi:
+  ../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript:
     dependencies:
       '@sdkwork/sdk-common':
-        specifier: ^1.0.2
-        version: 1.0.3
-    devDependencies:
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.43
-      rollup:
-        specifier: ^4.0.0
-        version: 4.62.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.9.3
+        specifier: workspace:*
+        version: link:../../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript
+
+  ../sdkwork-iam/sdks/sdkwork-iam-open-sdk/sdkwork-iam-open-sdk-typescript:
+    dependencies:
+      '@sdkwork/sdk-common':
+        specifier: workspace:*
+        version: link:../../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript
 
   ../sdkwork-sdk-commons/sdkwork-sdk-common-typescript:
     devDependencies:
@@ -565,6 +556,12 @@ importers:
       '@sdkwork/auth-runtime-pc-react':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-runtime-pc-react
+      '@sdkwork/customerservice-app-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
+      '@sdkwork/customerservice-backend-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
       '@sdkwork/customerservice-contracts':
         specifier: workspace:*
         version: link:../sdkwork-customerservice-contracts
@@ -573,7 +570,7 @@ importers:
         version: link:../../../../../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/iam-contracts':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts
@@ -589,12 +586,6 @@ importers:
       '@sdkwork/utils':
         specifier: workspace:*
         version: link:../../../../../sdkwork-utils/packages/sdkwork-utils-typescript
-      sdkwork-customerservice-app-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
-      sdkwork-customerservice-backend-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
     devDependencies:
       '@types/react':
         specifier: ^19.2.14
@@ -608,10 +599,10 @@ importers:
 
   apps/sdkwork-customerservice-common/packages/sdkwork-customerservice-contracts:
     dependencies:
-      sdkwork-customerservice-app-sdk-generated-typescript:
+      '@sdkwork/customerservice-app-sdk':
         specifier: workspace:*
         version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
-      sdkwork-customerservice-backend-sdk-generated-typescript:
+      '@sdkwork/customerservice-backend-sdk':
         specifier: workspace:*
         version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
 
@@ -666,6 +657,12 @@ importers:
       '@sdkwork/auth-runtime-pc-react':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-runtime-pc-react
+      '@sdkwork/customerservice-app-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
+      '@sdkwork/customerservice-backend-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
       '@sdkwork/customerservice-client-core':
         specifier: workspace:*
         version: link:../../../sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core
@@ -680,7 +677,7 @@ importers:
         version: link:../../../../../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/iam-contracts':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts
@@ -690,12 +687,6 @@ importers:
       '@sdkwork/utils':
         specifier: workspace:*
         version: link:../../../../../sdkwork-utils/packages/sdkwork-utils-typescript
-      sdkwork-customerservice-app-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
-      sdkwork-customerservice-backend-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
     devDependencies:
       typescript:
         specifier: ^6.0.2
@@ -780,6 +771,12 @@ importers:
       '@sdkwork/auth-runtime-pc-react':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-auth-runtime-pc-react
+      '@sdkwork/customerservice-app-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
+      '@sdkwork/customerservice-backend-sdk':
+        specifier: workspace:*
+        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
       '@sdkwork/customerservice-client-core':
         specifier: workspace:*
         version: link:../../../sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core
@@ -794,7 +791,7 @@ importers:
         version: link:../../../../../sdkwork-drive/sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript
       '@sdkwork/iam-app-sdk':
         specifier: workspace:*
-        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi
+        version: link:../../../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript
       '@sdkwork/iam-contracts':
         specifier: workspace:*
         version: link:../../../../../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts
@@ -813,12 +810,6 @@ importers:
       react:
         specifier: '>=18.2.0 <20.0.0'
         version: 19.2.7
-      sdkwork-customerservice-app-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript
-      sdkwork-customerservice-backend-sdk-generated-typescript:
-        specifier: workspace:*
-        version: link:../../../../sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript
     devDependencies:
       '@types/react':
         specifier: ^19.2.14
@@ -2646,9 +2637,6 @@ packages:
 
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
-
-  '@types/node@20.19.43':
-    resolution: {integrity: sha512-6oYBAi5ikg4Pl+kGsoYtawUMBT2zZMCvPNF7pVLnHZfd1zf38DRiWn/gT01RYCdUqkv7Fhr+C9ot4/tb+2sVvA==}
 
   '@types/node@22.20.0':
     resolution: {integrity: sha512-QWlFW2wf3nTjC13/DqRnBpR4ZO36VJH/JVBkA/vcnmbTBNQIlnObqyqZE1tUR7+Ni23Lda8R1BxMfbXRpCUx5g==}
@@ -6012,10 +6000,6 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/mdurl@2.0.0': {}
-
-  '@types/node@20.19.43':
-    dependencies:
-      undici-types: 6.21.0
 
   '@types/node@22.20.0':
     dependencies:

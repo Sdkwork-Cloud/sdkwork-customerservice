@@ -56,8 +56,8 @@ Plugin worker (optional separate process per topology profile)
 
 | Profile | Plugin execution |
 | --- | --- |
-| `standalone.unified-process.development` | In-process Tokio tasks inside gateway/service-host. |
-| `cloud.split-services.production` | Dedicated worker crate/process per plugin family; control via internal HTTP (`/internal/v3/api/customer_services/plugins/...`). |
+| `standalone.development` | In-process Tokio tasks inside gateway/service-host. |
+| `cloud.production` | Dedicated worker crate/process per plugin family; control via internal HTTP (`/internal/v3/api/customer_services/plugins/...`). |
 
 Pattern mirrors `external/xianyu-auto-reply`: `backend-web` (control) + `websocket` worker (marketplace I/O).
 
@@ -335,7 +335,7 @@ Per `SECURITY_SPEC.md`:
 
 ```bash
 pnpm db:validate
-pnpm plugin:validate
+pnpm check:plugin
 pnpm verify
 ```
 
@@ -344,7 +344,7 @@ pnpm verify
 | Phase | Deliverable |
 | --- | --- |
 | P0 | Spec, ADR, DB contract + migration, registry stubs, SPI crate skeleton |
-| P1 | Host `ChannelPluginHost`, plugin/channel list backend APIs, `pnpm plugin:validate` |
+| P1 | Host `ChannelPluginHost`, plugin/channel list backend APIs, `pnpm check:plugin` |
 | P2 | Port xianyu-auto-reply worker behind goofish plugin adapter |
 | P3 | Taobao plugin skeleton + overlay tables |
 | P4 | Split worker topology for cloud profile |

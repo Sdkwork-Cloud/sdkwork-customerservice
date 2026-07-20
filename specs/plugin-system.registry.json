@@ -26,7 +26,10 @@
         "reply.default",
         "notification.outbound"
       ],
-      "credentialKinds": ["cookie", "token"],
+      "credentialKinds": [
+        "cookie",
+        "token"
+      ],
       "databaseOverlay": "plugins/sdkwork-customerservice-plugin-goofish/docs/schema-registry/overlays/goofish.tables.yaml"
     },
     {
@@ -42,7 +45,10 @@
         "order.sync",
         "reply.keyword"
       ],
-      "credentialKinds": ["oauth", "token"],
+      "credentialKinds": [
+        "oauth",
+        "token"
+      ],
       "databaseOverlay": "plugins/sdkwork-customerservice-plugin-taobao/docs/schema-registry/overlays/taobao.tables.yaml"
     }
   ],
@@ -75,6 +81,9 @@
     "communication_cs_plugin_event_log"
   ],
   "verification": {
-    "commands": ["pnpm db:validate", "pnpm plugin:validate"]
+    "commands": [
+      "pnpm db:validate",
+      "pnpm check:plugin"
+    ]
   }
 }
