@@ -6,6 +6,14 @@
   "sdkType": "backend",
   "sdkOwner": "sdkwork-customerservice",
   "apiAuthority": "sdkwork-customerservice-backend-api",
+  "packageName": "@sdkwork/customerservice-backend-sdk",
+  "transportPackageName": "sdkwork-customerservice-backend-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-customerservice-backend-sdk-typescript",
+    "composedEntry": "sdkwork-customerservice-backend-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-customerservice-backend-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-customerservice-backend-sdk-typescript/generated/server-openapi/src/index.ts"
+  },
   "sourceAuthoritySpec": "../../apis/backend-api/communication/sdkwork-customerservice-backend-api.openapi.json",
   "authoritySpec": "openapi/sdkwork-customerservice-backend-api.openapi.json",
   "generationInputSpec": "openapi/sdkwork-customerservice-backend-api.sdkgen.json",
