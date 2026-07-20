@@ -13,7 +13,7 @@
 ## Layering
 
 ```text
-HTTP gateway (sdkwork-customerservice-standalone-gateway)
+HTTP gateway (sdkwork-api-customerservice-standalone-gateway)
   -> sdkwork-web-framework (WebRequestContext + IAM + trace propagation)
   -> route crates (app-api / backend-api / internal-api)
   -> CustomerServiceService (domain + credential crypto + ownership checks)
@@ -87,7 +87,7 @@ App list queries: `page`, `pageSize`, `limit` (alias), optional `status`.
 - Contract pipeline: `pnpm api:materialize` runs normalize → align → export
 - `pnpm api:check` validates align idempotency and route-manifest parity
 - SDK authority copies: `sdks/sdkwork-customerservice-*-sdk/openapi/`
-- Route manifest: `sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json`
+- Route manifest: `sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json`
 
 ## Operator consoles
 
@@ -116,7 +116,7 @@ pnpm topology:profile:check
 pnpm test:postgres:required
 pnpm smoke:gateway
 node ../sdkwork-specs/tools/check-api-response-envelope.mjs --workspace .
-cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-server
+cargo run -p sdkwork-api-customerservice-standalone-gateway --bin customerservice-server
 ```
 
 ### Automated contract coverage
@@ -128,9 +128,9 @@ cargo run -p sdkwork-customerservice-standalone-gateway --bin customerservice-se
 | Backend API envelope | `crates/sdkwork-routes-customerservice-backend-api/src/response.rs` |
 | Backend API HTTP (memory repo) | `crates/sdkwork-routes-customerservice-backend-api/src/http_integration_tests.rs` |
 | Internal ingress | `crates/sdkwork-routes-customerservice-internal-api/src/ingress_auth.rs` |
-| Gateway infra + app mount | `crates/sdkwork-customerservice-gateway-assembly/tests/gateway_infra_contract.rs` |
+| Gateway infra + app mount | `crates/sdkwork-api-customerservice-assembly/tests/gateway_infra_contract.rs` |
 | Postgres repository | `crates/sdkwork-communication-customerservice-repository-sqlx/tests/postgres_ticket_repository.rs` |
-| Postgres HTTP (gateway + Sqlx) | `crates/sdkwork-customerservice-gateway-assembly/tests/postgres_http_integration.rs` (app-api + backend-api + internal ingress auth; requester/tenant isolation) |
+| Postgres HTTP (gateway + Sqlx) | `crates/sdkwork-api-customerservice-assembly/tests/postgres_http_integration.rs` (app-api + backend-api + internal ingress auth; requester/tenant isolation) |
 | Postgres bootstrap helper | `crates/sdkwork-customerservice-database-host/src/testing/postgres_integration.rs` (`test-support` feature) |
 | CI governance | `.github/workflows/governance.yml` — `workflow:prepare-ci-dependencies`, `pnpm verify` |
 | CI / release Postgres gate | `.github/workflows/governance.yml` (`postgres-integration`), `pnpm test:postgres:required` |

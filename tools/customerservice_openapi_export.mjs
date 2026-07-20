@@ -18,7 +18,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const checkOnly = process.argv.includes("--check");
 const manifestPath = path.join(
   root,
-  "sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json",
+  "sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json",
 );
 
 function fail(message) {

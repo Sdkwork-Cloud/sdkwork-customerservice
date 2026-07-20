@@ -12,5 +12,10 @@ path = "src/lib.rs"
 [dependencies]
 axum.workspace = true
 tokio.workspace = true
+sqlx = { workspace = true }
+sdkwork_customerservice_service_host = { workspace = true }
+sdkwork-database-sqlx = { workspace = true }
+sdkwork-web-bootstrap = { workspace = true }
+sdkwork_routes_customerservice_internal_api = { package = "sdkwork-routes-customerservice-internal-api", path = "../sdkwork-routes-customerservice-internal-api" }
 sdkwork-routes-customerservice-app-api = { path = "../sdkwork-routes-customerservice-app-api" }
 sdkwork-routes-customerservice-backend-api = { path = "../sdkwork-routes-customerservice-backend-api" }

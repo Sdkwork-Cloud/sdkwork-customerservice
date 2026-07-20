@@ -5,7 +5,7 @@ SDKWork communication **customerservice** capability: support tickets, agent rep
 
 - Standards: [`../sdkwork-specs/README.md`](../sdkwork-specs/README.md)
 - Domain: `communication` / capability: `customerservice`
-- Gateway: `crates/sdkwork-customerservice-standalone-gateway` (`customerservice-server`)
+- Gateway: `crates/sdkwork-api-customerservice-standalone-gateway` (`customerservice-server`)
 - PC console: `apps/sdkwork-customerservice-pc`
 - Database: `database/` via `sdkwork-database`
 - OpenAPI: `apis/app-api/communication/`, `apis/backend-api/communication/`, `apis/internal-api/communication/` (materialize via `pnpm api:materialize`)

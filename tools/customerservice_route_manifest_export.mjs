@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = path.join(
   root,
-  "sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json",
+  "sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json",
 );
 
 const checkOnly = process.argv.includes("--check");

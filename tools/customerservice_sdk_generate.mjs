@@ -374,7 +374,7 @@ async function main() {
         validateGeneratedTypescript(family);
         const manifestPath = path.join(
           workspaceRoot,
-          "sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json",
+          "sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json",
         );
         const manifest = readJson(manifestPath);
         const openapi = readJson(resolveRoot(family.sourceOpenapi));

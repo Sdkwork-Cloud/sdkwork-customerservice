@@ -1,5 +1,5 @@
 [package]
-name = "sdkwork-customerservice-standalone-gateway"
+name = "sdkwork-api-customerservice-standalone-gateway"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -18,5 +18,5 @@ tower-http = { workspace = true }
 sdkwork-web-bootstrap = { workspace = true }
 sdkwork-web-axum = { workspace = true }
 sdkwork-web-core = { workspace = true }
-sdkwork-customerservice-gateway-assembly.workspace = true
+sdkwork-api-customerservice-assembly.workspace = true
 sdkwork_customerservice_service_host = { workspace = true }

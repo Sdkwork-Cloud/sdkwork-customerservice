@@ -19,7 +19,7 @@ test("route manifest covers app and backend customer-service surfaces", () => {
     readFileSync(
       path.join(
         root,
-        "sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json",
+        "sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json",
       ),
       "utf8",
     ),

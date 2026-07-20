@@ -1,4 +1,4 @@
-use sdkwork_customerservice_gateway_assembly::assemble_application_router;
+use sdkwork_api_customerservice_assembly::assemble_api_router;
 use sdkwork_customerservice_service_host::CustomerServiceHost;
 use std::sync::Arc;
 
@@ -20,7 +20,7 @@ async fn main() {
         &environment,
         std::iter::empty(),
     );
-    let app = assemble_application_router(host)
+    let app = assemble_api_router(host)
         .await
         .router
         .layer(sdkwork_web_axum::cors_layer_from_policy(policy.cors));

@@ -67,7 +67,7 @@ test("topology profile env files align with profile id axis", () => {
 
 test("gateway uses env-filter tracing bootstrap", () => {
   const source = readFileSync(
-    path.join(repoRoot, "crates/sdkwork-customerservice-standalone-gateway/src/main.rs"),
+    path.join(repoRoot, "crates/sdkwork-api-customerservice-standalone-gateway/src/main.rs"),
     "utf8",
   );
   assert.match(source, /EnvFilter::try_from_default_env/);
@@ -77,7 +77,7 @@ test("gateway assembly includes infra and memory app integration tests", () => {
   const source = readFileSync(
     path.join(
       repoRoot,
-      "crates/sdkwork-customerservice-gateway-assembly/tests/gateway_infra_contract.rs",
+      "crates/sdkwork-api-customerservice-assembly/tests/gateway_infra_contract.rs",
     ),
     "utf8",
   );
@@ -131,7 +131,7 @@ test("postgres repository integration tests are defined", () => {
   const httpSource = readFileSync(
     path.join(
       repoRoot,
-      "crates/sdkwork-customerservice-gateway-assembly/tests/postgres_http_integration.rs",
+      "crates/sdkwork-api-customerservice-assembly/tests/postgres_http_integration.rs",
     ),
     "utf8",
   );
@@ -142,7 +142,7 @@ test("postgres repository integration tests are defined", () => {
   assert.match(httpSource, /postgres_gateway_internal_missing_ingress_token_returns_401/);
   assert.match(httpSource, /postgres_gateway_internal_valid_ingress_requires_tenant_header/);
   assert.match(httpSource, /postgres_gateway_internal_valid_ingress_and_tenant_reaches_service_layer/);
-  assert.match(httpSource, /assemble_application_router/);
+  assert.match(httpSource, /assemble_api_router/);
   const bootstrapSource = readFileSync(
     path.join(
       repoRoot,

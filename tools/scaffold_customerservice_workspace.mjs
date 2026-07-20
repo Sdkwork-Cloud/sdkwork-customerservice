@@ -133,7 +133,7 @@ SDKWork communication **customerservice** capability: customer support tickets, 
 
 - Standards: \`../sdkwork-specs/README.md\`
 - Domain: \`communication\` / capability: \`customerservice\`
-- HTTP API: \`crates/sdkwork-customerservice-standalone-gateway/\` (planned)
+- HTTP API: \`crates/sdkwork-api-customerservice-standalone-gateway/\` (planned)
 - Database: \`database/\` via \`sdkwork-database\`
 - File uploads: \`sdkwork-drive\` integration required
 
@@ -174,7 +174,7 @@ await writeAlways(
         publicExports: ["."],
         runtimeEntrypoints: ["package.json#scripts.verify"],
         routeManifest:
-          "sdks/_route-manifests/app-api/sdkwork-customerservice-standalone-gateway.route-manifest.json",
+          "sdks/_route-manifests/app-api/sdkwork-api-customerservice-standalone-gateway.route-manifest.json",
         sdkClients: [],
         events: [],
         configKeys: [],

@@ -64,7 +64,7 @@
   },
   "components": {
     "applicationServer": {
-      "crate": "sdkwork-customerservice-standalone-gateway",
+      "crate": "sdkwork-api-customerservice-standalone-gateway",
       "binary": "customerservice-server"
     }
   },
@@ -74,7 +74,7 @@
         "processes": [
           {
             "id": "customerservice-api",
-            "crate": "sdkwork-customerservice-standalone-gateway",
+            "crate": "sdkwork-api-customerservice-standalone-gateway",
             "binary": "customerservice-server",
             "role": "api-standalone-gateway"
           }
@@ -84,7 +84,7 @@
         "processes": [
           {
             "id": "customerservice-api",
-            "crate": "sdkwork-customerservice-standalone-gateway",
+            "crate": "sdkwork-api-customerservice-standalone-gateway",
             "binary": "customerservice-server",
             "role": "api-standalone-gateway"
           }
@@ -101,7 +101,7 @@
         "processes": [
           {
             "id": "customerservice-api",
-            "crate": "sdkwork-customerservice-standalone-gateway",
+            "crate": "sdkwork-api-customerservice-standalone-gateway",
             "binary": "customerservice-server",
             "role": "api-standalone-gateway"
           }

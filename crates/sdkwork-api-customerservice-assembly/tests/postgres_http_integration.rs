@@ -5,7 +5,7 @@ use axum::http::{Request, StatusCode};
 use axum::Extension;
 use axum::Router;
 use sdkwork_customerservice_database_host::testing::postgres_integration;
-use sdkwork_customerservice_gateway_assembly::assemble_application_router;
+use sdkwork_api_customerservice_assembly::assemble_api_router;
 use sdkwork_customerservice_service_host::CustomerServiceHost;
 use sdkwork_iam_context_service::{AuthLevel, DeploymentMode, Environment, IamAppContext};
 use serde_json::Value;
@@ -54,7 +54,7 @@ async fn try_postgres_gateway() -> Option<Router> {
         }
     };
 
-    let assembly = assemble_application_router(host).await;
+    let assembly = assemble_api_router(host).await;
     Some(assembly.router)
 }
 

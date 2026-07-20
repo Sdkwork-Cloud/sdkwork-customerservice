@@ -1,7 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/sdkwork-customerservice-gateway-assembly",
+    "crates/sdkwork-api-customerservice-assembly",
+    "crates/sdkwork-api-customerservice-assembly",
     "crates/sdkwork-communication-customerservice-plugin-spi",
     "crates/sdkwork-communication-customerservice-plugin-host",
     "crates/sdkwork-communication-customerservice-plugin-runtime",
@@ -12,7 +13,7 @@ members = [
     "crates/sdkwork-routes-customerservice-internal-api",
     "crates/sdkwork-customerservice-database-host",
     "crates/sdkwork-customerservice-service-host",
-    "crates/sdkwork-customerservice-standalone-gateway",
+    "crates/sdkwork-api-customerservice-standalone-gateway",
     "plugins/sdkwork-customerservice-plugin-goofish/crates/sdkwork-customerservice-plugin-goofish-runtime",
 ]
 
@@ -43,7 +44,7 @@ sdkwork-web-contract = { path = "../sdkwork-web-framework/crates/sdkwork-web-con
 sdkwork-web-bootstrap = { path = "../sdkwork-web-framework/crates/sdkwork-web-bootstrap" }
 sdkwork-iam-web-adapter = { path = "../sdkwork-iam/crates/sdkwork-iam-web-adapter" }
 sdkwork_iam_context_service = { path = "../sdkwork-iam/crates/sdkwork-iam-context-service", package = "sdkwork-iam-context-service" }
-sdkwork-customerservice-gateway-assembly = { path = "crates/sdkwork-customerservice-gateway-assembly" }
+sdkwork-api-customerservice-assembly = { path = "crates/sdkwork-api-customerservice-assembly" }
 sdkwork-database-config = { path = "../sdkwork-database/crates/sdkwork-database-config" }
 sdkwork-database-lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle" }
 sdkwork-database-spi = { path = "../sdkwork-database/crates/sdkwork-database-spi" }
