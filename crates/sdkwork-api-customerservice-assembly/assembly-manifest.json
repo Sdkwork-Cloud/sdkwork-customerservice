@@ -1,0 +1,32 @@
+{
+  "kind": "sdkwork.api.assembly",
+  "schemaVersion": 1,
+  "applicationCode": "customerservice",
+  "apiMode": "served",
+  "packageName": "sdkwork-api-customerservice-assembly",
+  "crateDir": "crates/sdkwork-api-customerservice-assembly",
+  "routeCrates": [
+    {
+      "packageName": "sdkwork-routes-customerservice-app-api",
+      "memberDir": "crates/sdkwork-routes-customerservice-app-api",
+      "libName": "sdkwork_routes_customerservice_app_api",
+      "surface": "app-api",
+      "pathPrefix": null,
+      "mountOrder": 0,
+      "componentRef": "crates/sdkwork-routes-customerservice-app-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-customerservice-app-api/sdks/_route-manifests/app-api/sdkwork-routes-customerservice-app-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-customerservice-app-api/Cargo.toml"
+    },
+    {
+      "packageName": "sdkwork-routes-customerservice-backend-api",
+      "memberDir": "crates/sdkwork-routes-customerservice-backend-api",
+      "libName": "sdkwork_routes_customerservice_backend_api",
+      "surface": "backend-api",
+      "pathPrefix": null,
+      "mountOrder": 1,
+      "componentRef": "crates/sdkwork-routes-customerservice-backend-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-customerservice-backend-api/sdks/_route-manifests/backend-api/sdkwork-routes-customerservice-backend-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-customerservice-backend-api/Cargo.toml"
+    }
+  ]
+}

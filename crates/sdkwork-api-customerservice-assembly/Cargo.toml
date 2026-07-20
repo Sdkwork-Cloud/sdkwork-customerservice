@@ -1,0 +1,16 @@
+[package]
+name = "sdkwork-api-customerservice-assembly"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+description = "Generated API assembly for sdkwork-customerservice application HTTP plane."
+
+[lib]
+name = "sdkwork_api_customerservice_assembly"
+path = "src/lib.rs"
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+sdkwork-routes-customerservice-app-api = { path = "../sdkwork-routes-customerservice-app-api" }
+sdkwork-routes-customerservice-backend-api = { path = "../sdkwork-routes-customerservice-backend-api" }
