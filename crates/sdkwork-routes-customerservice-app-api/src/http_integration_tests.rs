@@ -97,6 +97,24 @@ async fn create_ticket_returns_sdkwork_envelope_with_item() {
 }
 
 #[tokio::test]
+async fn list_tickets_honors_canonical_page_size_query() {
+    let tenant_id = Uuid::new_v4();
+    let user_id = Uuid::new_v4();
+    let response = request(
+        memory_service(),
+        test_iam_context(tenant_id, user_id),
+        "GET",
+        "/app/v3/api/customer_services/tickets?page=0&pageSize=7",
+        None,
+    )
+    .await;
+    assert_eq!(response.status(), StatusCode::OK);
+    let json = response_json(response).await;
+    assert_eq!(json["code"], 0);
+    assert_eq!(json["data"]["pageInfo"]["pageSize"], 7);
+}
+
+#[tokio::test]
 async fn retrieve_ticket_hides_ticket_from_other_requester() {
     let tenant_id = Uuid::new_v4();
     let owner_id = Uuid::new_v4();

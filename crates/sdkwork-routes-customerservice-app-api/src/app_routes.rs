@@ -29,7 +29,6 @@ struct AppState {
 struct ListTicketsQuery {
     page: Option<u32>,
     page_size: Option<u32>,
-    page_size: Option<u32>,
     status: Option<String>,
 }
 
@@ -37,7 +36,6 @@ struct ListTicketsQuery {
 #[serde(rename_all = "camelCase")]
 struct PaginationQuery {
     page: Option<u32>,
-    page_size: Option<u32>,
     page_size: Option<u32>,
 }
 
@@ -69,8 +67,8 @@ fn web_ctx(context: &Option<Extension<WebRequestContext>>) -> Option<&WebRequest
     context.as_ref().map(|extension| &extension.0)
 }
 
-fn resolve_page_size(page_size: Option<u32>, limit: Option<u32>, default: u32) -> u32 {
-    page_size.or(limit).unwrap_or(default).clamp(1, 100)
+fn resolve_page_size(page_size: Option<u32>, default: u32) -> u32 {
+    page_size.unwrap_or(default).clamp(1, 100)
 }
 
 pub fn app_customerservice_router(host: Arc<CustomerServiceHost>) -> Router {
@@ -115,7 +113,7 @@ async fn list_my_tickets(
         Err(error) => return subject_auth_error(error, web),
     };
     let page = query.page.unwrap_or(0);
-    let page_size = resolve_page_size(query.page_size, query.page_size, 20);
+    let page_size = resolve_page_size(query.page_size, 20);
     let status = query.status.as_deref();
     match state
         .service
@@ -190,7 +188,7 @@ async fn list_messages(
         Err(error) => return subject_auth_error(error, web),
     };
     let page = query.page.unwrap_or(0);
-    let page_size = resolve_page_size(query.page_size, query.page_size, 50);
+    let page_size = resolve_page_size(query.page_size, 50);
     match state
         .service
         .list_messages_for_requester(

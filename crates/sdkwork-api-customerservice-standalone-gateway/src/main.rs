@@ -13,13 +13,10 @@ async fn main() {
     tracing::info!(service = "customerservice-server", "starting api server");
 
     let host = Arc::new(CustomerServiceHost::new().await);
-    let environment = sdkwork_web_bootstrap::web_environment_from_env(&[
-        "SDKWORK_CUSTOMER_SERVICE_ENVIRONMENT",
-    ]);
-    let policy = sdkwork_web_bootstrap::security_policy_for_environment(
-        &environment,
-        std::iter::empty(),
-    );
+    let environment =
+        sdkwork_web_bootstrap::web_environment_from_env(&["SDKWORK_CUSTOMER_SERVICE_ENVIRONMENT"]);
+    let policy =
+        sdkwork_web_bootstrap::security_policy_for_environment(&environment, std::iter::empty());
     let app = assemble_api_router(host)
         .await
         .router

@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "kind": "sdkwork.component.spec",
   "component": {
-    "name": "sdkwork-routes-customerservice-backend-api",
-    "displayName": "SDKWork Customerservice Backend API Routes",
+    "name": "sdkwork-routes-customerservice-internal-api",
+    "displayName": "SDKWork Customerservice Internal API Routes",
     "version": "0.1.0",
     "type": "rust-route-crate",
-    "root": "crates/sdkwork-routes-customerservice-backend-api",
+    "root": "crates/sdkwork-routes-customerservice-internal-api",
     "domain": "communication",
     "capability": "customerservice",
-    "surface": "backend-api",
+    "surface": "internal-api",
     "languages": [
       "rust"
     ],
@@ -30,9 +30,19 @@
       "purpose": "Canonical SDKWork naming rules."
     },
     {
+      "file": "INTERNAL_API_SPEC.md",
+      "path": "../../../sdkwork-specs/INTERNAL_API_SPEC.md",
+      "purpose": "Internal-api ownership, ingress placement, and authentication rules."
+    },
+    {
       "file": "API_SPEC.md",
       "path": "../../../sdkwork-specs/API_SPEC.md",
       "purpose": "OpenAPI authority and route manifest rules."
+    },
+    {
+      "file": "SECURITY_SPEC.md",
+      "path": "../../../sdkwork-specs/SECURITY_SPEC.md",
+      "purpose": "Ingress token validation and trusted service identity rules."
     },
     {
       "file": "WEB_FRAMEWORK_SPEC.md",
@@ -40,19 +50,9 @@
       "purpose": "Mandatory Web Framework integration for HTTP surfaces."
     },
     {
-      "file": "WEB_BACKEND_SPEC.md",
-      "path": "../../../sdkwork-specs/WEB_BACKEND_SPEC.md",
-      "purpose": "HTTP backend route boundary rules."
-    },
-    {
-      "file": "SDK_WORKSPACE_GENERATION_SPEC.md",
-      "path": "../../../sdkwork-specs/SDK_WORKSPACE_GENERATION_SPEC.md",
-      "purpose": "Route manifest and SDK generation ownership."
-    },
-    {
       "file": "RUST_CODE_SPEC.md",
       "path": "../../../sdkwork-specs/RUST_CODE_SPEC.md",
-      "purpose": "Rust crate rules."
+      "purpose": "Rust crate structure and public API rules."
     },
     {
       "file": "TEST_SPEC.md",
@@ -68,19 +68,15 @@
     "providedPorts": [],
     "requiredPorts": [],
     "runtimeEntrypoints": [
-      "src/backend_routes.rs#backend_customerservice_router",
-      "src/backend_routes.rs#backend_customerservice_router_with_ticket_port",
-      "src/http_route_manifest.rs#backend_route_manifest",
-      "src/backend_routes.rs#backend_router_core",
-      "src/routes.rs#build_backend_router",
-      "src/routes.rs#build_backend_router_with_framework",
+      "src/internal_routes.rs#internal_customerservice_router",
+      "src/http_route_manifest.rs#internal_route_manifest",
+      "src/routes.rs#build_internal_router",
       "src/lib.rs#gateway_mount",
       "src/routes.rs#gateway_mount_business",
-      "src/lib.rs#gateway_route_manifest",
-      "src/web_bootstrap.rs#wrap_router_with_web_framework",
-      "src/web_bootstrap.rs#wrap_router_with_web_framework_from_env"
+      "src/lib.rs#gateway_route_manifest"
     ],
-    "routeManifest": "src/http_route_manifest.rs#backend_route_manifest",
+    "routeManifest": "src/http_route_manifest.rs#internal_route_manifest",
+    "authMode": "ingress-token",
     "sdkClients": [],
     "sdkDependencies": [],
     "dependencyApiExports": [],
@@ -90,7 +86,7 @@
   },
   "verification": {
     "commands": [
-      "cargo test -p sdkwork-routes-customerservice-backend-api"
+      "cargo test -p sdkwork-routes-customerservice-internal-api"
     ]
   }
 }
