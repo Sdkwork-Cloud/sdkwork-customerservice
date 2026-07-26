@@ -4,10 +4,12 @@ use axum::Json;
 use sdkwork_communication_customerservice_service::CustomerServiceError;
 use sdkwork_utils_rust::{
     SdkWorkApiResponse, SdkWorkCommandData, SdkWorkProblemDetail, SdkWorkResourceData,
-    SdkWorkResultCode, SDKWORK_TRACE_ID_HEADER,
+    SdkWorkResultCode,
 };
 use sdkwork_web_core::{new_request_id, WebRequestContext};
 use serde::Serialize;
+
+const SDKWORK_TRACE_ID_HEADER_LOWER: &str = "x-sdkwork-trace-id";
 
 pub fn resolved_trace_id(web_context: Option<&WebRequestContext>) -> String {
     web_context
@@ -17,9 +19,10 @@ pub fn resolved_trace_id(web_context: Option<&WebRequestContext>) -> String {
 
 fn attach_trace_header(response: &mut Response, trace_id: &str) {
     if let Ok(value) = HeaderValue::from_str(trace_id) {
-        response
-            .headers_mut()
-            .insert(HeaderName::from_static(SDKWORK_TRACE_ID_HEADER), value);
+        response.headers_mut().insert(
+            HeaderName::from_static(SDKWORK_TRACE_ID_HEADER_LOWER),
+            value,
+        );
     }
 }
 
