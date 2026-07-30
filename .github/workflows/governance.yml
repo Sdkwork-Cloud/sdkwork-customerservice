@@ -58,19 +58,19 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: postgres
+          POSTGRES_USER: sdkwork_ai_test
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: sdkwork_customerservice
+          POSTGRES_DB: sdkwork_ai_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -d sdkwork_customerservice"
+          --health-cmd "pg_isready -U sdkwork_ai_test -d sdkwork_ai_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
     env:
-      CUSTOMER_SERVICE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/sdkwork_customerservice
-      CUSTOMER_SERVICE_DATABASE_ENGINE: postgres
+      SDKWORK_DATABASE_URL: postgres://sdkwork_ai_test:postgres@localhost:5432/sdkwork_ai_test
+      SDKWORK_DATABASE_ENGINE: postgresql
       SDKWORK_DATABASE_AUTO_MIGRATE: "true"
     steps:
       - name: Checkout repository
