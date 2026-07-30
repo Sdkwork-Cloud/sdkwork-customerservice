@@ -71,7 +71,7 @@ jobs:
     env:
       CUSTOMER_SERVICE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/sdkwork_customerservice
       CUSTOMER_SERVICE_DATABASE_ENGINE: postgres
-      SDKWORK_CUSTOMER_SERVICE_DATABASE_AUTO_MIGRATE: "true"
+      SDKWORK_DATABASE_AUTO_MIGRATE: "true"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
