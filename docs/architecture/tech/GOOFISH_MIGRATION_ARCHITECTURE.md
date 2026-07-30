@@ -119,7 +119,7 @@ GoofishWebSocketWorker
 ```bash
 pnpm check:plugin
 pnpm verify
-pnpm test:postgres          # when CUSTOMER_SERVICE_DATABASE_URL is configured
+pnpm test:postgres          # when SDKWORK_DATABASE_URL is configured
 cargo test -p sdkwork-customerservice-plugin-goofish
 ```
 

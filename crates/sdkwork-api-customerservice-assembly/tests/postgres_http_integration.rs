@@ -109,10 +109,10 @@ fn ingress_token() -> String {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_readyz_succeeds_with_postgres_pool() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let response = app
@@ -128,10 +128,10 @@ async fn postgres_gateway_readyz_succeeds_with_postgres_pool() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_create_ticket_returns_sdkwork_envelope() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let tenant_id = Uuid::new_v4();
@@ -154,10 +154,10 @@ async fn postgres_gateway_create_ticket_returns_sdkwork_envelope() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_retrieve_hides_ticket_from_other_requester() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let tenant_id = Uuid::new_v4();
@@ -189,10 +189,10 @@ async fn postgres_gateway_retrieve_hides_ticket_from_other_requester() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_backend_list_and_retrieve_ticket() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let tenant_id = Uuid::new_v4();
@@ -245,10 +245,10 @@ async fn postgres_gateway_backend_list_and_retrieve_ticket() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_backend_retrieve_hides_ticket_from_other_tenant() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let tenant_a = Uuid::new_v4();
@@ -280,10 +280,10 @@ async fn postgres_gateway_backend_retrieve_hides_ticket_from_other_tenant() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_internal_missing_ingress_token_returns_401() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let account_id = Uuid::new_v4();
@@ -301,10 +301,10 @@ async fn postgres_gateway_internal_missing_ingress_token_returns_401() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_internal_valid_ingress_requires_tenant_header() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let account_id = Uuid::new_v4();
@@ -324,10 +324,10 @@ async fn postgres_gateway_internal_valid_ingress_requires_tenant_header() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_gateway_internal_valid_ingress_and_tenant_reaches_service_layer() {
     let Some(app) = try_postgres_gateway().await else {
-        eprintln!("SKIP postgres HTTP integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres HTTP integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     let tenant_id = Uuid::new_v4();

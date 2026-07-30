@@ -34,7 +34,7 @@ Copy `apps/sdkwork-customerservice-pc/.env.example` for Vite topology URLs. Copy
 ## Database bootstrap
 
 ```bash
-export CUSTOMER_SERVICE_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/sdkwork_customerservice
+export SDKWORK_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/sdkwork_customerservice
 pnpm db:bootstrap
 ```
 

@@ -16,10 +16,10 @@ async fn try_bootstrap() -> Option<CustomerServiceDatabaseHost> {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_create_ticket_persists_and_lists_for_requester() {
     let Some(host) = try_bootstrap().await else {
-        eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     use sdkwork_communication_customerservice_service::CreateTicketCommand;
@@ -52,10 +52,10 @@ async fn postgres_create_ticket_persists_and_lists_for_requester() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_retrieve_ticket_isolates_requester() {
     let Some(host) = try_bootstrap().await else {
-        eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     use sdkwork_communication_customerservice_service::{
@@ -86,10 +86,10 @@ async fn postgres_retrieve_ticket_isolates_requester() {
 }
 
 #[tokio::test]
-#[ignore = "requires CUSTOMER_SERVICE_DATABASE_URL and migrated schema"]
+#[ignore = "requires an isolated SDKWORK_DATABASE_* PostgreSQL test profile"]
 async fn postgres_retrieve_ticket_isolates_tenant() {
     let Some(host) = try_bootstrap().await else {
-        eprintln!("SKIP postgres integration: CUSTOMER_SERVICE_DATABASE_URL is not set");
+        eprintln!("SKIP postgres integration: SDKWORK_DATABASE_URL is not set");
         return;
     };
     use sdkwork_communication_customerservice_service::{

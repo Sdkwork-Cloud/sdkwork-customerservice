@@ -1,10 +1,13 @@
+contract_version: 1.0.0
 schemaVersion: 1
 kind: sdkwork.database.contract
+database_role: authoritative-server
 moduleId: customerservice
 owner: customerservice-platform
 tablePrefix: communication_
 engines:
   - postgres
+table_prefix: communication_
 tables:
   - name: communication_cs_ticket
     primaryKey: id

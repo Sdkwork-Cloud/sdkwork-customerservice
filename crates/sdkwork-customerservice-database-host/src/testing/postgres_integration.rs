@@ -15,13 +15,13 @@ pub fn app_root() -> PathBuf {
 /// Applies standard Postgres integration test environment variables.
 pub fn prepare_env() {
     std::env::set_var("SDKWORK_CUSTOMER_SERVICE_APP_ROOT", app_root());
-    std::env::set_var("SDKWORK_CUSTOMER_SERVICE_DATABASE_AUTO_MIGRATE", "true");
+    std::env::set_var("SDKWORK_DATABASE_AUTO_MIGRATE", "true");
     let _ = dotenvy::dotenv();
 }
 
-/// Returns true when `CUSTOMER_SERVICE_DATABASE_URL` is configured.
+/// Returns true when the canonical workspace database URL is configured.
 pub fn database_url_configured() -> bool {
-    std::env::var("CUSTOMER_SERVICE_DATABASE_URL").is_ok()
+    std::env::var("SDKWORK_DATABASE_URL").is_ok()
 }
 
 /// Bootstraps Postgres schema when database URL is available; otherwise returns `None`.

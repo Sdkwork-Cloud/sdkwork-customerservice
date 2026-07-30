@@ -25,7 +25,7 @@ pnpm install
 ## Database bootstrap
 
 ```bash
-export CUSTOMER_SERVICE_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/sdkwork_customerservice
+export SDKWORK_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/sdkwork_customerservice
 pnpm db:bootstrap
 ```
 
@@ -37,7 +37,7 @@ Development defaults live in `configs/topology/standalone.development.env`.
 | --- | --- |
 | `pnpm verify` | Full standards gate (OpenAPI, SDK, topology, Rust tests, clippy, Node contracts) |
 | `pnpm test:postgres` | Postgres repository + gateway HTTP integration (`#[ignore]` tests; requires migrated DB) |
-| `pnpm test:postgres:required` | Same as above but fails when `CUSTOMER_SERVICE_DATABASE_URL` is unset (CI/release) |
+| `pnpm test:postgres:required` | Same as above but fails when `SDKWORK_DATABASE_URL` is unset (CI/release) |
 | `pnpm smoke:gateway` | Post-deploy infra smoke (`/healthz`, `/readyz`, `/metrics`; optional app-api list with `CUSTOMER_SERVICE_SMOKE_*`) |
 
 ## Local dev servers
