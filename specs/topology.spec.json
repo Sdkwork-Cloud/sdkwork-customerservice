@@ -2,6 +2,7 @@
   "schemaVersion": 5,
   "kind": "sdkwork.app.topology",
   "appId": "sdkwork-customerservice",
+  "applicationCode": "customer_service",
   "archetype": "application-http-gateway",
   "profileRoot": "configs/topology",
   "profilePattern": "{deploymentProfile}.{environment}.env",
@@ -58,9 +59,6 @@
       "httpUrlEnv": "SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL",
       "clientHttpEnv": "VITE_SDKWORK_CUSTOMER_SERVICE_PLATFORM_API_GATEWAY_HTTP_URL"
     }
-  },
-  "database": {
-    "appPrefix": "SDKWORK_CUSTOMER_SERVICE"
   },
   "components": {
     "applicationServer": {
