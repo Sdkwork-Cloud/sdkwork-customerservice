@@ -13,14 +13,6 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        "@sdkwork/utils": path.resolve(
-          __dirname,
-          "../../../sdkwork-utils/packages/sdkwork-utils-typescript/src/index.ts",
-        ),
-        "@sdkwork/customerservice-client-core": path.resolve(
-          __dirname,
-          "../sdkwork-customerservice-common/packages/sdkwork-customerservice-client-core/src/index.ts",
-        ),
       },
     },
     server: {
