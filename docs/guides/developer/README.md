@@ -25,7 +25,7 @@ pnpm install
 ## Database bootstrap
 
 ```bash
-export SDKWORK_DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/sdkwork_customerservice
+export SDKWORK_DATABASE_URL=postgres://sdkwork_ai_dev:sdkworkdev123@127.0.0.1:5432/sdkwork_ai_dev
 pnpm db:bootstrap
 ```
 
