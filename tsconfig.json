@@ -7,5 +7,12 @@
     "sdks/**/*.ts",
     "tests/**/*.mts",
     "tools/**/*.mts"
-  ]
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "types": [
+      "node"
+    ]
+  }
 }

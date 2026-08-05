@@ -9,6 +9,7 @@ packages:
   - "apps/*/packages/*"
   - "sdks/sdkwork-customerservice-app-sdk/sdkwork-customerservice-app-sdk-typescript"
   - "sdks/sdkwork-customerservice-backend-sdk/sdkwork-customerservice-backend-sdk-typescript"
+  - "sdks/sdkwork-customerservice-internal-sdk/sdkwork-customerservice-internal-sdk-typescript"
   - "../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts"
   - "../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-runtime"
   - "../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-sdk-ports"
@@ -34,6 +35,7 @@ packages:
   - "../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"
   - "../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"
 
+  - "../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-user-center-core-pc-react"
 catalog:
   "@tailwindcss/vite": ^4.1.14
   react: ^19.2.4
@@ -142,4 +144,3 @@ catalog:
   tailwindcss-animate: ^1.0.7
   tsup: ^8.5.0
   zustand: ^5.0.12
-  - "../../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-user-center-core-pc-react"

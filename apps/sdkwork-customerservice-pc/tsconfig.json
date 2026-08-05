@@ -1,8 +1,15 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ],
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true
   },
-  "include": ["src", "packages"]
+  "include": [
+    "src",
+    "packages"
+  ]
 }

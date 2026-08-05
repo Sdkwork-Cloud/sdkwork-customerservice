@@ -1,16 +1,16 @@
 import {
   createClient as createGeneratedInternalClient,
-  SdkworkBackendClient,
+  SdkworkCustomClient,
 } from '../generated/server-openapi/src/index';
-import type { SdkworkBackendConfig } from '../generated/server-openapi/src/types/common';
+import type { SdkworkCustomConfig } from '../generated/server-openapi/src/types/common';
 
-export { SdkworkBackendClient, createGeneratedInternalClient };
-export type { SdkworkBackendConfig };
+export { SdkworkCustomClient, createGeneratedInternalClient };
+export type { SdkworkCustomConfig };
 export * from '../generated/server-openapi/src/types';
 export * from '../generated/server-openapi/src/api';
 export * from '../generated/server-openapi/src/http';
 export * from '../generated/server-openapi/src/auth';
 
-export function createClient(config: SdkworkBackendConfig): SdkworkBackendClient {
+export function createClient(config: SdkworkCustomConfig): SdkworkCustomClient {
   return createGeneratedInternalClient(config);
 }
