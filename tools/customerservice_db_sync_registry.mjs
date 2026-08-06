@@ -60,14 +60,14 @@ const prefixRegistry = {
 const manifestPath = path.join(root, "database/database.manifest.json");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 manifest.contractVersion = "1.0.0";
-manifest.lifecycle.autoMigrate = true;
+// Initialization state: authoritative-server modules keep autoMigrate disabled;
+// migrations/ is reserved for post-GA changes (DATABASE_FRAMEWORK_SPEC).
+manifest.lifecycle.autoMigrate = false;
 manifest.lifecycle.supportedSeedLocales = ["zh-CN", "en-US", "ja-JP", "de-DE", "fr-FR", "ru-RU", "ko-KR"];
 
 for (const target of [
   "database/contract/table-registry.json",
-  "database/table-registry.json",
   "database/contract/prefix-registry.json",
-  "database/prefix-registry.json",
 ]) {
   const payload = target.includes("prefix") ? prefixRegistry : tableRegistry;
   writeFileSync(path.join(root, target), `${JSON.stringify(payload, null, 2)}\n`, "utf8");
